@@ -13,21 +13,24 @@
         <li ng-repeat="item in nav.menu" ui-sref-active="active">
             <a ui-sref="{{item.state}}">{{item.title}}</a>
         </li>
-        <li ng-show="nav.isAdmin()" ui-sref-active="active"><a ui-sref="admin">Admin</a></li>
-        <li ng-show="isAdmin()" class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Admin <span class="caret"></span></a>
-          <ul class="dropdown-menu">
-            <li><a href="/admin" ng-class="{active: isActive('/admin')}">View Users</a></li>
-            <li><a href="#">Another action</a></li>
+        
+        <li ng-hide="nav.isLoggedIn()" ui-sref-active="active"><a ui-sref="login">Login</a></li>
+        
+        <li dropdown ng-show="nav.isLoggedIn()">
+          <a href="#" dropdown-toggle>My Account <span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu">
+            <li class="dropdown-header">Options</li>
+            <li><a href="#" ui-sref="settings">My Profile</a></li>
+            <li><a href="#">Pricing</a></li>
+            <li class="divider" role="presentation"></li>
+            <li><a href="" ui-sref="logout">Logout</a></li>
           </ul>
         </li>
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown-menu" role="button" aria-haspopup="true" aria-expanded="false">Admin <span class="caret"></span></a>
-          <ul class="dropdown-menu">
-            <li><a href="#">An action</a></li>
-            <li><a href="#">Another action</a></li>
-            <li><a href="#">Another action</a></li>
-            <li><a href="#">Another action</a></li>
+        <li dropdown ng-show="nav.isAdmin()">
+          <a href="#" dropdown-toggle>Admin <span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="#" ui-sref="admin">Users</a></li>
+            <li><a href="#">PDF Template</a></li>
           </ul>
         </li>
       </ul>

@@ -23,6 +23,11 @@
 	border: none;
 	margin-bottom: 0;
 
+	.dropdown-header {
+		color: #e5e5e5;
+		border-bottom: 1px solid #e5e5e5;
+	}
+
 	.navbar-nav > li {
 		a {
 			color: #ffffff;
@@ -44,6 +49,36 @@
 			background: transparent;
 		}
 	}
+
+	.navbar-nav > li.dropdown {
+		a {
+			background: transparent;
+		}
+
+		a:hover, a:focus {
+			color: @seasons_light_green;
+			background: transparent;
+		}
+	}
+
+	.open > .dropdown-menu {
+	  -webkit-transform: scale(1, 1);
+	  transform: scale(1, 1);  
+	  opacity:1;
+	}
+	  
+	.dropdown-menu {
+	  opacity:.3;
+	  -webkit-transform-origin: top;
+	  transform-origin: top;
+	  -webkit-animation-fill-mode: forwards;  
+	  animation-fill-mode: forwards; 
+	  -webkit-transform: scale(1, 0);
+	  display: block; 
+	  transition: all 0.2s linear;
+	  -webkit-transition: all 0.2s linear;
+	  background: @seasons_green;
+	}
 }
 
 .page-head {
@@ -64,6 +99,7 @@
 }
 
 // injector
+@import 'account/login/login.less';
 @import 'admin/admin.less';
 @import 'main/main.less';
 @import '../components/footer/footer.less';

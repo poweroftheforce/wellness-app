@@ -10,7 +10,14 @@ class LoginController {
   constructor(Auth, $state) {
     this.Auth = Auth;
     this.$state = $state;
+
+    // Already logged in, redirect to dashboard
+    if (this.Auth.isLoggedIn()) {
+      this.$state.go('dashboard');
+    }
   }
+
+  
 
   login(form) {
     this.submitted = true;
@@ -21,8 +28,8 @@ class LoginController {
         password: this.user.password
       })
       .then(() => {
-        // Logged in, redirect to home
-        this.$state.go('main');
+        // Logged in, redirect to dashboard
+        this.$state.go('dashboard');
       })
       .catch(err => {
         this.errors.other = err.message;

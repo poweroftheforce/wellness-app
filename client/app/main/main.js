@@ -3,8 +3,8 @@
 angular.module('wellnessPlanApp')
   .config(function($stateProvider) {
     $stateProvider
-      .state('main', {
-        url: '/',
+      .state('dashboard', {
+        url: '/dashboard',
         templateUrl: 'app/main/main.html',
         controller: 'MainController',
         controllerAs: 'main'

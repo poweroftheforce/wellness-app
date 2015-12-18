@@ -1,0 +1,107 @@
+// Colors
+// --------------------------------------------------
+
+@btnText:                           #fff;
+@btnTextAlt:                        #000;
+
+// Social buttons
+// --------------------------------------------------
+
+html, body, .ui-wrapper {
+	height: 100%;
+}
+
+.login-body-wrapper {
+	height: 100%;
+	background: url(../assets/images/seasons_backdrop_1.jpg);
+	background-position: top right;
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+
+.login-container {
+	margin-top: 200px;
+	background :#ffffff;
+	background: rgba(255,255,255,0.7);
+	border: 3px solid @seasons_green;
+	border-radius: 14px;
+	padding: 12px 15px;
+
+	h2 {
+		text-align: center;
+		margin-top: 5px;
+		margin-bottom: 10px;
+		color: #666;
+		text-transform: uppercase;
+		font-size: 1.7em;
+	}
+
+	input {
+		border-radius: 0;
+		border: 1px solid #bbb;
+		padding: 25px 16px;
+		background-repeat: no-repeat;
+	}
+
+	label {
+		display: none;
+	}
+
+	.margin-bottom-sm {
+		margin-bottom: 10px;
+	}
+
+	// IE Maybe???
+	// input#email {
+	// 	font-size: 0.9em;
+	// 	color: #888888;
+	// 	background-image: url(../assets/images/profile-icon.png);
+	// 	background-position: 9px 13px;
+	// 	background-size: 23px;
+	// }
+
+	// input#password {
+	// 	background-image: url(../assets/images/lock-icon.png);	
+	// 	background-position: 11px 13px;
+	// 	background-size: 23px;
+	// }
+
+	.email {
+		font-size: 0.9em;
+		color: #888888;
+		position: relative;
+		&:before {
+			position: absolute;
+			left: 0;
+			top: 0;
+			background: #e3e;
+			content: '';
+		}
+	}
+
+	.btn-green {
+		background: @seasons_green;
+		color: #fff;
+		text-transform: uppercase;
+		border-radius: 12px;
+		padding: 9px 25px;
+		margin: 0 auto;
+	}
+
+	.forgot-pw-link {
+		font-size: 0.8em;
+		color: #888;
+		margin: 0;
+		padding: 0;
+		font-style: italic;
+	}
+
+	.has-error {
+		text-align: center;
+		p {
+			color: #ec364b;
+			font-size: 0.8em;
+			font-style: italic;
+		}
+	}
+}
