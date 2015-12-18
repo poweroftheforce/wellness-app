@@ -7,7 +7,8 @@ describe('Login View', function() {
   var page;
 
   var loadPage = function() {
-    let promise = browser.get(config.baseUrl + '/login');
+    browser.get(config.baseUrl + '/logout');
+    let promise = browser.get(config.baseUrl + '/');
     page = require('./login.po');
     return promise;
   };
@@ -42,13 +43,13 @@ describe('Login View', function() {
 
   describe('with local auth', function() {
 
-    it('should login a user and redirecting to "/"', function() {
+    it('should login a user and redirect to "/dashboard and display My Account Link"', function() {
       page.login(testUser);
 
       var navbar = require('../../components/navbar/navbar.po');
 
-      browser.getCurrentUrl().should.eventually.equal(config.baseUrl + '/');
-      navbar.navbarAccountGreeting.getText().should.eventually.equal('Hello ' + testUser.name);
+      browser.getCurrentUrl().should.eventually.equal(config.baseUrl + '/dashboard');
+      navbar.navbarMyAccountDropdown.isDisplayed().should.eventually.equal(true);
     });
 
     describe('and invalid credentials', function() {
@@ -62,7 +63,7 @@ describe('Login View', function() {
           password: 'badPassword'
         });
 
-        browser.getCurrentUrl().should.eventually.equal(config.baseUrl + '/login');
+        browser.getCurrentUrl().should.eventually.equal(config.baseUrl + '/');
 
         var helpBlock = page.form.element(by.css('.form-group.has-error .help-block.ng-binding'));
         helpBlock.getText().should.eventually.equal('This password is not correct.');

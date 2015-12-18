@@ -5,7 +5,7 @@ var UserModel = require(config.serverConfig.root + '/server/api/user/user.model'
 
 describe('Logout View', function() {
   var login = function(user) {
-    let promise = browser.get(config.baseUrl + '/login');
+    let promise = browser.get(config.baseUrl + '/');
     require('../login/login.po').login(user);
     return promise;
   };
@@ -33,18 +33,18 @@ describe('Logout View', function() {
 
   describe('with local auth', function() {
 
-    it('should logout a user and redirecting to "/"', function() {
+    it('should logout a user and redirect to "/"', function() {
       var navbar = require('../../components/navbar/navbar.po');
 
       browser.getCurrentUrl().should.eventually.equal(config.baseUrl + '/');
-      navbar.navbarAccountGreeting.getText().should.eventually.equal('Hello ' + testUser.name);
-
+      navbar.myAccountLink.isDisplayed().should.eventually.equal(true);
+      
       browser.get(config.baseUrl + '/logout');
 
       navbar = require('../../components/navbar/navbar.po');
 
       browser.getCurrentUrl().should.eventually.equal(config.baseUrl + '/');
-      navbar.navbarAccountGreeting.isDisplayed().should.eventually.equal(false);
+      navbar.myAccountLink.isDisplayed().should.eventually.equal(false);
     });
 
   });

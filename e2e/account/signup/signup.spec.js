@@ -47,13 +47,10 @@ describe('Signup View', function() {
       return UserModel.removeAsync();
     })
 
-    it('should signup a new user, log them in, and redirecting to "/"', function() {
+    it('should add a new user and redirect to "/users"', function() {
       page.signup(testUser);
 
-      var navbar = require('../../components/navbar/navbar.po');
-
-      browser.getCurrentUrl().should.eventually.equal(config.baseUrl + '/');
-      navbar.navbarAccountGreeting.getText().should.eventually.equal('Hello ' + testUser.name);
+      browser.getCurrentUrl().should.eventually.equal(config.baseUrl + '/users');
     });
 
     describe('and invalid credentials', function() {

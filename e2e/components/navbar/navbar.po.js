@@ -8,9 +8,9 @@
 var NavbarComponent = function() {
   this.navbar = element(by.css('.navbar'));
   this.navbarHeader = this.navbar.element(by.css('.navbar-header'));
-  this.navbarNav = this.navbar.element(by.css('#navbar-main .nav.navbar-nav:not(.navbar-right)'));
-  this.navbarAccount = this.navbar.element(by.css('#navbar-main .nav.navbar-nav.navbar-right'));
-  this.navbarAccountGreeting = this.navbarAccount.element(by.binding('getCurrentUser().name'));
+  this.navbarNav = this.navbar.element(by.css('#navbar-main .nav.navbar-nav'));
+  this.navbarMyAccountDropdown = this.navbarNav.element(by.css('.my-account-link'));
+  this.navbarAdminDropdown = this.navbarNav.element(by.css('.admin-link'));
 };
 
 module.exports = new NavbarComponent();
