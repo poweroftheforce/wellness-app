@@ -10,6 +10,7 @@ angular.module('wellnessPlanApp', [
   'btford.socket-io',
   'ui.router',
   'ui.bootstrap',
+  'ngAnimate',
   'validation.match'
 ])
   .config(function($urlRouterProvider, $locationProvider) {
