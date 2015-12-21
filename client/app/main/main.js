@@ -13,7 +13,12 @@ angular.module('wellnessPlanApp')
         url: '/about',
         templateUrl: 'app/main/about.html',
         controller: function($scope) {
-          $scope.pageTitle = 'About Us';
+          $scope.pageTitle = 'About Seasons Wellness';
+          $('.content').css('min-height', ($(window).outerHeight() - 230));
+
+          $(window).resize(function() {
+            $('.content').css('min-height', ($(window).outerHeight() - 230));
+          });
         }
       })
       .state('tutorial', {

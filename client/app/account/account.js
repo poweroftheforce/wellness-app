@@ -27,10 +27,10 @@ angular.module('wellnessPlanApp')
         controller: 'SignupController',
         controllerAs: 'vm'
       })
-      .state('settings', {
-        url: '/settings',
-        templateUrl: 'app/account/settings/settings.html',
-        controller: 'SettingsController',
+      .state('profile', {
+        url: '/profile',
+        templateUrl: 'app/account/profile/profile.html',
+        controller: 'ProfileController',
         controllerAs: 'vm',
         authenticate: true
       });

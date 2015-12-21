@@ -1,14 +1,18 @@
 'use strict';
 
-class SettingsController {
+class ProfileController {
   //start-non-standard
   errors = {};
   submitted = false;
   //end-non-standard
 
-  constructor(Auth) {
+  constructor(Auth, $scope) {
     this.Auth = Auth;
+
+    $scope.pageTitle = 'My Profile';
   }
+
+  
 
   changePassword(form) {
     this.submitted = true;
@@ -28,4 +32,4 @@ class SettingsController {
 }
 
 angular.module('wellnessPlanApp')
-  .controller('SettingsController', SettingsController);
+  .controller('ProfileController', ProfileController);
