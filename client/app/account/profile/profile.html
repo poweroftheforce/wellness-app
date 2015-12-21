@@ -1,55 +1,145 @@
 <navbar></navbar>
-
-<div class="container">
-  <div class="row">
-    <div class="col-sm-12">
-      <div class="page-header">
-        <h1>{{pageTitle}}</h1>
-      </div>  
+<div class="content-wrapper"style="background-image: url(http://www.placehold.it/1920x800); background-repeat: no-repeat; background-position: center center; background-size: cover;" >
+  <div class="container content" style="background: #ffffff; background: rgba(255,255,255,0.7);">
+    <div class="row">
+      <div class="col-sm-12" style="padding: 0 50px;">
+        <div class="page-header">
+          <h1>{{pageTitle}}</h1>
+          <p class="subheader">
+            Please enter the required informatin below.  Seasons's Wellness is ?????????? errors made 
+            by the account holder.
+          </p>
+        </div>      
+      </div>
     </div>
-    <div class="col-sm-12">
-      <form class="form" name="form" ng-submit="vm.changePassword(form)" novalidate>
 
-        <div class="form-group">
-          <label>Current Password</label>
 
-          <input type="password" name="password" class="form-control" ng-model="vm.user.oldPassword"
-                 mongoose-error/>
-          <p class="help-block" ng-show="form.password.$error.mongoose">
-              {{ vm.errors.other }}
-          </p>
-        </div>
+    <div class="row" style="margin-bottom: 25px;">
+      <div class="col-sm-12">
+        <form class="form" name="infoForm" ng-submit="vm.updateInfo(infoForm)" novalidate>
+          <div class="col-sm-3"> 
+            <img ng-hide="vm.user.logo_url" src="http://www.placehold.it/250x250" alt="Upload your logo!" class="img-responsive" style="margin: 0 auto;">
+            <img ng-show="vm.user.logo_url" ng-src="vm.user.logo_url" alt="{{vm.user.company}}" class="img-responsive" style="margin: 0 auto;">
+            <input type="file">
+          </div>
+          <div class="col-sm-9">
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label for="firstName">First Name</label>
+                <input type="text" name="firstName" id="firstName" class="form-control" ng-model="vm.user.name.first">
+              </div>
+            </div>
 
-        <div class="form-group">
-          <label>New Password</label>
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label for="lastName">Last Name</label>
+                <input type="text" name="lastName" id="lastName" class="form-control" ng-model="vm.user.name.last">
+              </div>
+            </div>
 
-          <input type="password" name="newPassword" class="form-control" ng-model="vm.user.newPassword"
-                 ng-minlength="3"
-                 required/>
-          <p class="help-block"
-             ng-show="(form.newPassword.$error.minlength || form.newPassword.$error.required) && (form.newPassword.$dirty || vm.submitted)">
-            Password must be at least 3 characters.
-          </p>
-        </div>
+            <div class="col-sm-12">
+              <div class="form-group">
+                <label for="addr1">Address Line 1</label>
 
-        <div class="form-group">
-          <label>Confirm New Password</label>
+                <input type="text" name="addr1" id="addr1" class="form-control" ng-model="vm.user.address.street1">
+              </div>
+            </div>
+            <div class="col-sm-12">
+              <div class="form-group">
+                <label for="addr2">Address Line 2</label>
 
-          <input type="password" name="confirmPassword" class="form-control" ng-model="vm.user.confirmPassword"
-                 match="vm.user.newPassword"
-                 ng-minlength="3"
-                 required=""/>
-          <p class="help-block"
-             ng-show="form.confirmPassword.$error.match && vm.submitted">
-            Passwords must match.
-          </p>
+                <input type="text" name="addr2" id="addr2" class="form-control" ng-model="vm.user.address.street2">
+              </div>
+            </div>
 
-        </div>
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label for="state">State</label>
+                <input type="text" name="state" id="state" class="form-control" ng-model="vm.user.address.state">
+              </div>
+            </div>
 
-        <p class="help-block"> {{ vm.message }} </p>
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label for="zip">Zip Code</label>
+                <input type="text" name="zip" id="zip" class="form-control" ng-model="vm.user.address.zip">
+              </div>
+            </div>
 
-        <button class="btn btn-lg btn-primary" type="submit">Save changes</button>
-      </form>
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label for="phone">Phone</label>
+                <input type="text" name="phone" id="phone" class="form-control" ng-model="vm.user.phone.mobile">
+              </div>
+            </div>
+
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label for="altPhone">Alternate Phone</label>
+                <input type="text" name="altPhone" id="altPhone" class="form-control" ng-model="vm.user.phone.alt">
+              </div>
+            </div>
+            <div class="col-sm-12">
+              <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut feugiat mauris ut nisi accumsan porta. Pellentesque euismod fermentum finibus. Nunc eu quam et ante dictum pharetra. Vivamus in ex malesuada, pretium massa ac, aliquam erat. Sed eget lorem enim. Nulla vitae nunc vitae neque pulvinar mollis. Nam neque orci, imperdiet a scelerisque ut, lobortis at felis. Nulla turpis felis, gravida eget orci sed, malesuada suscipit mi. Curabitur cursus nec ligula id accumsan. Duis feugiat lacinia tincidunt.
+              </p>
+              <button class="btn btn-lg btn-primary pull-right" type="submit">Submit</button>
+            </div>
+
+          </div>
+        </form>
+      </div>
+
+      <div class="col-sm-12">
+        <h3>Update Password</h3>
+        <form class="form" name="passwordForm" ng-submit="vm.changePassword(passwordForm)" novalidate>
+          <div class="col-sm-4">
+            <div class="form-group">
+              <label>Current Password</label>
+
+              <input type="password" name="password" class="form-control" ng-model="vm.user.oldPassword"
+              mongoose-error/>
+              <p class="help-block" ng-show="form.password.$error.mongoose">
+                {{ vm.errors.other }}
+              </p>
+            </div>
+
+            <div class="form-group">
+              <label>New Password</label>
+
+              <input type="password" name="newPassword" class="form-control" ng-model="vm.user.newPassword"
+              ng-minlength="3"
+              required/>
+              <p class="help-block"
+              ng-show="(form.newPassword.$error.minlength || form.newPassword.$error.required) && (form.newPassword.$dirty || vm.submitted)">
+                Password must be at least 3 characters.
+              </p>
+            </div>
+
+            <div class="form-group">
+              <label>Confirm New Password</label>
+
+              <input type="password" name="confirmPassword" class="form-control" ng-model="vm.user.confirmPassword"
+              match="vm.user.newPassword"
+              ng-minlength="3"
+              required=""/>
+              <p class="help-block"
+              ng-show="form.confirmPassword.$error.match && vm.submitted">
+                Passwords must match.
+              </p>
+
+            </div>
+
+            <p class="help-block"> {{ vm.message }} </p>
+
+            <button class="btn btn-lg btn-primary" type="submit">Save changes</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="row">
+      <footer></footer>
     </div>
   </div>
 </div>

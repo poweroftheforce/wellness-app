@@ -16,6 +16,7 @@ class ProfileController {
 
   changePassword(form) {
     this.submitted = true;
+    console.log('change password!');
 
     if (form.$valid) {
       this.Auth.changePassword(this.user.oldPassword, this.user.newPassword)
@@ -28,6 +29,11 @@ class ProfileController {
           this.message = '';
         });
     }
+  }
+
+  updateInfo(form) {
+    this.submitted = true;
+    console.log('update Profile Info');
   }
 }
 
