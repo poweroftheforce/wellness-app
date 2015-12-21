@@ -16,6 +16,12 @@ class MainController {
     $scope.$on('$destroy', function() {
       socket.unsyncUpdates('thing');
     });
+
+    $('.content').css('min-height', ($(window).outerHeight() - 230));
+
+    $(window).resize(function() {
+      $('.content').css('min-height', ($(window).outerHeight() - 230));
+    });
   }
 
   addThing() {

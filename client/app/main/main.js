@@ -26,6 +26,11 @@ angular.module('wellnessPlanApp')
         templateUrl: 'app/main/tutorial.html',
         controller: function($scope) {
           $scope.pageTitle = 'Tutorial';
+          $('.content').css('min-height', ($(window).outerHeight() - 230));
+
+          $(window).resize(function() {
+            $('.content').css('min-height', ($(window).outerHeight() - 230));
+          });
         }
       })
       .state('contact', {
@@ -33,6 +38,11 @@ angular.module('wellnessPlanApp')
         templateUrl: 'app/main/contact.html',
         controller: function($scope) {
           $scope.pageTitle = 'Contact Us';
+          $('.content').css('min-height', ($(window).outerHeight() - 230));
+
+          $(window).resize(function() {
+            $('.content').css('min-height', ($(window).outerHeight() - 230));
+          });
         }
       });
   });

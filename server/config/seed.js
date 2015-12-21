@@ -48,6 +48,22 @@ User.find({}).removeAsync()
       password: 'test'
     }, {
       provider: 'local',
+      name: 'John Doe',
+      email: 'john.doe@example.com',
+      password: 'jdoe1'
+    }, {
+      provider: 'local',
+      name: 'Jane Doe',
+      email: 'jane.doe@example.com',
+      password: 'jdoe1'
+    }, {
+      provider: 'local',
+      role: 'admin',
+      name: 'Justin Rhyne',
+      email: 'justin@example.com',
+      password: 'justin'
+    }, {
+      provider: 'local',
       role: 'admin',
       name: 'Admin',
       email: 'admin@example.com',

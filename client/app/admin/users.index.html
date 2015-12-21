@@ -1,0 +1,40 @@
+
+<navbar></navbar>
+<div class="content-wrapper" >
+  <div class="container content">
+    <div class="row">
+      <div class="col-sm-12" style="padding: 0 50px;">
+        <div class="page-header">
+          <h1>{{pageTitle}}</h1>
+          <span class="subheader">Easily manage created plans below with a click of the ?????????</span>
+        </div>      
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12">
+          <table class="table table-bordered table-striped table-condensed table-hover table-responsive">
+            <thead>
+              <th>Practice</th>
+              <th>Contact</th>
+              <th>Email</th>
+              <th colspan="4">Options</th>
+            </thead>
+            <tbody>
+              <tr ng-repeat="user in admin.users">
+                <td>{{user.comant}}</td>
+                <td>{{user.name}}</td>
+                <td><a href="mailto:{{user.email}}">{{user.email}}</a></td>
+                <td><i class="fa fa-user"></i>View Profile</td>
+                <td><i class="fa fa-pencil"></i> Edit Access</td>
+                <td><i class="fa fa-key"></i> Reset Password</td>
+                <td><i class="fa fa-trash trash"></i> Delete</td>
+              </tr>
+            </tbody>
+          </table>
+      </div>
+    </div>
+    <div class="row">
+      <footer></footer>
+    </div>
+  </div>
+</div>

@@ -1,11 +1,65 @@
 <navbar></navbar>
-<div class="container">
-	<div class="row">
-		<div class="col-sm-12">
-			<div class="page-header">
-				<h1>{{pageTitle}}</h1>
-			</div>			
+<div class="content-wrapper">
+	<div class="container content">
+		<div class="row">
+			<div class="col-sm-12" style="padding: 0 50px;">
+				<div class="page-header">
+					<h1>{{pageTitle}}</h1>
+					<span class="subheader">Have a question? We would like to hear from you.  Please use the form below to inform us how we may provide assistance.</span>
+				</div>			
+			</div>
+		</div>
+		<div class="row" style="margin-bottom: 25px;">
+			<div class="col-sm-8 col-sm-offset-2">
+				<div class="col-sm-6">
+					<form name="contactForm" ng-submit="sendContactForm(contactForm)"></form>
+					<div class="form-group">
+						<label for="name">Your Name</label>
+						<input type="text" class="form-control">
+					</div>
+				</div>
+				<div class="col-sm-6">
+					<div class="form-group">
+						<label for="company">Business Name</label>
+						<input type="text" class="form-control">
+					</div>
+				</div>
+				<div class="col-sm-6">
+					<div class="form-group">
+						<label for="phone">Phone Number</label>
+						<input type="text" class="form-control">
+					</div>
+				</div>
+				<div class="col-sm-6">
+					<div class="form-group">
+						<label for="email">Email</label>
+						<input type="text" class="form-control">
+					</div>
+				</div>
+				<div class="col-sm-12">
+					<div class="form-group">
+						<label for="comments">Comments</label>
+						<textarea class="form-control" rows="4"></textarea>
+					</div>
+				</div>
+				<div class="col-sm-12">
+					<div class="form-group">
+						<label for="message">How Can We Help You</label>
+						<textarea class="form-control" rows="4"></textarea>
+					</div>
+				</div>
+				<div class="col-sm-12">
+					<div class="col-sm-4">
+						CAPCHA
+					</div>
+					<div class="col-sm-4 col-sm-offset-4">
+						<button type="submit" class="btn btn-lg btn-success pull-right">Submit</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<footer></footer>
 		</div>
 	</div>
 </div>
-<footer></footer>
