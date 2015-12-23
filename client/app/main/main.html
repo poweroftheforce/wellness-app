@@ -1,23 +1,51 @@
 <navbar></navbar>
+<div class="content-wrapper" >
+  <div class="container content">
+    <div class="row">
+      <div class="col-sm-12" style="padding: 0 50px;">
+        <div class="page-header">
+          <h1>{{pageTitle}}</h1>
+        </div>      
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12" ng-show="dashboard.myPlans.length > 0">
+        <table class="table table-bordered table-striped table-condensed table-hover table-responsive">
+            <thead>
+              <th>Patient Name</th>
+              <th>Author</th>
+              <th>Created</th>
+              <th colspan="4">Options</th>
+            </thead>
+            <tbody>
+              <tr ng-repeat="plan in dashboard.myPlans">
+                <td><a href="#" ng-click="dashboard.view(plan)">{{plan.patient.name}}</a></td>
+                <td>{{plan.author}}</td>
+                <td><span am-time-ago="plan.created_at"></span></td>
+                <td><i class="fa fa-trash trash" ng-click="dashboard.deletePlan(plan)"></i> Delete</td>
+              </tr>
+            </tbody>
+          </table>
+      </div>
+      <div class="col-sm-12" ng-hide="dashboard.myPlans.length > 0">
+        <h5 style="text-align: center;">You have not created any plans.</h5>
+        <h5 style="text-align: center;">Enter a Patient's name below to create your first plan!</h5>
 
-<div class="container">
-  <div class="row">
-    <div class="col-lg-12">
-      <h1 class="page-header">My Plans:</h1>
-      <ul class="nav nav-tabs nav-stacked col-md-4 col-lg-4 col-sm-6" ng-repeat="plan in main.myPlans">
-        <li><a href="#" tooltip="{{plan.info}}">{{plan.name}}<button type="button" class="close" ng-click="main.deletePlan(plan)">&times;</button></a></li>
-      </ul>
+      </div>
+
+      <div class="col-md-4">
+        <form class="plan-form">
+          <p class="input-group">
+            <input type="text" class="form-control" placeholder="Patient Name" ng-model="dashboard.newPlan">
+            <span class="input-group-btn">
+              <button type="submit" class="btn btn-primary" ng-click="dashboard.addPlan()">Add New</button>
+            </span>
+          </p>
+        </form>
+      </div>
+    </div>
+    <div class="row">
+      <footer></footer>
     </div>
   </div>
-
-  <form class="plan-form">
-    <p class="input-group">
-      <input type="text" class="form-control" placeholder="Patient Name" ng-model="main.newPlan">
-      <span class="input-group-btn">
-        <button type="submit" class="btn btn-primary" ng-click="main.addPlan()">Add New</button>
-      </span>
-    </p>
-  </form>
 </div>
-
-<footer></footer>

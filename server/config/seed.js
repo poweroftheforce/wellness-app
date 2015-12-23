@@ -6,6 +6,12 @@
 'use strict';
 import Template from '../api/template/template.model';
 import User from '../api/user/user.model';
+import Plan from '../api/plan/plan.model';
+
+Plan.find({}).removeAsync()
+  .then(() => {
+    console.log('finished clearing plans');
+  });
 
 Template.find({}).removeAsync()
   .then(() => {
@@ -32,6 +38,9 @@ Template.find({}).removeAsync()
           html: 'Intro to Wellne'
         }
       ]
+    })
+    .then(() => {
+      console.log('finished populating templates');
     });
   });
 

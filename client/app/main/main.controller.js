@@ -4,17 +4,20 @@
 
 class MainController {
 
-  constructor($http, $scope, socket) {
+  constructor($http, $scope, socket, Auth) {
     this.$http = $http;
-    this.awesomeThings = [];
+    this.user = Auth.getCurrentUser();
+    this.myPlans = [];
 
-    $http.get('/api/things').then(response => {
-      this.awesomeThings = response.data;
-      socket.syncUpdates('thing', this.awesomeThings);
+    $scope.pageTitle = 'Dashboard';
+
+    $http.get('/api/plans').then(response => {
+      this.myPlans = response.data;
+      socket.syncUpdates('plan', this.myPlans);
     });
 
     $scope.$on('$destroy', function() {
-      socket.unsyncUpdates('thing');
+      socket.unsyncUpdates('plan');
     });
 
     $('.content').css('min-height', ($(window).outerHeight() - 230));
@@ -24,15 +27,15 @@ class MainController {
     });
   }
 
-  addThing() {
-    if (this.newThing) {
-      this.$http.post('/api/things', { name: this.newThing });
-      this.newThing = '';
+  addPlan() {
+    if (this.newPlan) {
+      this.$http.post('/api/plans', { patient: {name: this.newPlan}, author: this.user._id});
+      this.newPlan = '';
     }
   }
 
-  deleteThing(thing) {
-    this.$http.delete('/api/things/' + thing._id);
+  deletePlan(plan) {
+    this.$http.delete('/api/plans/' + plan._id);
   }
 }
 

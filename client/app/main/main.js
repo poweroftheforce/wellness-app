@@ -7,7 +7,7 @@ angular.module('wellnessPlanApp')
         url: '/dashboard',
         templateUrl: 'app/main/main.html',
         controller: 'MainController',
-        controllerAs: 'main'
+        controllerAs: 'dashboard'
       })
       .state('about', {
         url: '/about',
