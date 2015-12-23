@@ -1,4 +1,3 @@
-
 <navbar></navbar>
 <div class="content-wrapper" >
   <div class="container content">
@@ -20,8 +19,8 @@
               <th colspan="4">Options</th>
             </thead>
             <tbody>
-              <tr ng-repeat="user in admin.users">
-                <td>{{user.comant}}</td>
+              <tr ng-repeat="user in users.index">
+                <td>{{user.company}}</td>
                 <td>{{user.name}}</td>
                 <td><a href="mailto:{{user.email}}">{{user.email}}</a></td>
                 <td><i class="fa fa-user"></i>View Profile</td>
