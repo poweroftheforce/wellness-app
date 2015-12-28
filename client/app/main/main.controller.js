@@ -8,6 +8,7 @@ class MainController {
     this.$http = $http;
     this.user = Auth.getCurrentUser();
     this.myPlans = [];
+    this.$scope = $scope;
 
     $scope.pageTitle = 'Dashboard';
 
@@ -27,11 +28,40 @@ class MainController {
     });
   }
 
-  addPlan() {
-    if (this.newPlan) {
-      this.$http.post('/api/plans', { patient: {name: this.newPlan}, author: this.user._id});
-      this.newPlan = '';
+
+
+  addPlan(form) {
+    this.submitted = true;
+
+    var latest_template = this.$http.get('/api/template/latest');
+
+    console.log(latest_template);
+
+    if (form.$valid) {
+      this.$http.post('/api/plans', { patient: {name: {first: this.newPlan.firstname, last: this.newPlan.lastname}, dob: this.newPlan.dob }, author: this.user._id})
+      .catch(err => {
+        err = err.data;
+        this.errors = {};
+
+        // Update validity of form fields that match the mongoose errors
+        angular.forEach(err.errors, (error, field) => {
+          form[field].$setValidity('mongoose', false);
+          this.errors[field] = error.message;
+        });
+      });
     }
+  }
+
+  exportPlan(plan) {
+    alert('export to PDF');
+  }
+
+  editPlan(plan) {
+    this.$scope.plan = plan;
+  }
+
+  viewAllPlans() {
+    this.$scope.plan = {};
   }
 
   deletePlan(plan) {

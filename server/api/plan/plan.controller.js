@@ -12,7 +12,10 @@
 import _ from 'lodash';
 var Auth = require('../../auth/auth.service');
 var Plan = require('./plan.model');
+var Template = require('../template/template.model');
 
+
+//db.templates.find().sort({updated_at: -1}).limit(1)
 function handleError(res, statusCode) {
   statusCode = statusCode || 500;
   return function(err) {

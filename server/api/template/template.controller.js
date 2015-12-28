@@ -100,3 +100,10 @@ export function destroy(req, res) {
     .then(removeEntity(res))
     .catch(handleError(res));
 }
+
+export function latest(req, res) {
+  Template.findAsync().sort({updated_at: -1}).limit(1)
+    .then(handleEntityNotFound(res))
+    .then(responseWithResult(res))
+    .catch(handleError(res));
+}
