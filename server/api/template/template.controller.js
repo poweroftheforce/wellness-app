@@ -102,7 +102,7 @@ export function destroy(req, res) {
 }
 
 export function latest(req, res) {
-  Template.findAsync().sort({updated_at: -1}).limit(1)
+  Template.find().sort({updated_at: -1}).limit(1)
     .then(handleEntityNotFound(res))
     .then(responseWithResult(res))
     .catch(handleError(res));

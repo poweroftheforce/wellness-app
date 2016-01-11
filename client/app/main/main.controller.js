@@ -10,6 +10,7 @@ class MainController {
     this.myPlans = [];
     this.$scope = $scope;
 
+    this.newPlan = {firstname: 'Justin', lastname: 'Rhyne', dob: '10-1-80'};
     $scope.pageTitle = 'Dashboard';
 
     $http.get('/api/plans').then(response => {
@@ -33,10 +34,6 @@ class MainController {
   addPlan(form) {
     this.submitted = true;
 
-    var latest_template = this.$http.get('/api/template/latest');
-
-    console.log(latest_template);
-
     if (form.$valid) {
       this.$http.post('/api/plans', { patient: {name: {first: this.newPlan.firstname, last: this.newPlan.lastname}, dob: this.newPlan.dob }, author: this.user._id})
       .catch(err => {
@@ -53,11 +50,52 @@ class MainController {
   }
 
   exportPlan(plan) {
-    alert('export to PDF');
+    var doc = new jsPDF('p', 'pt','letter');
+    var options = {
+      pagesplit: true,
+      dim: {
+        w: 400, 
+        h: 600
+      }
+    };
+
+    doc.setProperties({
+      title: 'NEW WELLNESS PLAN',
+      author: 'admin@wellness.com',
+      creator: 'Seasons Wellness'
+    });
+
+    // doc.fromHTML($('#plan-wrapper').get(0), 25, 25, {
+    //   'width': 560
+    // });
+  
+    // for (var i = 0; i<$('#plan-wrapper .plan-page').length; i++ ) {
+    //   doc.addHTML($('#plan-wrapper .plan-page')[i], function() {
+    //     doc.addPage();
+    //   });
+    // }
+
+    doc.addHTML($('#plan-wrapper'), options, function() {
+      // var string = doc.output('datauristring');
+      // $('.plan-preview').attr('src', string);
+      doc.save(plan.patient.name.last + ', ' + plan.patient.name.first + '.pdf');
+    });
+
+    // $('.plan-preview').attr('src', string);
+    // doc.save(plan.patient.name.last + ', ' + plan.patient.name.first + '.pdf');
   }
 
   editPlan(plan) {
+    var ctl = this;
+    // we need the latest template file for it's data.
+    this.$http.get('/api/templates/latest')
+      .then(function(res) {
+        ctl.$scope.template = res.data[0];
+      }, function(err) {
+        console.log(err);
+      });
     this.$scope.plan = plan;
+    this.$scope.viewing = false;
   }
 
   viewAllPlans() {
@@ -67,6 +105,8 @@ class MainController {
   deletePlan(plan) {
     this.$http.delete('/api/plans/' + plan._id);
   }
+
+
 }
 
 angular.module('wellnessPlanApp')

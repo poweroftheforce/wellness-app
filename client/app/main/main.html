@@ -10,22 +10,45 @@
         </div>      
       </div>
     </div>
-    <div class="row" ng-show="plan.patient">
-      <div class="col-md-4">
+    <div class="row patient-info" ng-show="plan.patient">
+      <div class="col-md-4 ">
         <h3>Patient Info</h3>
-        <div class="form-group">
-          <label for="firstname">First Name</label>
-          <input type="text" class="form-control" name="firstname" placeholder="First Name" ng-model="plan.patient.name.first" required>
-        </div>
-        <div class="form-group" ng-class="planForm.lastname.$error.required && dashboard.submitted ? 'has-error' : ''">
-          <label for="lastname">Last Name</label>
-          <input type="text" class="form-control" name="lastname" placeholder="Last Name" ng-model="plan.patient.name.last" required>
-        </div>
-        <div class="form-group" ng-class="planForm.dob.$error.required && dashboard.submitted ? 'has-error' : ''">
-          <label for="dob">Date of Birth</label>
-          <input type="text" class="form-control" name="dob" placeholder="DOB" ng-model="plan.patient.dob" required>
+        <span class="patient-info">Name: {{plan.patient.name.first}}  {{plan.patient.name.last}}</span> <br>
+        <span class="patient-info">Date Of Birth: {{plan.patient.dob}}</span>
+        <hr>
+      </div>
+      <div class="col-md-4 col-md-offset-4">
+        <button class="btn btn-success" ng-show="!viewing" ng-click="viewing=true">View Plan</button>
+        <button class="btn btn-warning" ng-show="viewing" ng-click="viewing=false">Edit Plan</button>
+        <button class="btn btn-warning" ng-show="viewing" ng-click="dashboard.exportPlan(plan)">Export Plan</button>
+
+        <h5>Using Template Version: {{template.version}}</h5>
+      </div>
+    </div>
+    <div class="row" id="wrapper" ng-show="plan.patient && !viewing">
+      <div class="sidebar">
+        <ul>
+          <li ng-repeat="section in template.sections">
+            <a href="#">{{section.name}}</a>
+          </li>
+        </ul>
+      </div>
+      <div class="body">
+        <div class="plan-page">
+          
         </div>
       </div>
+    </div>
+    <div class="row" id="plan-preview-wrapper" ng-show="viewing">
+      <iframe class="plan-preview" type="application/pdf" width="400" height="600" frameborder="0"></iframe>
+    </div>
+    <div class="row" id="plan-wrapper" ng-show="viewing">
+      <div ng-repeat="section in template.sections">
+        <!-- <img ng-if="section.cover_page != ''" class="plan-page plan-cover-page" ng-src="../assets/images/{{section.cover_page}}"> -->
+
+        <div class="plan-page" ng-bind-html="section.html"></div>
+      </div>  
+      
     </div>
     <div class="row" ng-hide="plan.patient">
       <div class="col-sm-12" ng-show="dashboard.myPlans.length > 0">
@@ -38,11 +61,9 @@
             </thead>
             <tbody>
               <tr ng-repeat="plan in dashboard.myPlans">
-                <td><a href="#" ng-click="dashboard.view(plan)">{{plan.patient.name.last}}, {{plan.patient.name.first}}</a></td>
+                <td><a href="#" ng-click="dashboard.editPlan(plan)">{{plan.patient.name.last}}, {{plan.patient.name.first}}</a></td>
                 <td>{{plan.patient.dob}}</td>
                 <td><span am-time-ago="plan.created_at"></span></td>
-                <td style="text-align: center;"><i class="fa fa-pencil edit" ng-click="dashboard.editPlan(plan)"></i></td>
-                <td style="text-align: center;"><i class="fa fa-file-pdf-o edit" ng-click="dashboard.exportPlan(plan)"></i></td>
                 <td style="text-align: center;"><i class="fa fa-trash trash" ng-click="dashboard.deletePlan(plan)"></i></td>
               </tr>
             </tbody>
@@ -58,12 +79,12 @@
         <div class="row">
           <form class="plan-form" name="planForm" ng-submit="dashboard.addPlan(planForm)" novalidate>
             <div class="form-group col-sm-4" ng-class="planForm.firstname.$error.required && dashboard.submitted ? 'has-error' : ''">
-              <input type="text" class="form-control" name="firstname" placeholder="First Name" ng-model="dashboard.newPlan.firstname" required>
+              <input type="text" class="form-control" name="firstname" placeholder="First Name" ng-model="dashboard.newPlan.firstname"  required>
             </div>
             <div class="form-group col-sm-4" ng-class="planForm.lastname.$error.required && dashboard.submitted ? 'has-error' : ''">
-              <input type="text" class="form-control" name="lastname" placeholder="Last Name" ng-model="dashboard.newPlan.lastname" required>
+              <input type="text" class="form-control" name="lastname" placeholder="Last Name" ng-model="dashboard.newPlan.lastname"  required>
             </div>
-            <div class="form-group col-sm-4" ng-class="planForm.dob.$error.required && dashboard.submitted ? 'has-error' : ''">
+            <div class="form-group col-sm-4" ng-class="planForm.dob.$error.required && dashboard.submitted ? 'has-error' : ''" required>
               <input type="text" class="form-control" name="dob" placeholder="DOB" ng-model="dashboard.newPlan.dob" required>
             </div>
             <div class="form-group col-sm-12">
