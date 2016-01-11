@@ -12,7 +12,8 @@ angular.module('wellnessPlanApp', [
   'ui.bootstrap',
   'ngAnimate',
   'validation.match',
-  'angularMoment'
+  'angularMoment',
+  'textAngular'
 ])
   .config(function($urlRouterProvider, $locationProvider) {
     $urlRouterProvider

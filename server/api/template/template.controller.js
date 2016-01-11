@@ -72,6 +72,11 @@ export function show(req, res) {
     .then(handleEntityNotFound(res))
     .then(responseWithResult(res))
     .catch(handleError(res));
+
+  // Template.findOne({version: req.params.version})
+  //   .then(handleEntityNotFound(res))
+  //   .then(responseWithResult(res))
+  //   .catch(handleError(res));
 }
 
 // Creates a new Template in the DB

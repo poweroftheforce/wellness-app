@@ -3,7 +3,7 @@
 var mongoose = require('bluebird').promisifyAll(require('mongoose'));
 
 var TemplateSchema = new mongoose.Schema({
-  version: String,
+  version: {type: String, unique: true, required: true, dropDups: true},
   author: String,
   sections: [{
     	name: String,

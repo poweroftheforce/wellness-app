@@ -1,0 +1,57 @@
+<navbar></navbar>
+<div class="content-wrapper" >
+  <div class="container content">
+    <div class="row">
+      <div class="col-sm-12" style="padding: 0 50px;">
+        <div class="page-header">
+          <h1>{{pageTitle}}</h1>
+        </div>      
+      </div>
+    </div>
+    <div class="row" id="wrapper">
+      <div class="sidebar">
+        <ul>
+          <li ng-repeat="section in vm.template.sections">
+            <a href="#" ng-click="vm.currentSection = section">{{section.name}}</a>
+          </li>
+        </ul>
+      </div>
+      <div class="body">
+      	{{v.template}}
+        <div class="section-body">
+        	<div class="col-sm-12">
+        		<h4 class="section-name pull-left">{{vm.currentSection.name}}</h4>
+        	<a href="#" class="btn btn-info pull-right" ng-show="vm.currentSection && !vm.editing" ng-click="vm.editing=true">Edit Section</a>
+        	<a href="#" class="btn btn-info pull-right" ng-show="vm.editing && vm.currentSection" ng-click="vm.editing=false">Preview Section</a>
+        	</div>
+        	<div class="section-preview" ng-hide="vm.editing" ng-bind-html="vm.currentSection.html">
+        		
+        	</div>
+          <div class="section-editor" ng-show="vm.editing">
+          	<text-angular ng-model="vm.currentSection.html"></text-angular>
+          	<a href="#" class="btn btn-success" ng-click="vm.updateSection(vm.currentSection)">Update</a>
+          </div>
+        </div>
+        <div class="clearfix"></div>
+      </div>
+    </div>
+
+    <div class="row">
+    	<div class="col-sm-12">
+    		<!--<div ng-repeat="section in vm.template.sections">
+	         <img ng-if="section.cover_page != ''" class="plan-page plan-cover-page" ng-src="../assets/images/{{section.cover_page}}">
+					<h3>{{section.name}}</h3>
+					
+	        <div class="plan-page" ng-bind-html="section.html"></div>
+	      </div>  -->
+    	</div>
+    	<div class="col-sm-12">
+    		<a class="btn btn-warning pull-left" ui-sref="templates">Go Back to Templates</a>
+    	</div>
+    </div>
+    
+    <div class="row">
+      <footer></footer>
+    </div>
+  </div>
+</div>
