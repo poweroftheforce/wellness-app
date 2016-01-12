@@ -2,14 +2,16 @@
 
 (function() {
 
-class TemplatesService{
+class Template{
 
   constructor($resource) {
-    this.$resource = $resource;
-    return this.$resource('/api/templates/:id');
+  	this.$resource = $resource;
+    return $resource('/api/templates/:id', {
+    	id: '@id'
+    });
   }
 }
 
 angular.module('wellnessPlanApp')
-  .service('Template', TemplatesService);
+  .service('Template', Template);
 })();

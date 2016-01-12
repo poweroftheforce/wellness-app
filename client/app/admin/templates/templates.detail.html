@@ -4,11 +4,11 @@
     <div class="row">
       <div class="col-sm-12" style="padding: 0 50px;">
         <div class="page-header">
-          <h1>{{pageTitle}}</h1>
+          <h1>{{vm.pageTitle}}</h1>
         </div>      
       </div>
     </div>
-    <div class="row" id="wrapper">
+    <!-- <div class="row" id="wrapper">
       <div class="sidebar">
         <ul>
           <li ng-repeat="section in vm.template.sections">
@@ -34,6 +34,14 @@
         </div>
         <div class="clearfix"></div>
       </div>
+    </div> -->
+
+    <div class="row">
+      <h5>State Params Object:</h5>
+      {{vm.$stateParams}}
+      <hr>
+      <h5>Template Object:</h5>
+      {{vm.template}}
     </div>
 
     <div class="row">

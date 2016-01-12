@@ -4,25 +4,31 @@
 
 class TemplatesDetailController {
 
-  constructor($http, $scope, $stateParams, Auth, $resource, Template) {
+  constructor($http, $stateParams, Auth, template, $log) {
     this.$http = $http;
-    this.$scope = $scope;
-    this.currentUser = Auth.getCurrentUser();
-    this.version = $stateParams.version;
-    this.template = {};
-
+    this.$stateParams = $stateParams;
     
-    this.$scope.pageTitle = 'Template Version ' + this.version;
+    this.currentUser = Auth.getCurrentUser();
+    // this.version = '';
+    // this.version = $stateParams.version;
+    
 
-    this.template = Template.query({version: this.version}, function() {
-    	console.log('success?');
-    });
-
+    // this.activate(template);
+    this.template = template;
+    $log.debug(template);
+    // this.pageTitle = 'Template Version: ' + this.template.version;
   }
 
-  updateSection(section) {
-  	this.$http.put('/api/templates/' + this.template.version)
+  activate(template) {
+    this.getTemplate(template);
   }
+
+  getTemplate(template) {
+    this.template = template[0];
+  }
+  // updateSection(section) {
+  // 	this.$http.put('/api/templates/' + this.template.version)
+  // }
 }
 
 

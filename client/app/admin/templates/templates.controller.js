@@ -4,25 +4,17 @@
 
 class TemplatesController {
 
-  constructor($http, $scope, socket, Auth) {
+  constructor($http, $scope, socket, Auth, templates) {
     this.$http = $http;
     this.$scope = $scope;
     this.index = [];
     this.currentUser = Auth.getCurrentUser();
-
+    this.index = templates;
+    
     $scope.pageTitle = 'PDF Template';
 
-    $http.get('/api/templates').then(response => {
-      this.index = response.data;
-      socket.syncUpdates('template', this.index);
-    });
-
-    $scope.$on('$destroy', function() {
-      socket.unsyncUpdates('template');
-    });
-
+    // I need to wrap this somewhere else.
     $('.content').css('min-height', ($(window).outerHeight() - 230));
-
     $(window).resize(function() {
       $('.content').css('min-height', ($(window).outerHeight() - 230));
     });
