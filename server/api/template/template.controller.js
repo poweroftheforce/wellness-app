@@ -11,6 +11,7 @@
 
 import _ from 'lodash';
 var Template = require('./template.model');
+var TemplateSection = require('./templateSection/templateSection.model');
 
 function handleError(res, statusCode) {
   statusCode = statusCode || 500;
@@ -62,16 +63,25 @@ function removeEntity(res) {
 // Gets a list of Templates
 export function index(req, res) {
   Template.findAsync()
+    // .populate('sections')
     .then(responseWithResult(res))
     .catch(handleError(res));
 }
 
 // Gets a single Template from the DB
 export function show(req, res) {
-  Template.findByIdAsync(req.params.id)
+
+  Template.findOne({_id: req.params.id})
+    .populate('sections')
+    .execAsync()
     .then(handleEntityNotFound(res))
     .then(responseWithResult(res))
     .catch(handleError(res));
+
+  // Template.findByIdAsync(req.params.id)
+  //   .then(handleEntityNotFound(res))
+  //   .then(responseWithResult(res))
+  //   .catch(handleError(res));
 }
 
 // Creates a new Template in the DB
@@ -101,9 +111,26 @@ export function destroy(req, res) {
     .catch(handleError(res));
 }
 
+// Returns the latest Template
 export function latest(req, res) {
   Template.find().sort({updated_at: -1}).limit(1)
     .then(handleEntityNotFound(res))
     .then(responseWithResult(res))
     .catch(handleError(res));
+}
+
+// Update Template Section
+export function updateSection(req, res, next) {
+  var templateId = req.templateId;
+  var sectionId = req.sectionId;
+
+  Template.findByIdAsync(templateId)
+    .then(template => {
+      template.sections = sections;
+      return template.saveAsync()
+      .then(() => {
+        res.status(204).end();
+      })
+      .catch(validationError(res));
+    });
 }

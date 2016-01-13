@@ -11,7 +11,7 @@ export default function(app) {
   // Insert routes below
   app.use('/api/plans', require('./api/plan'));
   app.use('/api/templates', require('./api/template'));
-  app.use('/api/things', require('./api/thing'));
+  app.use('/api/sections', require('./api/template/templateSection'));
   app.use('/api/users', require('./api/user'));
 
   app.use('/auth', require('./auth'));

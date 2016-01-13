@@ -4,14 +4,14 @@
 
 class TemplatesController {
 
-  constructor($http, $scope, socket, Auth, templates) {
+  constructor($http, Auth, templates, Template) {
     this.$http = $http;
-    this.$scope = $scope;
     this.index = [];
     this.currentUser = Auth.getCurrentUser();
-    this.index = templates;
+    this.templates = templates;
+    this.Template = Template;
     
-    $scope.pageTitle = 'PDF Template';
+    this.pageTitle = 'PDF Template';
 
     // I need to wrap this somewhere else.
     $('.content').css('min-height', ($(window).outerHeight() - 230));
@@ -20,32 +20,24 @@ class TemplatesController {
     });
   }
 
-  view(template) {
-    this.$scope.template = template;
-  }
-
-  viewAll() {
-    this.$scope.template = {};
-  }
-
-  new() {
+  addTemplate() {
   	if (this.newTemplateVersion) {
-  		this.$http.post('/api/templates', { version: this.newTemplateVersion, author: this.currentUser.name });	
+  		// this.$http.post('/api/templates', { version: this.newTemplateVersion, author: this.currentUser.name });	
+      var newTemplate = new this.Template({version: this.newTemplateVersion, author: this.currentUser.name});
+      newTemplate.$save()
+      .then((data) => {
+        this.newTemplateVersion = '';
+        this.templates.push(data);
+      });
   	}
   }
 
-  delete(template) {
-    this.$http.delete('/api/templates/' + template._id);
-  }
-
-  addSection(template, name) {
-
-    if (this.$scope.template && this.newSectionName) {
-      // return array of sections, add new section, then update model in db
-      var newSection = {name: this.newSectionName, cover_page: '<h2>Cover Page</h2>', html: '<b>blank</b>'};
-      this.$scope.template.sections.push(newSection);
-      // this.$http.put('/api/templates/' + template._id, { });
-    }
+  deleteTemplate(template) {
+    // this.$http.delete('/api/templates/' + template._id);
+    template.$delete()
+    .then((data) => {
+      this.templates = this.Template.query();
+    });
   }
 }
 

@@ -4,7 +4,7 @@
     <div class="row">
       <div class="col-sm-12" style="padding: 0 50px;">
         <div class="page-header">
-          <button ng-show="template.version" class="btn btn-info pull-right" ng-click="templates.viewAll()">View All</button>
+          <button ng-show="template.version" class="btn btn-info pull-right" ng-click="vm.viewAll()">View All</button>
           <h1>{{pageTitle}}</h1>
           <span class="subheader" ng-show="template.version">v {{template.version | number:1}}</span>
         </div>      
@@ -25,11 +25,11 @@
               <th colspan="4">Options</th>
             </thead>
             <tbody>
-              <tr ng-repeat="template in templates.index">
+              <tr ng-repeat="template in vm.templates">
                 <td><a ui-sref="template({id: template._id})">{{template.version | number: 1}}</a></td>
                 <td>{{template.author}}</td>
                 <td><span am-time-ago="template.updated_at"></span></td>
-                <td><i class="fa fa-trash trash" ng-click="templates.delete(template)"></i> Delete</td>
+                <td><i class="fa fa-trash trash" ng-click="vm.deleteTemplate(template)"></i> Delete</td>
               </tr>
             </tbody>
           </table>
@@ -38,9 +38,9 @@
       <div class="col-sm-12">
         <form class="plan-form">
           <p class="input-group">
-            <input type="text" class="form-control" placeholder="New Version Number" ng-model="templates.newTemplateVersion">
+            <input type="text" class="form-control" placeholder="New Version Number" ng-model="vm.newTemplateVersion">
             <span class="input-group-btn">
-              <button type="submit" class="btn btn-primary" ng-click="templates.new()">Add New</button>
+              <button type="submit" class="btn btn-primary" ng-click="vm.addTemplate()">Add New</button>
             </span>
           </p>
         </form>

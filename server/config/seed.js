@@ -5,8 +5,11 @@
 
 'use strict';
 import Template from '../api/template/template.model';
+import TemplateSection from '../api/template/templateSection/templateSection.model';
 import User from '../api/user/user.model';
 import Plan from '../api/plan/plan.model';
+
+var template, section;
 
 Plan.find({}).removeAsync()
   .then(() => {
@@ -17,138 +20,110 @@ Template.find({}).removeAsync()
   .then(() => {
     Template.create({
       version: '0.1',
-      author: 'System',
-      sections: [
-        {
-          name: 'Front Cover',
-          order: 1,
-          cover_page: 'front-cover.jpg',
-          html: '<p>Cover Page</p>'
-        },
-        {
-          name: 'Table Of Contents',
-          order: 2,
-          cover_page: '',
-          html: '<p>ToC</p>'
-        },
-        {
-          name: 'Introduction to Wellness',
-          order: 3,
-          cover_page: '',
-          html: '<p class="red">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nostrum ullam deserunt possimus eveniet, quasi commodi similique! Ipsa, natus doloremque voluptatem error reprehenderit saepe voluptatum quaerat, sunt odio eaque harum delectus? Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nostrum ullam deserunt possimus eveniet, quasi commodi similique! Ipsa, natus doloremque voluptatem error reprehenderit saepe voluptatum quaerat, sunt odio eaque harum delectus? </p>'
-        },
-        {
-          name: 'Custom Wellness',
-          order: 4,
-          cover_page: '',
-          html: '<p class="blue">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nostrum ullam deserunt possimus eveniet, quasi commodi similique! Ipsa, natus doloremque voluptatem error reprehenderit saepe voluptatum quaerat, sunt odio eaque harum delectus? Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nostrum ullam deserunt possimus eveniet, quasi commodi similique! Ipsa, natus doloremque voluptatem error reprehenderit saepe voluptatum quaerat, sunt odio eaque harum delectus? </p>'
-        },
-        {
-          name: 'Wellness Summary',
-          order: 5,
-          cover_page: '',
-          html: '<p class="green">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nostrum ullam deserunt possimus eveniet, quasi commodi similique! Ipsa, natus doloremque voluptatem error reprehenderit saepe voluptatum quaerat, sunt odio eaque harum delectus? Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nostrum ullam deserunt possimus eveniet, quasi commodi similique! Ipsa, natus doloremque voluptatem error reprehenderit saepe voluptatum quaerat, sunt odio eaque harum delectus? </p>'
-        },
-        {
-          name: '5 Points Primer',
-          order: 6,
-          cover_page: '',
-          html: '<p class="red">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nostrum ullam deserunt possimus eveniet, quasi commodi similique! Ipsa, natus doloremque voluptatem error reprehenderit saepe voluptatum quaerat, sunt odio eaque harum delectus? Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nostrum ullam deserunt possimus eveniet, quasi commodi similique! Ipsa, natus doloremque voluptatem error reprehenderit saepe voluptatum quaerat, sunt odio eaque harum delectus? </p>'
-        },
-        {
-          name: 'Nutrition',
-          order: 7,
-          cover_page: '',
-          html: '<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nostrum ullam deserunt possimus eveniet, quasi commodi similique! Ipsa, natus doloremque voluptatem error reprehenderit saepe voluptatum quaerat, sunt odio eaque harum delectus? Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nostrum ullam deserunt possimus eveniet, quasi commodi similique! Ipsa, natus doloremque voluptatem error reprehenderit saepe voluptatum quaerat, sunt odio eaque harum delectus? </p>'
-        },
-        {
-          name: 'Exercise',
-          order: 8,
-          cover_page: '',
-          html: '<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nostrum ullam deserunt possimus eveniet, quasi commodi similique! Ipsa, natus doloremque voluptatem error reprehenderit saepe voluptatum quaerat, sunt odio eaque harum delectus? Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nostrum ullam deserunt possimus eveniet, quasi commodi similique! Ipsa, natus doloremque voluptatem error reprehenderit saepe voluptatum quaerat, sunt odio eaque harum delectus? </p>'
-        },
-        {
-          name: 'Hormones',
-          order: 9,
-          cover_page: '',
-          html: '<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nostrum ullam deserunt possimus eveniet, quasi commodi similique! Ipsa, natus doloremque voluptatem error reprehenderit saepe voluptatum quaerat, sunt odio eaque harum delectus? Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nostrum ullam deserunt possimus eveniet, quasi commodi similique! Ipsa, natus doloremque voluptatem error reprehenderit saepe voluptatum quaerat, sunt odio eaque harum delectus? </p>'
-        },
-        {
-          name: 'Inflamation',
-          order: 10,
-          cover_page: '',
-          html: '<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nostrum ullam deserunt possimus eveniet, quasi commodi similique! Ipsa, natus doloremque voluptatem error reprehenderit saepe voluptatum quaerat, sunt odio eaque harum delectus? Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nostrum ullam deserunt possimus eveniet, quasi commodi similique! Ipsa, natus doloremque voluptatem error reprehenderit saepe voluptatum quaerat, sunt odio eaque harum delectus? </p>'
-        },
-        {
-          name: 'Detoxification',
-          order: 11,
-          cover_page: '',
-          html: '<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nostrum ullam deserunt possimus eveniet, quasi commodi similique! Ipsa, natus doloremque voluptatem error reprehenderit saepe voluptatum quaerat, sunt odio eaque harum delectus? Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nostrum ullam deserunt possimus eveniet, quasi commodi similique! Ipsa, natus doloremque voluptatem error reprehenderit saepe voluptatum quaerat, sunt odio eaque harum delectus? </p>'
-        },
-        {
-          name: 'Neutraceuticals',
-          order: 12,
-          cover_page: '',
-          html: '<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nostrum ullam deserunt possimus eveniet, quasi commodi similique! Ipsa, natus doloremque voluptatem error reprehenderit saepe voluptatum quaerat, sunt odio eaque harum delectus? Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nostrum ullam deserunt possimus eveniet, quasi commodi similique! Ipsa, natus doloremque voluptatem error reprehenderit saepe voluptatum quaerat, sunt odio eaque harum delectus? </p>'
-        },
-        {
-          name: 'Prescriptions',
-          order: 13,
-          cover_page: '',
-          html: '<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nostrum ullam deserunt possimus eveniet, quasi commodi similique! Ipsa, natus doloremque voluptatem error reprehenderit saepe voluptatum quaerat, sunt odio eaque harum delectus? Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nostrum ullam deserunt possimus eveniet, quasi commodi similique! Ipsa, natus doloremque voluptatem error reprehenderit saepe voluptatum quaerat, sunt odio eaque harum delectus? </p>'
-        },
-        {
-          name: 'Compounding Pharmacy List',
-          order: 14,
-          cover_page: '',
-          html: '<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nostrum ullam deserunt possimus eveniet, quasi commodi similique! Ipsa, natus doloremque voluptatem error reprehenderit saepe voluptatum quaerat, sunt odio eaque harum delectus? Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nostrum ullam deserunt possimus eveniet, quasi commodi similique! Ipsa, natus doloremque voluptatem error reprehenderit saepe voluptatum quaerat, sunt odio eaque harum delectus? </p>'
-        },
-        {
-          name: 'Drug-Nutrient Reactions',
-          order: 15,
-          cover_page: '',
-          html: '<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nostrum ullam deserunt possimus eveniet, quasi commodi similique! Ipsa, natus doloremque voluptatem error reprehenderit saepe voluptatum quaerat, sunt odio eaque harum delectus? Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nostrum ullam deserunt possimus eveniet, quasi commodi similique! Ipsa, natus doloremque voluptatem error reprehenderit saepe voluptatum quaerat, sunt odio eaque harum delectus? </p>'
-        },
-        {
-          name: 'Drug To Drug Interactions',
-          order: 16,
-          cover_page: '',
-          html: '<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nostrum ullam deserunt possimus eveniet, quasi commodi similique! Ipsa, natus doloremque voluptatem error reprehenderit saepe voluptatum quaerat, sunt odio eaque harum delectus? Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nostrum ullam deserunt possimus eveniet, quasi commodi similique! Ipsa, natus doloremque voluptatem error reprehenderit saepe voluptatum quaerat, sunt odio eaque harum delectus? </p>'
-        },
-        {
-          name: 'Objective Measures',
-          order: 17,
-          cover_page: '',
-          html: '<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nostrum ullam deserunt possimus eveniet, quasi commodi similique! Ipsa, natus doloremque voluptatem error reprehenderit saepe voluptatum quaerat, sunt odio eaque harum delectus? Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nostrum ullam deserunt possimus eveniet, quasi commodi similique! Ipsa, natus doloremque voluptatem error reprehenderit saepe voluptatum quaerat, sunt odio eaque harum delectus? </p>'
-        },
-        {
-          name: 'Supplement Store',
-          order: 18,
-          cover_page: '',
-          html: '<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nostrum ullam deserunt possimus eveniet, quasi commodi similique! Ipsa, natus doloremque voluptatem error reprehenderit saepe voluptatum quaerat, sunt odio eaque harum delectus? Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nostrum ullam deserunt possimus eveniet, quasi commodi similique! Ipsa, natus doloremque voluptatem error reprehenderit saepe voluptatum quaerat, sunt odio eaque harum delectus? </p>'
-        },
-        {
-          name: 'Wellness Coach Program',
-          order: 19,
-          cover_page: '',
-          html: '<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nostrum ullam deserunt possimus eveniet, quasi commodi similique! Ipsa, natus doloremque voluptatem error reprehenderit saepe voluptatum quaerat, sunt odio eaque harum delectus? Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nostrum ullam deserunt possimus eveniet, quasi commodi similique! Ipsa, natus doloremque voluptatem error reprehenderit saepe voluptatum quaerat, sunt odio eaque harum delectus? </p>'
-        },
-        {
-          name: 'Upcoming Events',
-          order: 20,
-          cover_page: '',
-          html: '<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nostrum ullam deserunt possimus eveniet, quasi commodi similique! Ipsa, natus doloremque voluptatem error reprehenderit saepe voluptatum quaerat, sunt odio eaque harum delectus? Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nostrum ullam deserunt possimus eveniet, quasi commodi similique! Ipsa, natus doloremque voluptatem error reprehenderit saepe voluptatum quaerat, sunt odio eaque harum delectus? </p>'
-        },
-        {
-          name: 'Social Media',
-          order: 21,
-          cover_page: '',
-          html: '<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nostrum ullam deserunt possimus eveniet, quasi commodi similique! Ipsa, natus doloremque voluptatem error reprehenderit saepe voluptatum quaerat, sunt odio eaque harum delectus? Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nostrum ullam deserunt possimus eveniet, quasi commodi similique! Ipsa, natus doloremque voluptatem error reprehenderit saepe voluptatum quaerat, sunt odio eaque harum delectus? </p>'
-        }
-      ]
+      author: 'System'
     })
-    .then(() => {
-      console.log('finished populating templates');
+    .then((data) => {
+      template = data;
+      console.log('finished populating template');
+      TemplateSection.find({}).removeAsync()
+        .then(() => {
+          TemplateSection.createAsync(
+            {
+              title: 'Front Cover',
+              order: 1,
+              cover_page: 'front-cover.jpg',
+              html: '<h2>Cover Page</h2>',
+              _template_version: '0.1'
+            },
+            {
+              title: 'Table Of Contents',
+              _template_version: '0.1'
+            },
+            {
+              title: 'Introduction to Wellness',
+              _template_version: '0.1'
+            },
+            {
+              title: 'Custom Wellness',
+              _template_version: '0.1'
+            },
+            {
+              title: 'Wellness Summary',
+              _template_version: '0.1'
+            },
+            {
+              title: '5 Points Primer',
+              _template_version: '0.1'
+            },
+            {
+              title: 'Nutrition',
+              _template_version: '0.1'
+            },
+            {
+              title: 'Exercise',
+              _template_version: '0.1'
+            },
+            {
+              title: 'Hormones',
+              _template_version: '0.1'
+            },
+            {
+              title: 'Inflamation',
+              _template_version: '0.1'
+            },
+            {
+              title: 'Detoxification',
+              _template_version: '0.1'
+            },
+            {
+              title: 'Neutraceuticals',
+              _template_version: '0.1'
+            },
+            {
+              title: 'Prescriptions',
+              _template_version: '0.1'
+            },
+            {
+              title: 'Compounding Pharmacy List',
+              _template_version: '0.1'
+            },
+            {
+              title: 'Drug-Nutrient Reactions',
+              _template_version: '0.1'
+            },
+            {
+              title: 'Drug To Drug Interactions',
+              _template_version: '0.1'
+            },
+            {
+              title: 'Objective Measures',
+              _template_version: '0.1'
+            },
+            {
+              title: 'Supplement Store',
+              _template_version: '0.1'
+            },
+            {
+              title: 'Wellness Coach Program',
+              _template_version: '0.1'
+            },
+            {
+              title: 'Upcoming Events',
+              _template_version: '0.1'
+            },
+            {
+              title: 'Social Media',
+              _template_version: '0.1'
+            })
+          .then((data) => {
+            for ( var i =0; i<data.length; i ++) {
+              section = data[i];
+              template.sections.push(section);
+            }
+            template.save();
+            console.log('finished populating sections');
+          });
+        });
     });
   });
 

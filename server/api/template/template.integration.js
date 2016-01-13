@@ -31,12 +31,25 @@ describe('Template API:', function() {
   });
 
   describe('POST /api/templates', function() {
+
     beforeEach(function(done) {
+      request(app)
+        .post('/auth/local')
+        .send({
+          email: 'test@example.com',
+          password: 'password'
+        })
+        .expect(200)
+        .expect('Content-Type', /json/)
+        .end((err, res) => {
+          token = res.body.token;
+          done();
+        });
+
       request(app)
         .post('/api/templates')
         .send({
-          name: 'New Template',
-          info: 'This is the brand new template!!!'
+          name: 'New Template'
         })
         .expect(201)
         .expect('Content-Type', /json/)
@@ -48,6 +61,7 @@ describe('Template API:', function() {
           done();
         });
     });
+
 
     it('should respond with the newly created template', function() {
       newTemplate.name.should.equal('New Template');

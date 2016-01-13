@@ -2,7 +2,7 @@
 
 (function() {
 
-function AuthService($location, $http, $cookies, $q, appConfig, Util, User) {
+function AuthService($location, $http, $cookies, $q, appConfig, Util, User, Template) {
   var safeCb = Util.safeCb;
   var currentUser = {};
   var userRoles = appConfig.userRoles || [];
@@ -81,6 +81,25 @@ function AuthService($location, $http, $cookies, $q, appConfig, Util, User) {
       return User.changePassword({ id: currentUser._id }, {
         oldPassword: oldPassword,
         newPassword: newPassword
+      }, function() {
+        return safeCb(callback)(null);
+      }, function(err) {
+        return safeCb(callback)(err);
+      }).$promise;
+    },
+
+
+    /**
+     * Update section of template
+     *
+     * @param  {Object}   template
+     * @param  {Array}   sections
+     * @param  {Function} callback    - optional, function(error, user)
+     * @return {Promise}
+     */
+    updateSection(template, sections, callback) {
+      return Template.updateSection({ id: template._id }, {
+        sections: sections
       }, function() {
         return safeCb(callback)(null);
       }, function(err) {

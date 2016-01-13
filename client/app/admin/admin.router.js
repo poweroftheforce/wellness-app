@@ -12,7 +12,7 @@ angular.module('wellnessPlanApp.admin')
           }
         },
         controller: 'TemplatesController',
-        controllerAs: 'templates',
+        controllerAs: 'vm',
         authenticate: 'admin'
       })
       .state('template', {
@@ -22,7 +22,6 @@ angular.module('wellnessPlanApp.admin')
           template: function(Template, $stateParams, $log, $state) {
             var promise = Template.get({id: $stateParams.id});
             return promise.$promise.then((data) => {
-              $log.info('Returning template: ' + $stateParams.id);
               return data;
             })
             .catch((error) => {
