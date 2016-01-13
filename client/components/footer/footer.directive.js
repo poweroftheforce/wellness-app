@@ -7,6 +7,7 @@ angular.module('wellnessPlanApp')
       restrict: 'E',
       link: function(scope, element) {
         element.addClass('footer');
+        $('.footer-logo').attr('src', 'assets/images/seasons-logo-green.png');
       }
     };
   });
