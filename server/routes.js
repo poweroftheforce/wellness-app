@@ -10,8 +10,9 @@ import path from 'path';
 export default function(app) {
   // Insert routes below
   app.use('/api/plans', require('./api/plan'));
+  app.use('/api/plans/:plan_id/sections', require('./api/plan/planSection'));
   app.use('/api/templates', require('./api/template'));
-  app.use('/api/sections', require('./api/template/templateSection'));
+  app.use('/api/templates/:template_id/sections', require('./api/template/templateSection'));
   app.use('/api/users', require('./api/user'));
 
   app.use('/auth', require('./auth'));

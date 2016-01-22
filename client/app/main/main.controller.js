@@ -4,22 +4,21 @@
 
 class MainController {
 
-  constructor($http, $scope, socket, Auth) {
+  constructor($http, $scope, Auth, Template, TemplateSection, PlanSection) {
     this.$http = $http;
     this.user = Auth.getCurrentUser();
     this.myPlans = [];
-    this.$scope = $scope;
-
+    this.Template = Template;
+    this.TemplateSection = TemplateSection;
+    this.PlanSection = PlanSection;
+    this.sections = [];
     this.newPlan = {firstname: 'Justin', lastname: 'Rhyne', dob: '10-1-80'};
-    $scope.pageTitle = 'Dashboard';
+    this.pageTitle = 'Dashboard';
+    this.viewing = true;
+    this.activeSection;
 
     $http.get('/api/plans').then(response => {
       this.myPlans = response.data;
-      socket.syncUpdates('plan', this.myPlans);
-    });
-
-    $scope.$on('$destroy', function() {
-      socket.unsyncUpdates('plan');
     });
 
     $('.content').css('min-height', ($(window).outerHeight() - 230));
@@ -32,21 +31,43 @@ class MainController {
 
 
   addPlan(form) {
-    this.submitted = true;
+    var sections = [];
+    var promise = this.$http.get('/api/templates/latest');
+      promise.success(function(data) {
+      })  
+      .then((data) => {
+        var template_id = data.data[0]._id;
 
-    if (form.$valid) {
-      this.$http.post('/api/plans', { patient: {name: {first: this.newPlan.firstname, last: this.newPlan.lastname}, dob: this.newPlan.dob }, author: this.user._id})
-      .catch(err => {
-        err = err.data;
-        this.errors = {};
+        var promise = this.TemplateSection.query({template_id: template_id});
+        promise.$promise.then((data) => { 
+          // sections = data;
+          this.submitted = true;  
 
-        // Update validity of form fields that match the mongoose errors
-        angular.forEach(err.errors, (error, field) => {
-          form[field].$setValidity('mongoose', false);
-          this.errors[field] = error.message;
+          if (form.$valid) {
+            this.$http.post('/api/plans', { 
+              patient: {
+                name: {
+                  first: this.newPlan.firstname, 
+                  last: this.newPlan.lastname}, 
+              dob: this.newPlan.dob }, 
+              author: this.user._id
+            })
+            .catch(err => {
+              err = err.data;
+              this.errors = {};
+
+              // Update validity of form fields that match the mongoose errors
+              angular.forEach(err.errors, (error, field) => {
+                form[field].$setValidity('mongoose', false);
+                this.errors[field] = error.message;
+              });
+            });
+
+            // Add sections for new plan.
+
+          }
         });
       });
-    }
   }
 
   exportPlan(plan) {
@@ -76,8 +97,8 @@ class MainController {
     // }
 
     doc.addHTML($('#plan-wrapper'), options, function() {
-      // var string = doc.output('datauristring');
-      // $('.plan-preview').attr('src', string);
+      var string = doc.output('datauristring');
+      $('.plan-preview').attr('src', string);
       doc.save(plan.patient.name.last + ', ' + plan.patient.name.first + '.pdf');
     });
 
@@ -86,16 +107,31 @@ class MainController {
   }
 
   editPlan(plan) {
-    var ctl = this;
+
     // we need the latest template file for it's data.
-    this.$http.get('/api/templates/latest')
-      .then(function(res) {
-        ctl.$scope.template = res.data[0];
-      }, function(err) {
-        console.log(err);
+    var version;
+    var ctl = this;
+    var promise = this.$http.get('/api/templates/latest');
+    promise.success(function(data) {
+    })  
+    .then((data) => {
+      version = data.data[0].version;
+
+      var promise = this.TemplateSection.query({_template_version: version});
+      promise.$promise.then((data) => { 
+        this.sections = data;
+        // TODO Need to make Cover active!
+        this.activeSection = data[0];
       });
-    this.$scope.plan = plan;
-    this.$scope.viewing = false;
+      
+      
+      this.plan = plan;
+      this.viewing = false;  
+      
+
+    });
+  
+    
   }
 
   viewAllPlans() {
@@ -105,7 +141,6 @@ class MainController {
   deletePlan(plan) {
     this.$http.delete('/api/plans/' + plan._id);
   }
-
 
 }
 

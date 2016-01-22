@@ -2,11 +2,11 @@
 
 (function() {
 
-class TemplateSection{
+class PlanSection{
 
   constructor($resource) {
   	this.$resource = $resource;
-    return $resource('/api/templates/:template_id/sections/:id', { id: '@_id', template_id: '@template_id' }, {
+    return $resource('/api/plans/:plan_id/sections/:id', { id: '@_id', plan_id: '@plan_id' }, {
     	update: {
     		method: 'PUT'
     	}
@@ -14,5 +14,5 @@ class TemplateSection{
 	}
 }
 angular.module('wellnessPlanApp')
-  .service('TemplateSection', TemplateSection);
+  .service('PlanSection', PlanSection);
 })();

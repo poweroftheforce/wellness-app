@@ -2,64 +2,12 @@
 <div class="content-wrapper" >
   <div class="container content">
     <div class="row page-title">
-      <div class="col-sm-12" style="padding: 0 50px;">
-        <div class="page-header">
-          <button ng-show="vm.plan.patient" class="btn btn-info pull-right" ng-click="vm.viewAllPlans()">View All</button>
-          <h1>{{vm.pageTitle}}</h1>
-          <span class="subheader" ng-show="vm.plan.patient">{{vm.plan.patient.name.first}} {{vm.plan.patient.name.last}}'s Wellness Plan</span>
-        </div>      
-      </div>
+      Plans!
     </div><!-- .page-title -->
 
     <div class="row patient-info" ng-show="vm.plan.patient">
-      <div class="col-md-4 ">
-        <h3>Patient Info</h3> 
-        <span class="patient-info">Name: {{vm.plan.patient.name.first}}  {{vm.plan.patient.name.last}}</span> <br>
-        <span class="patient-info">Date Of Birth: {{vm.plan.patient.dob}}</span>
-        <hr>
-      </div>
-      <div class="col-md-4 col-md-offset-4">
-        <button class="btn btn-success" ng-show="!vm.viewing" ng-click="vm.viewing=true">View Plan</button>
-        <button class="btn btn-warning" ng-show="vm.viewing" ng-click="vm.viewing=false">Edit Plan</button>
-        <button class="btn btn-warning" ng-show="vm.viewing" ng-click="vm.exportPlan(plan)">Export Plan</button>
-      </div>
+      <!-- there's no patient info on this page! -->
     </div>  <!-- End Patient Info -->
-
-    <div class="row" id="wrapper" ng-show="vm.plan.patient && !vm.viewing">
-      <div class="sidebar">
-        <ul>
-          <li ng-repeat="section in vm.sections | orderBy:'order'">
-            <a href="#" ng-class="{active : vm.activeSection === section}" ng-click="vm.activeSection = section">{{section.title}}</a>
-          </li>
-        </ul>
-      </div>
-      <div class="body">
-        <div class="plan-page">
-          <div ng-bind-html="vm.activeSection.html"></div>
-          <span ng-if="!vm.activeSection.html">This section has no content yet.</span>
-        </div>
-      </div>
-    </div> <!-- End Plan Edit Wrapper -->
-
-    <div class="row" id="plan-preview-wrapper" ng-show="vm.viewing">
-      <iframe class="plan-preview" type="application/pdf" width="612" height="792" frameborder="0"></iframe>
-    </div>
-
-    <div class="row" id="plan-print-wrapper" ng-show="vm.viewing">
-      <div ng-repeat="section in vm.sections | orderBy:'order'">
-        <!-- <img ng-if="section.cover_page != ''" class="plan-page plan-cover-page" ng-src="../assets/images/{{section.cover_page}}"> -->
-
-        <div class="plan-page" ng-bind-html="section.html"></div>
-      </div>  
-    </div><!-- plan-print-wrapper -->
-
-    <div class="row" id="plan-wrapper" ng-show="vm.viewing">
-      <div ng-repeat="section in vm.sections | orderBy:'order'">
-        <!-- <img ng-if="section.cover_page != ''" class="plan-page plan-cover-page" ng-src="../assets/images/{{section.cover_page}}"> -->
-
-        <div class="plan-page" ng-bind-html="section.html"></div>
-      </div>  
-    </div><!-- plan-wrapper -->
 
     <div id="plans-table" class="row" ng-hide="vm.plan.patient">
       <div class="col-sm-12" ng-show="vm.myPlans.length > 0">
@@ -72,7 +20,7 @@
             </thead>
             <tbody>
               <tr ng-repeat="plan in vm.myPlans">
-                <td><a ui-sref="plan({id: plan._id})">{{plan.patient.name.last}}, {{plan.patient.name.first}}</a></td>
+                <td><a href="#" ng-click="vm.editPlan(plan)">{{plan.patient.name.last}}, {{plan.patient.name.first}}</a></td>
                 <td>{{plan.patient.dob}}</td>
                 <td><span am-time-ago="plan.created_at"></span></td>
                 <td style="text-align: center;"><i class="fa fa-trash trash" ng-click="vm.deletePlan(plan)"></i></td>

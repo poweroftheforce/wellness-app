@@ -22,12 +22,7 @@ var PlanSchema = new mongoose.Schema({
             type: mongoose.Schema.Types.ObjectId,
             ref: 'User'
   },
-  sections: [{
-    	name: String,
-    	order: Number,
-    	cover_page: String,
-    	html: String
-  }]
+  sections: [{ type: mongoose.Schema.Types.ObjectId, ref: 'PlanSection' }]
 });
 
 

@@ -1,0 +1,66 @@
+<navbar></navbar>
+<div class="content-wrapper" >
+  <div class="container content">
+    <div class="row page-title">
+      <div class="col-sm-12" style="padding: 0 50px;">
+        <div class="page-header">
+          <h1>{{vm.pageTitle}}</h1>
+          <span class="subheader" ng-show="vm.plan.patient">{{vm.plan.patient.name.first}} {{vm.plan.patient.name.last}}'s Wellness Plan</span>
+        </div>      
+      </div>
+    </div><!-- .page-title -->
+
+    <div class="row patient-info" ng-show="vm.plan.patient">
+      <div class="col-md-4 ">
+        <h3>Patient Info</h3> 
+        <span class="patient-info">Name: {{vm.plan.patient.name.first}}  {{vm.plan.patient.name.last}}</span> <br>
+        <span class="patient-info">Date Of Birth: {{vm.plan.patient.dob}}</span>
+        <hr>
+      </div>
+    </div>  <!-- End Patient Info -->
+    
+    <div class="row" id="plan-wrapper" ng-show="vm.viewing">
+      <div ng-repeat="section in vm.templateSections | orderBy:'order'">
+        <!-- <img ng-if="section.cover_page != ''" class="plan-page plan-cover-page" ng-src="../assets/images/{{section.cover_page}}"> -->
+
+        <div class="plan-page" ng-bind-html="section.html"></div>
+      </div>  
+    </div><!-- plan-wrapper -->
+
+		<div class="row" id="plan-print-wrapper" ng-show="vm.viewing">
+      <div ng-repeat="section in vm.plan.sections | orderBy:'order'">
+        <!-- <img ng-if="section.cover_page != ''" class="plan-page plan-cover-page" ng-src="../assets/images/{{section.cover_page}}"> -->
+
+        <div class="plan-page" ng-bind-html="section.html"></div>
+      </div>  
+    </div><!-- plan-print-wrapper -->
+
+    <div class="row" id="wrapper" ng-show="vm.plan.patient && !vm.viewing">
+      <div class="sidebar">
+        <ul>
+          <li ng-repeat="section in vm.templateSections | orderBy:'order'">
+            <a href="#" ng-class="{active : vm.activeSection === section}" ng-click="vm.activeSection = section">{{section.title}}</a>
+          </li>
+        </ul>
+      </div>
+      <div class="body">
+        <div class="plan-page">
+          <!-- <div ng-bind-html="vm.activeSection.html"></div> -->
+          <text-angular ng-model="vm.currentSection.html"></text-angular>
+            <input style="width: 40px; margin-right: 20px;" type="number" ng-model="vm.currentSection.order"></input><a href="#" class="btn btn-success" ng-click="vm.updateSection()">Update</a>
+          <span ng-if="!vm.activeSection.html">This section has no content yet.</span>
+        </div>
+      </div>
+    </div> <!-- End Plan Edit Wrapper -->
+
+	     <div class="col-md-4 col-md-offset-4">
+	      <button class="btn btn-success" ng-show="!vm.viewing" ng-click="vm.viewing=true">View Plan</button>
+	      <button class="btn btn-warning" ng-show="vm.viewing" ng-click="vm.viewing=false">Edit Plan</button>
+	      <button class="btn btn-warning" ng-show="vm.viewing" ng-click="vm.popPlan()">Populate Plan</button>
+	    </div>
+    
+    <div class="row footer-wrapper">
+      <footer></footer>
+    </div>
+  </div>
+</div>

@@ -10,7 +10,7 @@
     </div>
     <div class="row" id="wrapper" ng-model="vm.template">
       <div class="sidebar">
-        <ul>
+        <ul ui-sortable ng-model="vm.template.sections">
           <li ng-repeat="section in vm.template.sections">
             <a href="#" ng-class="{active : vm.currentSection === section}" ng-click="vm.currentSection = section">{{section.title}}</a>
           </li>
@@ -37,7 +37,7 @@
         	</div>
           <div class="section-editor" ng-show="vm.editing">
           	<text-angular ng-model="vm.currentSection.html"></text-angular>
-          	<a href="#" class="btn btn-success" ng-click="vm.updateSection()">Update</a>
+          	<input style="width: 40px; margin-right: 20px;" type="number" ng-model="vm.currentSection.order"></input><a href="#" class="btn btn-success" ng-click="vm.updateSection()">Update</a>
           </div>
         </div>
       </div>
