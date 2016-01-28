@@ -1,0 +1,125 @@
+// #plan-print-wrapper {
+//   //pages for printing
+//   background: #fff;
+//   display: none;
+//   .plan-page {
+//     background: #fff;;
+//   }
+// }
+
+
+#plan-wrapper {
+  margin: 0 auto;
+  width: 8.5in;
+  .plan-page {
+    height: 9.75in;
+    width: 8in;
+    background: #fff;
+    margin: 0 auto;
+    padding: .5in;
+    box-shadow: 0px 0px 9px -1px #999;
+    margin-bottom: 50px; 
+    .plan-page-body {
+     
+    }
+  }
+}
+#plan-edit-wrapper {
+  position: relative;
+  height: 595px;
+  .sidebar {
+    z-index: 1000;
+    position: absolute;
+    left: 250px;
+    width: 0;
+    height: 100%;
+    margin-left: -250px;
+    overflow-y: auto;
+    background: @seasons_green;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+    
+    ul {
+      list-style: none;
+      padding: 0;
+      li {
+        line-height: 28px;
+        text-indent: 20px;
+        a {
+          color: #fff;
+          text-decoration: none;
+          display: block;
+        }
+        a:hover {
+          background: @seasons_light_green;
+          color: #333;
+        }
+        a.active {
+          background: @seasons_light_green;
+          color: #333;
+        }
+      }
+    }
+  }
+  .body {
+    width: 100%;
+    position: absolute;
+    padding: 15px;
+    // editing pages
+    .plan-page { 
+      
+    }
+  }
+}
+
+// #plan-preview-wrapper {
+//   .plan-preview {
+//     display: none;
+//     margin: 0 auto;
+//   }
+// }
+
+@media (min-width: 768px) {
+  #plan-edit-wrapper {
+    padding-left: 250px;
+    .sidebar {
+      width: 250px;
+    }
+    .body {
+      padding: 20px;
+      position: relative;
+    }
+  }
+}
+
+@media print {
+
+  * { background: transparent !important; color: #000 !important; box-shadow:none !important; text-shadow: none !important;}
+
+  header, .row.page-title, .row.patient-info, .row.footer-wrapper, .controls {
+    display: none;
+  }
+
+  a, a:visited { text-decoration: none; }
+
+  a[href]:after { content: " (" attr(href) ")";}
+
+  abbr[title]:after { content: " (" attr(title) ")"; }
+
+  .ir a:after, a[href^="javascript:"]:after, a[href^="#"]:after { content: ""; }
+
+  // Hides default date and site name ( in chrome ).
+  @page { margin: 0; size: auto; }
+
+  #plan-wrapper {
+    max-height: none;
+    overflow-y: inherit;
+    .plan-page {
+      font-size: 1.1em;
+      page-break-after: always;
+      margin-bottom: 0;
+    }
+  }
+}

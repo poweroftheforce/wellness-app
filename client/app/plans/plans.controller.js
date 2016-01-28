@@ -13,6 +13,8 @@ class PlansController {
     
     this.pageTitle = 'Wellness Plan';
     this.viewing = true;
+    this.previewPages;
+    this.currentPreviewPage;
     this.planSections;
     this.templateSections;
     
@@ -50,15 +52,20 @@ class PlansController {
   }
 
   view(plan) {
-  	this.viewing = true;
+    this.viewing = true;
   }
 
   popPlan() {
     var plan = this.plan;
     var sections = [];
-    console.log(this.templateSections);
+    
     
     console.log('populating plan');
+
+    for (var i=0; i<this.templateSections.length; i++) {
+      var tempSec = this.templateSections[i];
+      console.log(tempSec.order + ' - ' + tempSec.title);  
+    }
   }
 
   getTemplateSections() {
@@ -73,8 +80,42 @@ class PlansController {
       self.templateSections = promise.$promise
       .then((data) => {
          self.templateSections = data;
+
+          // Prep plan pages!
+          this.previewPages = $('.plan-page');
+          this.currentPreviewPage = $('.plan-page')[0];
+          $(this.currentPreviewPage).addClass('current-page');
       });
     });
+  }
+
+  getPlanSections() {
+    var self = this;
+    var promise = this.$http.get('api/templates/latest');
+    promise.success(function(data) {
+      
+    })
+    .then((data) => {
+
+      var promise = self.TemplateSection.query({template_id: data.data[0]._id});
+      self.templateSections = promise.$promise
+      .then((data) => {
+         self.templateSections = data;
+
+          // Prep plan pages!
+          this.previewPages = $('.plan-page');
+          this.currentPreviewPage = $('.plan-page')[0];
+          $(this.currentPreviewPage).addClass('current-page');
+      });
+    });
+  }
+
+  nextPage() {
+
+  }
+
+  previousPage() {
+
   }
 }
 angular.module('wellnessPlanApp')

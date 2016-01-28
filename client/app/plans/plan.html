@@ -17,25 +17,24 @@
         <span class="patient-info">Date Of Birth: {{vm.plan.patient.dob}}</span>
         <hr>
       </div>
+      <div class="col-md-4 col-md-offset-4">
+        <button class="btn btn-lg btn-seasons" ng-show="!vm.viewing" ng-click="vm.viewing=true">View Plan</button>
+        <button class="btn btn-lg btn-seasons" ng-show="vm.viewing" ng-click="vm.viewing=false">Edit Plan</button>
+      </div>
     </div>  <!-- End Patient Info -->
     
-    <div class="row" id="plan-wrapper" ng-show="vm.viewing">
-      <div ng-repeat="section in vm.templateSections | orderBy:'order'">
-        <!-- <img ng-if="section.cover_page != ''" class="plan-page plan-cover-page" ng-src="../assets/images/{{section.cover_page}}"> -->
-
-        <div class="plan-page" ng-bind-html="section.html"></div>
+    <div class="row" id="plan-wrapper" ng-show="vm.viewings">
+      <div class="section-wrapper" ng-repeat="section in vm.templateSections | orderBy:'order'">
+        <div class="plan-page">
+          <div class="plan-page-body" ng-bind-html="section.html"></div>  
+        </div>
       </div>  
+      <div class="controls" style="margin: 0 auto 30px auto; text-align: center;"> <a href="" ng-click="previousPage()">Prev</a> | <a href="" ng-click="nextPage()">Next</a></div>
     </div><!-- plan-wrapper -->
+    <plan-preview ng-show="vm.viewing"></plan-preview>
 
-		<div class="row" id="plan-print-wrapper" ng-show="vm.viewing">
-      <div ng-repeat="section in vm.plan.sections | orderBy:'order'">
-        <!-- <img ng-if="section.cover_page != ''" class="plan-page plan-cover-page" ng-src="../assets/images/{{section.cover_page}}"> -->
 
-        <div class="plan-page" ng-bind-html="section.html"></div>
-      </div>  
-    </div><!-- plan-print-wrapper -->
-
-    <div class="row" id="wrapper" ng-show="vm.plan.patient && !vm.viewing">
+    <div class="row" id="plan-edit-wrapper" ng-show="vm.plan.patient && !vm.viewing">
       <div class="sidebar">
         <ul>
           <li ng-repeat="section in vm.templateSections | orderBy:'order'">
@@ -53,11 +52,12 @@
       </div>
     </div> <!-- End Plan Edit Wrapper -->
 
-	     <div class="col-md-4 col-md-offset-4">
-	      <button class="btn btn-success" ng-show="!vm.viewing" ng-click="vm.viewing=true">View Plan</button>
-	      <button class="btn btn-warning" ng-show="vm.viewing" ng-click="vm.viewing=false">Edit Plan</button>
-	      <button class="btn btn-warning" ng-show="vm.viewing" ng-click="vm.popPlan()">Populate Plan</button>
-	    </div>
+    <div class="area">
+      <pre>
+        {{vm.plan}}
+      </pre>
+      <button ng-click="vm.popPlan()">Populate</button>
+    </div>
     
     <div class="row footer-wrapper">
       <footer></footer>

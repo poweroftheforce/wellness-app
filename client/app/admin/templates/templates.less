@@ -4,17 +4,51 @@
 	margin-bottom: 15px;
 }
 
-#wrapper .body {
-	overflow-y: scroll;
-	height: 100%;
-	max-height: 100%;
-	border: 1px solid @seasons_green;
-	background: #fff; 
+#wrapper {
+  position: relative;
+  height: 595px;
+  .sidebar {
+    z-index: 1000;
+    position: absolute;
+    left: 250px;
+    height: 100%;
+    margin-left: -250px;
+    overflow-y: auto;
+    background: @seasons_green;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+    
+    ul {
+      list-style: none;
+      padding: 0;
+      li {
+        line-height: 28px;
+        text-indent: 20px;
+        a {
+          color: #fff;
+          text-decoration: none;
+          display: block;
+        }
+        a:hover {
+          background: @seasons_light_green;
+          color: #333;
+        }
+        a.active {
+          background: @seasons_light_green;
+          color: #333;
+        }
+      }
+    }
+  }
+  .body {
+		overflow-y: scroll;
+		height: 100%;
+		max-height: 100%;
+		border: 1px solid @seasons_green;
+		background: #fff; 
+		padding-left: 250px;
+  }
 }
-
-#wrapper .sidebar ul li a.active {
-	background: @seasons_light_green;
-	color: #333;
-}
-
 

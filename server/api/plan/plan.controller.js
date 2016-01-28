@@ -72,7 +72,9 @@ export function index(req, res) {
 
 // Gets a single Plan from the DB
 export function show(req, res) {
-  Plan.findByIdAsync(req.params.id)
+  Plan.findOne({_id: req.params.id})
+    .populate('sections')
+    .execAsync()
     .then(handleEntityNotFound(res))
     .then(responseWithResult(res))
     .catch(handleError(res));
