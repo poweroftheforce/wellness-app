@@ -4,7 +4,7 @@ import {Router} from 'express';
 import * as controller from './planSection.controller';
 import * as auth from '../../../auth/auth.service';
 
-var router = new Router();
+var router = new Router({mergeParams: true});
 
 router.get('/', controller.index);     
 router.post('/', controller.create);				

@@ -1,21 +1,17 @@
 /**
  * Using Rails-like standard naming convention for endpoints.
- * GET     /api/plans              ->  index
- * POST    /api/plans              ->  create
- * GET     /api/plans/:id          ->  show
- * PUT     /api/plans/:id          ->  update
- * DELETE  /api/plans/:id          ->  destroy
+ * GET     /api/nutraceuticals              ->  index
+ * POST    /api/nutraceuticals              ->  create
+ * GET     /api/nutraceuticals/:id          ->  show
+ * PUT     /api/nutraceuticals/:id          ->  update
+ * DELETE  /api/nutraceuticals/:id          ->  destroy
  */
 
 'use strict';
 
 import _ from 'lodash';
-var Auth = require('../../auth/auth.service');
-var Plan = require('./plan.model');
-var Template = require('../template/template.model');
+var Nutraceutical = require('./nutraceutical.model');
 
-
-//db.templates.find().sort({updated_at: -1}).limit(1)
 function handleError(res, statusCode) {
   statusCode = statusCode || 500;
   return function(err) {
@@ -63,45 +59,43 @@ function removeEntity(res) {
   };
 }
 
-// Gets a list of Plans (for the current user)
+// Gets a list of Nutraceuticals
 export function index(req, res) {
-    Plan.findAsync({_author_id: req.user._id})
+  Nutraceutical.findAsync()
     .then(responseWithResult(res))
-    .catch(handleError(res));  
+    .catch(handleError(res));
 }
 
-// Gets a single Plan from the DB
+// Gets a single Nutraceutical from the DB
 export function show(req, res) {
-  Plan.findOne({_id: req.params.id})
-    .populate('sections')
-    .execAsync()
+  Nutraceutical.findByIdAsync(req.params.id)
     .then(handleEntityNotFound(res))
     .then(responseWithResult(res))
     .catch(handleError(res));
 }
 
-// Creates a new Plan in the DB
+// Creates a new Nutraceutical in the DB
 export function create(req, res) {
-  Plan.createAsync(req.body)
+  Nutraceutical.createAsync(req.body)
     .then(responseWithResult(res, 201))
     .catch(handleError(res));
 }
 
-// Updates an existing Plan in the DB
+// Updates an existing Nutraceutical in the DB
 export function update(req, res) {
   if (req.body._id) {
     delete req.body._id;
   }
-  Plan.findByIdAsync(req.params.id)
+  Nutraceutical.findByIdAsync(req.params.id)
     .then(handleEntityNotFound(res))
     .then(saveUpdates(req.body))
     .then(responseWithResult(res))
     .catch(handleError(res));
 }
 
-// Deletes a Plan from the DB
+// Deletes a Nutraceutical from the DB
 export function destroy(req, res) {
-  Plan.findByIdAsync(req.params.id)
+  Nutraceutical.findByIdAsync(req.params.id)
     .then(handleEntityNotFound(res))
     .then(removeEntity(res))
     .catch(handleError(res));

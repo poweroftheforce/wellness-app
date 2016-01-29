@@ -2,6 +2,7 @@
 
 import {Router} from 'express';
 import * as controller from './template.controller';
+import * as section_controller from './templateSection/templateSection.controller';
 import * as auth from '../../auth/auth.service';
 
 var router = new Router();

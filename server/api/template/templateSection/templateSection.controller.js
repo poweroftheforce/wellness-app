@@ -60,14 +60,15 @@ function removeEntity(res) {
   };
 }
 
-// Gets a list of Template Sections
+// Gets a list of Template Sections (From One Template!)
 export function index(req, res) {
-  TemplateSection.findAsync()
+  TemplateSection.findAsync({_template_id: req.params.template_id})
+    .then(handleEntityNotFound(res))
     .then(responseWithResult(res))
     .catch(handleError(res));
 }
 
-// Gets a single Template Section from the DB
+// // Gets a single Template Section from the DB
 // export function show(req, res) {
 //   TemplateSection.findByIdAsync(req.params.id)
 //     .then(handleEntityNotFound(res))
@@ -75,8 +76,9 @@ export function index(req, res) {
 //     .catch(handleError(res));
 // }
 
-// Creates a new Template Section in the DB
+// Creates a new Template Section in the DB (In The Correct Section)
 export function create(req, res) {
+  req.body._template_id = req.params.template_id;
   TemplateSection.createAsync(req.body)
     .then(responseWithResult(res, 201))
     .catch(handleError(res));

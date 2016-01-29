@@ -40,7 +40,7 @@ class TemplatesDetailController {
   updateSection() {
     this.$log.info('testing 123');
     // get section reference
-    this.TemplateSection.update({id: this.currentSection._id}, this.currentSection);
+    this.TemplateSection.update({id: this.currentSection._id, template_id: this.currentSection._template_id}, this.currentSection);
     
     // get new section
     // update sections based on new section

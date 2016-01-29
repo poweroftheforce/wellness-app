@@ -7,7 +7,18 @@ angular.module('wellnessPlanApp')
         url: '/dashboard',
         templateUrl: 'app/main/main.html',
         controller: 'MainController',
-        controllerAs: 'vm'
+        controllerAs: 'vm',
+        resolve: {
+          template_sections: function(Template, TemplateSection, $http) {
+            var promise = Template.query({});
+            return promise.$promise.then((data) => {
+              var promise = TemplateSection.query({template_id: data[0]._id});
+              return promise.$promise.then((data) => { 
+                return data;
+              })
+            });
+          }
+        }
       })
       .state('about', {
         url: '/about',

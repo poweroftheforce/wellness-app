@@ -23,14 +23,17 @@
       </div>
     </div>  <!-- End Patient Info -->
     
-    <div class="row" id="plan-wrapper" ng-show="vm.viewings">
+    <div class="row" id="plan-wrapper" ng-show="vm.viewing">
       <div class="section-wrapper" ng-repeat="section in vm.templateSections | orderBy:'order'">
         <div class="plan-page">
-          <div class="plan-page-body" ng-bind-html="section.html"></div>  
+          <div class="plan-page-body">
+            <h2 class="plan-page-title" ng-bind-html="section.title"></h2>
+            <div class="plan-page-content" ng-bind-html="section.html"></div>
+          </div>  
         </div>
       </div>  
       <div class="controls" style="margin: 0 auto 30px auto; text-align: center;"> <a href="" ng-click="previousPage()">Prev</a> | <a href="" ng-click="nextPage()">Next</a></div>
-    </div><!-- plan-wrapper -->
+    </div><!-- End Plan Wrapper -->
     <plan-preview ng-show="vm.viewing"></plan-preview>
 
 
@@ -43,21 +46,25 @@
         </ul>
       </div>
       <div class="body">
-        <div class="plan-page">
-          <!-- <div ng-bind-html="vm.activeSection.html"></div> -->
-          <text-angular ng-model="vm.currentSection.html"></text-angular>
-            <input style="width: 40px; margin-right: 20px;" type="number" ng-model="vm.currentSection.order"></input><a href="#" class="btn btn-success" ng-click="vm.updateSection()">Update</a>
-          <span ng-if="!vm.activeSection.html">This section has no content yet.</span>
+        <div class="predefinedMaterials" style="text-align: center; margin-bottom: 15px; padding-bottom: 15px; border-bottom: solid;">
+          <h4>Predefined Materials</h4>
+          <button class="btn btn-small btn-seasons">Add</button>
+
+        </div>
+        <div class="nutraceuticals" style="text-align: center; margin-bottom: 15px; padding-bottom: 15px; border-bottom: solid;">
+          <h4>Nutraceuticals</h4>  
+          <button class="btn btn-small btn-seasons">Add</button>
+        </div>
+        <div class="prescriptions" style="text-align: center; margin-bottom: 15px; padding-bottom: 15px; border-bottom: solid;">
+          <h4>Prescriptions</h4>
+          <button class="btn btn-small btn-seasons">Add</button>
+        </div>
+        <div class="references" style="text-align: center; margin-bottom: 15px; padding-bottom: 15px; border-bottom: solid;">
+          <h4>References</h4>
+          <button class="btn btn-small btn-seasons">Add</button>
         </div>
       </div>
     </div> <!-- End Plan Edit Wrapper -->
-
-    <div class="area">
-      <pre>
-        {{vm.plan}}
-      </pre>
-      <button ng-click="vm.popPlan()">Populate</button>
-    </div>
     
     <div class="row footer-wrapper">
       <footer></footer>

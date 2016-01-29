@@ -60,9 +60,9 @@ function removeEntity(res) {
   };
 }
 
-// Gets a list of Plan Sections
+// Gets a list of Plan Sections For Plan
 export function index(req, res) {
-  PlanSection.findAsync()
+  PlanSection.findAsync({_plan_id: req.params.plan_id})
     .then(responseWithResult(res))
     .catch(handleError(res));
 }

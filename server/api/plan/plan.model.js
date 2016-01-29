@@ -17,13 +17,13 @@ var PlanSchema = new mongoose.Schema({
   	dob: String,
   	notes: String
   },
-  created_at: { type: Date, default: Date.now },
-  author: {
+  _author_id: {
             type: mongoose.Schema.Types.ObjectId,
-            ref: 'User'
+            ref: 'User',
+            required: true
   },
   sections: [{ type: mongoose.Schema.Types.ObjectId, ref: 'PlanSection' }]
-});
+}, { timestamps: true });
 
 
 /**
@@ -32,7 +32,7 @@ var PlanSchema = new mongoose.Schema({
 
 // Validate Patient
 PlanSchema
-  .path('created_at')
+  .path('createdAt')
   .validate(function(patient) {
     if (!patient) {
       return false;

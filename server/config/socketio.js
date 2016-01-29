@@ -17,6 +17,9 @@ function onConnect(socket) {
   });
 
   // Insert sockets below
+  require('../api/nutraceutical/nutraceutical.socket').register(socket);
+  require('../api/reference/reference.socket').register(socket);
+  require('../api/prescription/prescription.socket').register(socket);
   require('../api/plan/plan.socket').register(socket);
   // require('../api/template/template.socket').register(socket);
   require('../api/thing/thing.socket').register(socket);

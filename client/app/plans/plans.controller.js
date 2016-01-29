@@ -32,40 +32,24 @@ class PlansController {
 
   edit(plan) {
   	this.viewing = false;
-    // // we need the latest template file for it's data.
-    // var version;
-    // var ctl = this;
-    // var promise = this.$http.get('/api/templates/latest');
-    // promise.success(function(data) {
-    // })  
-    // .then((data) => {
-    //   version = data.data[0].version;
-    //   var promise = this.TemplateSection.query({_template_version: version});
-    //   promise.$promise.then((data) => { 
-    //     this.sections = data;
-    //     // TODO Need to make Cover active!
-    //     this.activeSection = data[0];
-    //   });
-    //   this.plan = plan;
-    //   this.viewing = false;  
-    // });  
+  }
+
+  addSection() {
+    var newPlanSection = new this.PlanSection({
+      title: 'new section',
+      _plan_id: this.plan._id
+    });
+    newPlanSection.$save({plan_id: this.plan._id})
+    .then(() => {
+      // this.$state.reload();
+    })
+    .catch((err) => {
+      console.log(err);
+    });
   }
 
   view(plan) {
     this.viewing = true;
-  }
-
-  popPlan() {
-    var plan = this.plan;
-    var sections = [];
-    
-    
-    console.log('populating plan');
-
-    for (var i=0; i<this.templateSections.length; i++) {
-      var tempSec = this.templateSections[i];
-      console.log(tempSec.order + ' - ' + tempSec.title);  
-    }
   }
 
   getTemplateSections() {
