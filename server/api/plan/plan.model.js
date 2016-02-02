@@ -43,35 +43,4 @@ PlanSchema
     return true;
   }, 'Patient must be present!');
 
-// Validate empty password
-// PlanSchema
-//   .path('password')
-//   .validate(function(password) {
-//     return password.length;
-//   }, 'Password cannot be blank');
-
-// // Validate email is not taken
-// PlanSchema
-//   .path('email')
-//   .validate(function(value, respond) {
-//     var self = this;
-//     return this.constructor.findOneAsync({ email: value })
-//       .then(function(user) {
-//         if (user) {
-//           if (self.id === user.id) {
-//             return respond(true);
-//           }
-//           return respond(false);
-//         }
-//         return respond(true);
-//       })
-//       .catch(function(err) {
-//         throw err;
-//       });
-//   }, 'The specified email address is already in use.');
-
-// var validatePresenceOf = function(value) {
-//   return value && value.length;
-// };
-
 export default mongoose.model('Plan', PlanSchema);

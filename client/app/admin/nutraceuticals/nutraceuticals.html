@@ -1,0 +1,36 @@
+<navbar></navbar>
+<div class="content-wrapper" >
+  <div class="container content">
+    <div class="row">
+      <div class="col-sm-12" style="padding: 0 50px;">
+        <div class="page-header">
+          <h1>{{pageTitle}}</h1>
+          <span class="subheader">You can manage your nutraceuticals here.<span>
+        </div>      
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12">
+          <table class="table table-bordered table-striped table-condensed table-hover table-responsive">
+            <thead>
+              <th>Name</th>
+              <th>Description</th>
+              <th>Info</th>
+              <th>Options</th>
+            </thead>
+            <tbody>
+              <tr ng-repeat="nutraceutical in vm.nutraceuticals">
+                <td>{{nutraceutical.name}}</td>
+                <td>{{nutraceutical.description | limitTo: 20}}</td>
+                <td>{{nutraceutical.info}}</td>
+                <td><i class="fa fa-trash trash"></i> Delete</td>
+              </tr>
+            </tbody>
+          </table>
+      </div>
+    </div>
+    <div class="row">
+      <footer></footer>
+    </div>
+  </div>
+</div>

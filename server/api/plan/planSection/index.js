@@ -6,10 +6,10 @@ import * as auth from '../../../auth/auth.service';
 
 var router = new Router({mergeParams: true});
 
-router.get('/', controller.index);     
-router.post('/', controller.create);				
-router.put('/:id', controller.update);			
-router.patch('/:id', controller.update);		
-router.delete('/:id', controller.destroy);	
+router.get('/', auth.isAuthenticated(),  controller.index);     
+router.post('/', auth.isAuthenticated(), controller.create);				
+router.put('/:id', auth.isAuthenticated(), controller.update);			
+router.patch('/:id', auth.isAuthenticated(), controller.update);		
+router.delete('/:id', auth.isAuthenticated(), controller.destroy);	
 
 export default router;

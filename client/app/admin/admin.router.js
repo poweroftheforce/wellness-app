@@ -40,7 +40,36 @@ angular.module('wellnessPlanApp.admin')
         controller: 'UsersController',
         controllerAs: 'users',
         authenticate: 'admin'
+      })
+      .state('nutraceuticals', {
+        url: '/admin/nutraceuticals',
+        templateUrl: 'app/admin/nutraceuticals/nutraceuticals.html',
+        controller: 'NutraceuticalsController',
+        controllerAs: 'vm',
+        authenticate: 'admin'
+      })
+      .state('prescriptions', {
+        url: '/admin/prescriptions',
+        templateUrl: 'app/admin/prescriptions/prescriptions.html',
+        controller: 'PrescriptionsController',
+        controllerAs: 'vm',
+        authenticate: 'admin'
+      })
+      .state('predefinedMaterials', {
+        url: '/admin/predefinedMaterials',
+        templateUrl: 'app/admin/predefinedMaterials/predefinedMaterials.html',
+        controller: 'PredefinedMaterialsController',
+        controllerAs: 'vm',
+        authenticate: 'admin'
+      })
+      .state('references', {
+        url: '/admin/references',
+        templateUrl: 'app/admin/references/references.html',
+        controller: 'ReferencesController',
+        controllerAs: 'vm',
+        authenticate: 'admin'
       });
+
   });
 
 function templateProvider(template) {

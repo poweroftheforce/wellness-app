@@ -86,17 +86,18 @@
 	.open > .dropdown-menu {
 	  -webkit-transform: scale(1, 1);
 	  transform: scale(1, 1);  
-	  opacity:1;
+	  opacity:0.9;
 	}
 	  
 	.dropdown-menu {
-	  opacity:.3;
+	  display: block;
 	  -webkit-transform-origin: top;
 	  transform-origin: top;
 	  -webkit-animation-fill-mode: forwards;  
 	  animation-fill-mode: forwards; 
+	  transform: scale(1, 0);
 	  -webkit-transform: scale(1, 0);
-	  display: block; 
+	  opacity: 0; 
 	  transition: all 0.2s linear;
 	  -webkit-transition: all 0.2s linear;
 	  background: @seasons_green;
@@ -133,6 +134,10 @@
 @import 'account/login/login.less';
 @import 'account/profile/profile.less';
 @import 'admin/admin.less';
+@import 'admin/nutraceuticals/nutraceuticals.less';
+@import 'admin/predefinedMaterials/predefinedMaterials.less';
+@import 'admin/prescriptions/prescriptions.less';
+@import 'admin/references/references.less';
 @import 'admin/templates/templates.less';
 @import 'admin/users/users.less';
 @import 'main/main.less';

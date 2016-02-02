@@ -7,7 +7,6 @@ angular.module('wellnessPlanApp', [
   'ngCookies',
   'ngResource',
   'ngSanitize',
-  'btford.socket-io',
   'ui.router',
   'ui.bootstrap',
   'ngAnimate',

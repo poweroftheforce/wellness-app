@@ -2,10 +2,10 @@
 
 var mongoose = require('bluebird').promisifyAll(require('mongoose'));
 
-var ReferenceSchema = new mongoose.Schema({
+var PredefinedMaterialSchema = new mongoose.Schema({
   name: String,
   description: String,
   info: String
 });
 
-export default mongoose.model('Reference', ReferenceSchema);
+export default mongoose.model('PredefinedMaterial', PredefinedMaterialSchema);

@@ -30,8 +30,6 @@ module.exports = function(config) {
       'client/bower_components/angular-animate/angular-animate.js',
       'client/bower_components/moment/moment.js',
       'client/bower_components/angular-moment/angular-moment.js',
-      'client/bower_components/jspdf/dist/jspdf.min.js',
-      'client/bower_components/html2canvas/build/html2canvas.js',
       'client/bower_components/rangy/rangy-core.js',
       'client/bower_components/rangy/rangy-classapplier.js',
       'client/bower_components/rangy/rangy-highlighter.js',

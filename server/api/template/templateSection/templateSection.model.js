@@ -7,6 +7,7 @@ var TemplateSectionSchema = new mongoose.Schema({
   order: {type: Number, default: 0},
   cover_page: String,
   html: String,
+  allow_extras: Boolean,
   _template_id: {type: String, required: true, ref: 'Template'},
 }, { timestamps: true });
 
