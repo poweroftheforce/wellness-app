@@ -33,7 +33,7 @@
         </div>
       </div>  
       <div class="controls" style="margin: 0 auto 30px auto; text-align: center;"> <a href="" ng-click="previousPage()">Prev</a> | <a href="" ng-click="nextPage()">Next</a></div>
-    </div><!-- End Plan Wrapper -->
+    </div><!-- End Plan View Wrapper -->
     <plan-preview ng-show="vm.viewing"></plan-preview>
 
 
@@ -41,31 +41,38 @@
       <div class="sidebar">
         <ul>
           <li ng-repeat="section in vm.templateSections | orderBy:'order'">
-            <a href="#" ng-class="{active : vm.activeSection === section}" ng-click="vm.activeSection = section">{{section.title}}</a>
+            <a href="#" ng-class="{active : vm.templateSection === section}" ng-click="vm.setSection(section)">{{section.title}}</a>
           </li>
         </ul>
       </div>
       <div class="body">
-        <div class="predefinedMaterials" style="text-align: center; margin-bottom: 15px; padding-bottom: 15px; border-bottom: solid;">
-          <h4>Predefined Materials</h4>
-          <button class="btn btn-small btn-seasons">Add</button>
+        <plan-editor ng-show="vm.templateSection" data-section="{section}"></plan-editor>
 
-        </div>
-        <div class="nutraceuticals" style="text-align: center; margin-bottom: 15px; padding-bottom: 15px; border-bottom: solid;">
-          <h4>Nutraceuticals</h4>  
-          <button class="btn btn-small btn-seasons">Add</button>
-        </div>
-        <div class="prescriptions" style="text-align: center; margin-bottom: 15px; padding-bottom: 15px; border-bottom: solid;">
-          <h4>Prescriptions</h4>
-          <button class="btn btn-small btn-seasons">Add</button>
-        </div>
-        <div class="references" style="text-align: center; margin-bottom: 15px; padding-bottom: 15px; border-bottom: solid;">
-          <h4>References</h4>
-          <button class="btn btn-small btn-seasons">Add</button>
-        </div>
+        <h4 ng-show="!vm.templateSection.is_editable && !vm.templateSection.has_extras">
+          Nothing to do here.  <subtext>Push to preview?<subtext>
+        </h4>
       </div>
     </div> <!-- End Plan Edit Wrapper -->
-    
+    <div class="row">
+      <div class="col-sm-3">
+        <h4>Plan Section:</h4>
+      </div>
+      <div class="col-sm-9">
+        <code style="white-space: inherit;">
+          {{vm.planSection}}
+        </code>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-3">
+        <h4>Template Section:</h4>
+      </div>
+      <div class="col-sm-9">
+        <code style="white-space: inherit;">
+          {{vm.templateSection}}
+        </code>
+      </div>
+    </div>
     <div class="row footer-wrapper">
       <footer></footer>
     </div>

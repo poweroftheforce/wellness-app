@@ -8,7 +8,7 @@
         </div>      
       </div>
     </div>
-    <div class="row" id="wrapper" ng-model="vm.template">
+    <div class="row" id="template-edit-wrapper" ng-model="vm.template">
       <div class="sidebar">
         <ul ui-sortable ng-model="vm.template.sections">
           <li ng-repeat="section in vm.template.sections">
@@ -20,24 +20,41 @@
         <div class="section-body">
         	<div class="col-sm-12" style="margin-bottom: 20px; border-bottom: 2px solid #444;">
         		<h4 class="section-name pull-left">{{vm.currentSection.title}}</h4>
-            <form class="plan-form hidden">
-              <p class="input-group">
-                <input type="text" class="form-control" ng-model="vm.currentSection.title">
-                <span class="input-group-btn">
-                  <button type="submit" class="btn btn-primary" ng-click="vm.updateSection()">Rename</button>
-                </span>
-              </p>
-            </form>
+            
           	<a href="#" class="btn btn-info pull-right" ng-show="vm.currentSection && !vm.editing" ng-click="vm.editing=true">Edit Section</a>
           	<a href="#" class="btn btn-info pull-right" ng-show="vm.editing && vm.currentSection" ng-click="vm.editing=false">Preview Section</a>
         	</div>
-          <div class="clearfix"></div>
-        	<div class="section-preview" ng-hide="vm.editing">
-        		<div ng-bind-html="vm.currentSection.html"></div>
-        	</div>
+          <div class="col-sm-10 col-sm-offset-1">
+
+          	<div class="section-preview" ng-hide="vm.editing">
+          		<div ng-bind-html="vm.currentSection.html"></div>
+          	</div>
+          </div>
           <div class="section-editor" ng-show="vm.editing">
+            <form class="plan-form form-inline">
+              <div class="col-sm-12">
           	<text-angular ng-model="vm.currentSection.html"></text-angular>
-          	<input style="width: 40px; margin-right: 20px;" type="number" ng-model="vm.currentSection.order"></input><a href="#" class="btn btn-success" ng-click="vm.updateSection()">Update</a>
+            </div>
+            <div class="col-sm-12">
+            <div class="form-group">
+              <label for="sectionTitle">Title: </label>  
+              <input class="form-control" id="sectionTitle" type="text" ng-model="vm.currentSection.title"></input>
+            </div>
+            <div class="form-group">
+              <label for="sectionOrder">Order: </label>  
+              <input class="form-control" style="width: 60px;" id="sectionOrder" type="number" ng-model="vm.currentSection.order"></input>
+            </div>
+            <div class="form-group">
+              <label for="sectionHasExtras">Has Extras: </label>  
+              <input class="form-control" style="width: 40px;" id="sectionHasExtras" type="checkbox" ng-model="vm.currentSection.has_extras"></input>
+            </div>
+            <div class="form-group">
+              <label for="sectionIsEditable">Is Editable: </label>  
+              <input class="form-control" style="width: 40px;" id="sectionIsEditable" type="checkbox" ng-model="vm.currentSection.is_editable"></input>
+            </div>
+            <a href="#" class="btn btn-success pull-right" ng-click="vm.updateSection()">Save Section</a>
+            </div>
+            </form>
           </div>
         </div>
       </div>

@@ -4,14 +4,17 @@
 
 class TemplatesDetailController {
 
-  constructor($http, $stateParams, Auth, template, $log, Template, $state, TemplateSection) {
-    this.$http = $http;
-    this.$stateParams = $stateParams;
+  constructor($http, $stateParams, Auth, template, $log, $state, TemplateSection, $cookies) {
     this.$log = $log;
+    this.$http = $http;
+    this.$cookies = $cookies;
     this.$state = $state;
-    this.currentUser = Auth.getCurrentUser();
-    this.Template = Template;
+    this.$stateParams = $stateParams;
     this.TemplateSection = TemplateSection;
+    this.currentUser = Auth.getCurrentUser();
+  
+    this.editing = true;
+  
     this.activate(template);
   }
 
@@ -38,18 +41,30 @@ class TemplatesDetailController {
   // }
 
   updateSection() {
-    this.$log.info('testing 123');
+
     // get section reference
     this.TemplateSection.update({id: this.currentSection._id, template_id: this.currentSection._template_id}, this.currentSection);
-    
-    // get new section
-    // update sections based on new section
-    // update view?
+    this.$cookies.put('current-ts', this.currentSection._id);
+    console.log(this.$cookies.get('current-ts'));
+    // this.$state.reload();
   }
 
   activate(template) {
     this.template = template;
-    this.currentSection = this.template.sections[0];
+
+    if (this.$cookies.get('current-ts')) {
+      
+      for (var i in this.template.sections) {
+        if (this.template.sections[i]._id == this.$cookies.get('current-ts')) {
+
+          this.currentSection = this.template.sections[i];
+        }
+        
+      }
+    }
+    else {
+      this.currentSection = this.template.sections[0];
+    }
     this.pageTitle = 'Template Version: ' + this.template.version;
   }
 }

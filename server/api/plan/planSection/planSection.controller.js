@@ -68,12 +68,12 @@ export function index(req, res) {
 }
 
 // Gets a single Plan Section from the DB
-// export function show(req, res) {
-//   PlanSection.findByIdAsync(req.params.id)
-//     .then(handleEntityNotFound(res))
-//     .then(responseWithResult(res))
-//     .catch(handleError(res));
-// }
+export function show(req, res) {
+  PlanSection.findByIdAsync({_plan_id: req.params.plan_id, _id: req.params.id})
+    .then(handleEntityNotFound(res))
+    .then(responseWithResult(res))
+    .catch(handleError(res));
+}
 
 // Creates a new Plan Section in the DB
 export function create(req, res) {
@@ -87,7 +87,7 @@ export function update(req, res) {
   if (req.body._id) {
     delete req.body._id;
   }
-  PlanSection.findByIdAsync(req.params.id)
+  PlanSection.findByIdAsync({_plan_id: req.params.plan_id, _id: req.params.id})
     .then(handleEntityNotFound(res))
     .then(saveUpdates(req.body))
     .then(responseWithResult(res))
