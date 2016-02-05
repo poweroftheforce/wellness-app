@@ -16,6 +16,18 @@ angular.module('wellnessPlanApp')
               $log.error('There was an error accessing this plan.\n' + angular.toJson(error.data, true));              
               $state.go('dashboard');
             });
+          },
+
+          latestTemplate: function(Template) {
+            var promise = Template.latest();
+            return promise.$promise.then((data) => {
+              return data[0];
+            })
+            .catch((err) => {
+              $log.error('There was an error accessing the latest template.\n' + angular.toJson(error.data, true));              
+              $state.go('dashboard');
+            });
+            
           }
         },
         controller: 'PlansController',

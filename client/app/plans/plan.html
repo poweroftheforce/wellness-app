@@ -20,6 +20,8 @@
       <div class="col-md-4 col-md-offset-4">
         <button class="btn btn-lg btn-seasons" ng-show="!vm.viewing" ng-click="vm.viewing=true">View Plan</button>
         <button class="btn btn-lg btn-seasons" ng-show="vm.viewing" ng-click="vm.viewing=false">Edit Plan</button>
+        <button class="btn btn-lg btn-seasons" ng-click="vm.getLatestTemplate()">Test</button>
+        
       </div>
     </div>  <!-- End Patient Info -->
     
@@ -70,6 +72,16 @@
       <div class="col-sm-9">
         <code style="white-space: inherit;">
           {{vm.templateSection}}
+        </code>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-3">
+        <h4>Plans Sections:</h4>
+      </div>
+      <div class="col-sm-9">
+        <code style="white-space: inherit;">
+          {{vm.plan.sections}}
         </code>
       </div>
     </div>

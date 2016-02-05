@@ -111,9 +111,11 @@ export function destroy(req, res) {
     .catch(handleError(res));
 }
 
-// Returns the latest Template
+// Returns the last updated Template - this is so wrong!
 export function latest(req, res) {
-  Template.find().sort({updated_at: -1}).limit(1)
+  Template.find().sort({version: -1}).limit(1)
+    .populate('sections')
+    .execAsync()
     .then(handleEntityNotFound(res))
     .then(responseWithResult(res))
     .catch(handleError(res));
