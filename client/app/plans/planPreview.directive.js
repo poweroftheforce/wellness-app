@@ -4,19 +4,18 @@ angular.module('wellnessPlanApp')
   .directive('planPreview', function () {
     return {
       restrict: 'E',
+      // templateUrl: 'app/plans/planPreview.html',
       link: function(scope, element) {
         element.addClass('row');
 
-        	//set up loop! 
+        	//set up loop!
 
         	function pagedContent() {
-        		// Gather initial data.	
+        		// Gather initial data.
 						var ln = $('.section-wrapper').length;
-						
 
 						for (var i = 0; i < ln; i++) {
 						  var section = $($('.section-wrapper')[i]);
-						  
 						 	removeOverflow(section);
 						}
         	}
@@ -27,24 +26,38 @@ angular.module('wellnessPlanApp')
 					  var page = $(section.children('.plan-page').last().children('.plan-page-body'));
 					  var pageBodyHeight = page.parent().height();
 					  var pageHeight = page.height();
-					  if (pageHeight > pageBodyHeight) {
 
-					    $(section).append('<div class="plan-page"><div class="plan-page-body"></div></div>');
+					  if (pageHeight > pageBodyHeight) {
+					    $(section).append('<div class="plan-page"><div class="plan-page-body"><div class="plan-page-content"></div></div></div>');
 
 					    // As long as the content is overflowing, push it down to the top of the next page.
 					    while (pageHeight > pageBodyHeight) {
-					      $(page).children().last().prependTo($(page).parent().next('.plan-page').children('.plan-page-body'));
+
+                // push last child of overlowing div to the next div
+					      $(page).children('.plan-page-content').children().last().prependTo($(page).parent().next('.plan-page').children('.plan-page-body').children('.plan-page-content'));
 
 					      // update height
 					      var pageHeight = $(page).height();
 					    }
-					    removeOverflow(section); // <= Recursion Mothafucka
+					    removeOverflow(section);
 					  }
 					  // If the last page has no overflow, it's done!
 					}
 
+          function previewInit() {
+            var animationEnd = 'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend';
+            var firstPage = $('.plan-page').first()
+
+            // Animate first page.
+            $(firstPage).addClass('animated bounceIn').one(animationEnd, function() {
+              $(firstPage).css('opacity', 1);
+              $(firstPage).removeClass('animated bounceIn');
+            });
+          }
+
         	setTimeout(function() {
         		pagedContent();
+            previewInit();
         	}, 1000);
       }
     };

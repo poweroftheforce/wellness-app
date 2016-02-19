@@ -12,9 +12,9 @@ class TemplatesDetailController {
     this.$stateParams = $stateParams;
     this.TemplateSection = TemplateSection;
     this.currentUser = Auth.getCurrentUser();
-  
+
     this.editing = true;
-  
+
     this.activate(template);
   }
 
@@ -24,7 +24,7 @@ class TemplatesDetailController {
     //   _template_version: this.template.version,
     //   title: this.section_title
     // });
-      
+
   //   newSection.$save()
   //     .then((data) => {
   //       var template = this.Template.get({id: this.template._id});
@@ -36,7 +36,7 @@ class TemplatesDetailController {
   //       console.log(err);
   //     });
 
-  //     this.newSectionForm = false; 
+  //     this.newSectionForm = false;
   //     this.section_title = ''
   // }
 
@@ -45,21 +45,20 @@ class TemplatesDetailController {
     // get section reference
     this.TemplateSection.update({id: this.currentSection._id, template_id: this.currentSection._template_id}, this.currentSection);
     this.$cookies.put('current-ts', this.currentSection._id);
-    console.log(this.$cookies.get('current-ts'));
-    // this.$state.reload();
+    this.$state.reload();
   }
 
   activate(template) {
     this.template = template;
 
     if (this.$cookies.get('current-ts')) {
-      
+
       for (var i in this.template.sections) {
         if (this.template.sections[i]._id == this.$cookies.get('current-ts')) {
 
           this.currentSection = this.template.sections[i];
         }
-        
+
       }
     }
     else {

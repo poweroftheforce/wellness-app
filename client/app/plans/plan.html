@@ -1,18 +1,19 @@
 <navbar></navbar>
-<div class="content-wrapper" >
+
+<div class="content-wrapper">
   <div class="container content">
     <div class="row page-title">
       <div class="col-sm-12" style="padding: 0 50px;">
         <div class="page-header">
           <h1>{{vm.pageTitle}}</h1>
           <span class="subheader" ng-show="vm.plan.patient">{{vm.plan.patient.name.first}} {{vm.plan.patient.name.last}}'s Wellness Plan</span>
-        </div>      
+        </div>
       </div>
     </div><!-- .page-title -->
 
     <div class="row patient-info" ng-show="vm.plan.patient">
       <div class="col-md-4 ">
-        <h3>Patient Info</h3> 
+        <h3>Patient Info</h3>
         <span class="patient-info">Name: {{vm.plan.patient.name.first}}  {{vm.plan.patient.name.last}}</span> <br>
         <span class="patient-info">Date Of Birth: {{vm.plan.patient.dob}}</span>
         <hr>
@@ -21,20 +22,20 @@
         <button class="btn btn-lg btn-seasons" ng-show="!vm.viewing" ng-click="vm.viewing=true">View Plan</button>
         <button class="btn btn-lg btn-seasons" ng-show="vm.viewing" ng-click="vm.viewing=false">Edit Plan</button>
         <button class="btn btn-lg btn-seasons" ng-click="vm.getLatestTemplate()">Test</button>
-        
+
       </div>
     </div>  <!-- End Patient Info -->
-    
+
     <div class="row" id="plan-wrapper" ng-show="vm.viewing">
+      <div class="controls" style="margin: 0 auto 30px auto; text-align: center;"> <a href="" ng-click="vm.previousPage()">Prev</a> | <a href="" ng-click="vm.nextPage()">Next</a></div>
       <div class="section-wrapper" ng-repeat="section in vm.templateSections | orderBy:'order'">
         <div class="plan-page">
           <div class="plan-page-body">
             <h2 class="plan-page-title" ng-bind-html="section.title"></h2>
             <div class="plan-page-content" ng-bind-html="section.html"></div>
-          </div>  
+          </div>
         </div>
-      </div>  
-      <div class="controls" style="margin: 0 auto 30px auto; text-align: center;"> <a href="" ng-click="previousPage()">Prev</a> | <a href="" ng-click="nextPage()">Next</a></div>
+      </div>
     </div><!-- End Plan View Wrapper -->
     <plan-preview ng-show="vm.viewing"></plan-preview>
 
@@ -55,36 +56,7 @@
         </h4>
       </div>
     </div> <!-- End Plan Edit Wrapper -->
-    <div class="row">
-      <div class="col-sm-3">
-        <h4>Plan Section:</h4>
-      </div>
-      <div class="col-sm-9">
-        <code style="white-space: inherit;">
-          {{vm.planSection}}
-        </code>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-sm-3">
-        <h4>Template Section:</h4>
-      </div>
-      <div class="col-sm-9">
-        <code style="white-space: inherit;">
-          {{vm.templateSection}}
-        </code>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-sm-3">
-        <h4>Plans Sections:</h4>
-      </div>
-      <div class="col-sm-9">
-        <code style="white-space: inherit;">
-          {{vm.plan.sections}}
-        </code>
-      </div>
-    </div>
+
     <div class="row footer-wrapper">
       <footer></footer>
     </div>

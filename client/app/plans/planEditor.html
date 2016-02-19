@@ -3,7 +3,7 @@
 		<div ng-bind-html="tab.content"></div>
 	</uib-tab> -->
 
-	<uib-tab heading="HTML" active="false" disable="false" ng-if="vm.templateSection.is_editable">
+	<uib-tab heading="HTML" active="true" disable="false" ng-if="vm.templateSection.is_editable">
 		<form class="plan-form" ng-if="!vm.planSection.html">
 				<text-angular ng-model="vm.templateSection.html"></text-angular>
 				<button class="btn btn-seasons" ng-click="vm.saveSection(vm.templateSection)">Save</button>
@@ -13,7 +13,7 @@
 				<button class="btn btn-seasons" ng-click="vm.saveSection(vm.planSection)">Save</button>
 		</form>
 	</uib-tab>
-		
+
 
 	<uib-tab heading="Nutraceuticals" active="false" disable="false" ng-if="vm.templateSection.has_extras">
 		<form class="plan-form">

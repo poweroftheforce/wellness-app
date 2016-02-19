@@ -19,4 +19,4 @@ angular.module('wellnessPlanApp', [
       .otherwise('/');
 
     $locationProvider.html5Mode(true);
-  });
+});

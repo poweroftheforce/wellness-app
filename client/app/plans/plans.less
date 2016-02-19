@@ -11,17 +11,44 @@
 #plan-wrapper {
   margin: 0 auto;
   width: 8.5in;
+  position: relative;
+  height: 11in;
   .plan-page {
+    position: absolute;
     height: 9.75in;
     width: 8in;
     background: #fff;
     margin: 0 auto;
     padding: .5in;
+    padding-top: 0.7in;
     box-shadow: 0px 0px 9px -1px #999;
-    margin-bottom: 50px; 
-    .plan-page-body {
-     
-    }
+    opacity: 0;
+    margin-bottom: 50px;
+    &:before {
+        position: absolute;
+        background: #43ab4c;
+        background: rgba(67, 171, 76, 0.4);
+        height: 30px;
+        width: 100px;
+        left: 30px;
+        top: 30px;
+        content: '';
+      }
+    &:after {
+        position: absolute;
+        background: #43ab4c;
+        background: rgba(67, 171, 76, 0.4);
+        height: 30px;
+        left: 30px;
+        right: 30px;
+        bottom: 30px;
+        content: '';
+      }
+     h2 {
+        margin-top: 0;
+        color: @seasons_green !important;
+        font-weight: 300;
+      }
   }
 }
 #plan-edit-wrapper {
@@ -40,7 +67,7 @@
     -moz-transition: all 0.5s ease;
     -o-transition: all 0.5s ease;
     transition: all 0.5s ease;
-    
+
     ul {
       list-style: none;
       padding: 0;
@@ -68,8 +95,8 @@
     position: absolute;
     padding: 15px;
     // editing pages
-    .plan-page { 
-      
+    .plan-page {
+
     }
   }
 }
@@ -96,8 +123,6 @@
 
 @media print {
 
-  * { background: transparent !important; color: #000 !important; box-shadow:none !important; text-shadow: none !important;}
-
   header, .row.page-title, .row.patient-info, .row.footer-wrapper, .controls {
     display: none;
   }
@@ -113,13 +138,44 @@
   // Hides default date and site name ( in chrome ).
   @page { margin: 0; size: auto; }
 
+  .content-wrapper:before {
+    background: transparent !important;
+  }
+
   #plan-wrapper {
     max-height: none;
+    height: auto;
     overflow-y: inherit;
     .plan-page {
       font-size: 1.1em;
       page-break-after: always;
       margin-bottom: 0;
+      opacity: 1 !important;
+      position: relative;
+      padding: .5in;
+      padding-top: 0.7in;
+
+      &:before {
+        position: absolute;
+        background: #43ab4c;
+        background: rgba(67, 171, 76, 0.4);
+        height: 30px;
+        width: 100px;
+        left: 0;
+        top: 30px;
+        content: '';
+      }
+
+      &:after {
+        position: absolute;
+        background: #43ab4c;
+        background: rgba(67, 171, 76, 0.4);
+        height: 30px;
+        left: 0;
+        right: 0;
+        bottom: -100px;
+        content: '';
+      }
     }
   }
 }

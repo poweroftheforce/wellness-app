@@ -16,8 +16,8 @@
         
         <li ng-hide="nav.isLoggedIn()" ui-sref-active="active"><a ui-sref="login">Login</a></li>
         
-        <li dropdown ng-show="nav.isLoggedIn()">
-          <a href="#" class="my-account-link" dropdown-toggle>My Account <span class="caret"></span></a>
+        <li uib-dropdown ng-show="nav.isLoggedIn()">
+          <a href="#" class="my-account-link" uib-dropdown-toggle>My Account <span class="caret"></span></a>
           <ul class="dropdown-menu" role="menu">
             <li class="dropdown-header">Options</li>
             <li><a href="#" ui-sref="profile">My Profile</a></li>
@@ -26,8 +26,8 @@
             <li><a href="" ui-sref="logout">Logout</a></li>
           </ul>
         </li>
-        <li dropdown ng-show="nav.isAdmin()">
-          <a href="#" class="admin-link" dropdown-toggle>Admin <span class="caret"></span></a>
+        <li uib-dropdown ng-show="nav.isAdmin()">
+          <a href="#" class="admin-link" uib-dropdown-toggle>Admin <span class="caret"></span></a>
           <ul class="dropdown-menu" role="menu">
             <li><a href="#" ui-sref="nutraceuticals">Nutraceuticals</a></li>
             <li><a href="#" ui-sref="predefinedMaterials">Predefined Materials</a></li>
