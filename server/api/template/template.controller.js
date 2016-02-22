@@ -128,11 +128,10 @@ export function updateSection(req, res, next) {
 
   Template.findByIdAsync(templateId)
     .then(template => {
-      template.sections = sections;
       return template.saveAsync()
       .then(() => {
         res.status(204).end();
       })
-      .catch(validationError(res));
+      .catch(handleError(res));
     });
 }
