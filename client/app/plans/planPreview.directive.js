@@ -51,6 +51,7 @@ angular.module('wellnessPlanApp')
             // Animate first page.
             $(firstPage).addClass('animated bounceIn').one(animationEnd, function() {
               $(firstPage).css('opacity', 1);
+
               $(firstPage).removeClass('animated bounceIn');
             });
           }

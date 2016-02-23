@@ -9,7 +9,6 @@ angular.module('wellnessPlanApp')
       	//Do things Here'
       	var vm = scope.vm;
 
-      	// select a tab already...
       }
     };
   });

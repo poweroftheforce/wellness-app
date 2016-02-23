@@ -1,7 +1,4 @@
 <uib-tabset>
-	<!-- <uib-tab ng-repeat="tab in tabs" heading="{{tab.title}}" active="tab.active" disable="tab.disabled">
-		<div ng-bind-html="tab.content"></div>
-	</uib-tab> -->
 
 	<uib-tab heading="HTML" active="true" disable="false" ng-if="vm.templateSection.is_editable">
 		<form class="plan-form" ng-if="!vm.planSection.html">
@@ -14,6 +11,8 @@
 		</form>
 	</uib-tab>
 
+
+<!--  Placeholders for future updates <div ng-if="vm.templateSection.has_extras">
 
 	<uib-tab heading="Nutraceuticals" active="false" disable="false" ng-if="vm.templateSection.has_extras">
 		<form class="plan-form">
@@ -38,4 +37,5 @@
 			<button class="btn btn-small btn-seasons">Add</button>
 		</form>
 	</uib-tab>
+ </div> -->
 </uib-tabset>

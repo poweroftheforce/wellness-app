@@ -79,6 +79,10 @@ class PlansController {
     var title = section.title;
     this.planSection = {};
 
+    // set the template section always, for updating/adding sections and the sidebar.
+    this.templateSection = section;
+    this.$cookies.put('ps-id', this.templateSection._id);
+
     for (var i=0;i<this.plan.sections.length;i++) {
       // if the current plan has this section added...
       if (this.plan.sections[i].title == title) {
@@ -86,43 +90,86 @@ class PlansController {
         .then((data) => {
           // set planSection and ct-ps-id cookie or should it be state params?
           this.planSection = data;
+          this.templateSection.planSection = this.planSection;
           // this.$cookies.put('current-plan-ps', this.planSection._id);
         });
       }
     }
-
-    // set the template section always, for updating/adding sections and the sidebar.
-    this.templateSection = section;
-    this.$cookies.put('ps-id', this.templateSection._id);
   }
 
   activate(plan) {
+    var self = this;
     this.plan = plan;
-
     var c_id = this.$cookies.get('ps-id');
+    this.templateSection = this.templateSections[0];
 
-    if (c_id) {
-      // set active section from template sections
-      for (var i=0;i<this.templateSections.length;i++) {
+
+    // link existing plan sections to template sections
+    for (var i=0;i<this.templateSections.length;i++) {
+
+      var section = this.templateSections[i];
+
+      // If the user has a cookie for last edited section...
+      if (c_id) {
+        // We need that section to be the active section
         if ( this.templateSections[i]._id == c_id ) {
           this.templateSection = this.templateSections[i];
         }
       }
-      for (var i=0;i<this.plan.sections.length;i++) {
-        // if the current plan has this section added...
-        if (this.plan.sections[i].title == this.templateSection.title) {
-          this.PlanSection.get({plan_id: this.plan._id, id: this.plan.sections[i]._id }).$promise
-          .then((data) => {
-            this.planSection = data;
-          });
+
+      // link any plan sections to their templates
+      for (var j=0;j<this.plan.sections.length;j++) {
+
+        // If a plan section has been made, we can link it here.
+        if (this.plan.sections[j].title == section.title) {
+          section.planSection = this.plan.sections[j];
         }
       }
     }
 
-    else { // No Section Active - set first to active.
-      this.templateSection = this.templateSections[0];
-      this.$cookies.put('ps-id', this.templateSection._id);
+    // Loop through plan sections to see if any of them match the current section.
+    for (var j=0;j<this.plan.sections.length;j++) {
+      if (this.plan.sections[j].title == this.templateSection.title) {
+        this.PlanSection.get({plan_id: this.plan._id, id: this.plan.sections[j]._id }).$promise
+        .then((data) => {
+          this.planSection = data;
+        });
+      }
     }
+
+
+    // if (c_id) {
+
+    //   // set active section from template sections
+    //   for (var i=0;i<this.templateSections.length;i++) {
+    //     if ( this.templateSections[i]._id == c_id ) {
+    //       this.templateSection = this.templateSections[i];
+    //     }
+
+    //     for (var j=0;j<this.plan.sections.length;j++) {
+    //       console.log('j: ' j);
+    //       // If there are any plan sections that correspond to template sections, link them.
+    //       if (this.plan.sections[j].title == this.templateSections[i].title) {
+    //         this.templateSections[i].planSection = this.planSections[j]
+    //       }
+    //     }
+
+    //   }
+    //   for (var j=0;j<this.plan.sections.length;j++) {
+    //     // If there are any plan sections that correspond to template sections, link them.
+    //     if (this.plan.sections[j].title == this.templateSections[i].title) {
+    //      this.templateSections[i].planSection = this.planSections[j]
+    //     }
+
+    //     // if the current plan has this section added...
+    //     if (this.plan.sections[j].title == this.templateSection.title) {
+    //       this.PlanSection.get({plan_id: this.plan._id, id: this.plan.sections[j]._id }).$promise
+    //       .then((data) => {
+    //         this.planSection = data;
+    //       });
+    //     }
+    //   }
+    // }
   }
 
 
@@ -165,6 +212,7 @@ class PlansController {
       // Fade out current page
       $(page).addClass('animated fadeOutRight').one(animationEnd, function() {
         $(page).css('opacity', 0);
+        $(page).css('z-index', 0);
         $(page).removeClass('animated fadeOutRight');
       });
 
@@ -175,9 +223,14 @@ class PlansController {
       // Fade in new page
       $(nextPage).addClass('animated fadeInLeft').one(animationEnd, function() {
         $(nextPage).css('opacity', 1);
+        $(nextPage).css('z-index', 1);
         $(nextPage).removeClass('animated fadeInLeft');
       });
     }
+  }
+
+  printPlan() {
+    window.print();
   }
 }
 angular.module('wellnessPlanApp')

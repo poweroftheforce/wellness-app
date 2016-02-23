@@ -21,7 +21,7 @@
       <div class="col-md-4 col-md-offset-4">
         <button class="btn btn-lg btn-seasons" ng-show="!vm.viewing" ng-click="vm.viewing=true">View Plan</button>
         <button class="btn btn-lg btn-seasons" ng-show="vm.viewing" ng-click="vm.viewing=false">Edit Plan</button>
-        <button class="btn btn-lg btn-seasons" ng-click="vm.getLatestTemplate()">Test</button>
+        <button class="btn btn-lg btn-seasons" onclick="window.print()">Print</button>
 
       </div>
     </div>  <!-- End Patient Info -->
@@ -29,12 +29,21 @@
     <div class="row" id="plan-wrapper" ng-show="vm.viewing">
       <div class="controls" style="margin: 0 auto 30px auto; text-align: center;"> <a href="" ng-click="vm.previousPage()">Prev</a> | <a href="" ng-click="vm.nextPage()">Next</a></div>
       <div class="section-wrapper" ng-repeat="section in vm.templateSections | orderBy:'order'">
-        <div class="plan-page">
-          <div class="plan-page-body">
-            <h2 class="plan-page-title" ng-bind-html="section.title"></h2>
-            <div class="plan-page-content" ng-bind-html="section.html"></div>
+
+          <div class="plan-page" ng-if="section.planSection">
+            <div class="plan-page-body">
+              <h2 class="plan-page-title" ng-bind-html="section.title"></h2>
+              <div class="plan-page-content" ng-bind-html="section.planSection.html"></div>
+            </div>
           </div>
-        </div>
+
+          <div class="plan-page" ng-if="!section.planSection">
+            <div class="plan-page-body">
+              <h2 class="plan-page-title" ng-bind-html="section.title"></h2>
+              <div class="plan-page-content" ng-bind-html="section.html"></div>
+            </div>
+          </div>
+
       </div>
     </div><!-- End Plan View Wrapper -->
     <plan-preview ng-show="vm.viewing"></plan-preview>
