@@ -20,34 +20,35 @@
     background: #fff;
     margin: 0 auto;
     padding: .5in;
-    padding-top: 0.7in;
     box-shadow: 0px 0px 9px -1px #999;
     opacity: 0;
     z-index: 0;
     margin-bottom: 50px;
-    &:before {
-        position: absolute;
-        background: #43ab4c;
-        background: rgba(67, 171, 76, 0.4);
-        height: 30px;
-        width: 100px;
-        left: 30px;
-        top: 30px;
-        content: '';
-      }
+    // &:before {
+    //     position: absolute;
+    //     background: #43ab4c;
+    //     background: rgba(67, 171, 76, 0.4);
+    //     height: 30px;
+    //     width: 100px;
+    //     left: 30px;
+    //     top: 30px;
+    //     content: '';
+    //   }
     &:after {
         position: absolute;
-        background: #43ab4c;
-        background: rgba(67, 171, 76, 0.4);
+        background: @seasons_light_green;
+        // background: rgba(67, 171, 76, 0.4);
         height: 30px;
-        left: 30px;
-        right: 30px;
-        bottom: 30px;
+        // left: 25px;
+        // right: 25px;
+        // bottom: 30px;
         content: '';
       }
-     h2 {
-        margin-top: 0;
-        color: @seasons_green !important;
+     h2.plan-page-title {
+        margin: -15px -15px 10px -15px;
+        color: #fff !important;
+        padding: 15px 0 15px 25px;
+        background-color: @seasons_green !important;
         font-weight: 300;
       }
   }
@@ -130,14 +131,19 @@
 
   a, a:visited { text-decoration: none; }
 
-  a[href]:after { content: " (" attr(href) ")";}
+  a,a:visited { color: #428bca !important; }
+
+  a[href]:after { content: "";}
 
   abbr[title]:after { content: " (" attr(title) ")"; }
 
-  .ir a:after, a[href^="javascript:"]:after, a[href^="#"]:after { content: ""; }
+  // .ir a:after, a[href^="javascript:"]:after, a[href^="#"]:after { content: ""; }
 
   // Hides default date and site name ( in chrome ).
-  @page { margin: 0; size: auto; }
+  @page {
+    margin: 0;
+    size: auto;
+  }
 
   .content-wrapper:before {
     background: transparent !important;
@@ -145,41 +151,41 @@
 
   #plan-wrapper {
     max-height: none;
-    height: auto;
     overflow-y: inherit;
+    border: none;
+    width: 100%;
+    margin: 0;
+
     .plan-page {
+      border: none;
       font-size: 1.1em;
+      width: 7.65in;
       page-break-after: always;
-      margin-bottom: 0;
       opacity: 1 !important;
       position: relative;
-      padding: .5in;
-      padding-top: 0.7in;
-
-      &:before {
-        position: absolute;
-        background: #43ab4c;
-        background: rgba(67, 171, 76, 0.4);
-        height: 30px;
-        width: 100px;
-        left: 0;
-        top: 30px;
-        content: '';
-      }
+      margin: 0;
+      padding: .15in;
 
       &:after {
-        position: absolute;
-        background: #43ab4c;
-        background: rgba(67, 171, 76, 0.4);
-        height: 30px;
-        left: 0;
-        right: 0;
-        bottom: -100px;
-        content: '';
+        left: .15in;
+        right: .15in;
+        bottom: -30px;
+      }
+
+      h2.plan-page-title {
+        padding: .15in 0 .15in .5in;
+        margin: 0;
+      }
+
+      .plan-page-content {
+        padding-left: .5in;
+        padding-right: .5in;
+        padding-top: .25in;
       }
     }
   }
 }
+
 
 subtext {
     font-size: 0.6em;

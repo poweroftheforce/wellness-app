@@ -49,10 +49,10 @@ angular.module('wellnessPlanApp')
             var firstPage = $('.plan-page').first()
 
             // Animate first page.
-            $(firstPage).addClass('animated bounceIn').one(animationEnd, function() {
+            $(firstPage).addClass('animated fadeInDown').one(animationEnd, function() {
               $(firstPage).css('opacity', 1);
 
-              $(firstPage).removeClass('animated bounceIn');
+              $(firstPage).removeClass('animated fadeInDown');
             });
           }
 
