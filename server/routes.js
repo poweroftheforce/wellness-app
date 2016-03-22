@@ -9,10 +9,11 @@ import path from 'path';
 
 export default function(app) {
   // Insert routes below
-  app.use('/api/predefinedMaterials', require('./api/predefinedMaterial'));
+  app.use('/api/addendums', require('./api/addendum'));
   app.use('/api/nutraceuticals', require('./api/nutraceutical'));
   app.use('/api/references', require('./api/reference'));
   app.use('/api/prescriptions', require('./api/prescription'));
+  app.use('/api/focusItems', require('./api/focusItem'));
   app.use('/api/plans', require('./api/plan'));
   app.use('/api/plans/:plan_id/sections', require('./api/plan/planSection'));
   app.use('/api/templates', require('./api/template'));

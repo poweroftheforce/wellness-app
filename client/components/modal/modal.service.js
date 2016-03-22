@@ -68,6 +68,53 @@ angular.module('wellnessPlanApp')
             });
           };
         }
+      },
+
+      /* Form Modals */
+
+      FocusItem: {
+
+        /**
+         * Create a function to open a form modal (ex. ng-click='myModalFn(name, arg1, arg2...)')
+         * @param  {Function} action - callback, ran when form is submitted
+         * @return {Function}     - the function to open the modal (ex. myModalFn)
+         */
+        create(create = angular.noop) {
+          /**
+           * Open a Create Focus Item modal
+           * @param  {String} name   - name or info to show on modal
+           * @param  {All}           - any additional args are passed straight to del callback
+           */
+          return function() {
+            var args = Array.prototype.slice.call(arguments),
+                newFocusItemModal;
+
+            newFocusItemModal = openModal({
+              modal: {
+                dismissable: true,
+                title: 'Add New Focus Item',
+                html: '<p>Are you sure you want to create one?</p>',
+                buttons: [{
+                  classes: 'btn-seasons',
+                  text: 'Create',
+                  click: function(e) {
+                    newFocusItemModal.close(e);
+                  }
+                }, {
+                  classes: 'btn-warning',
+                  text: 'Cancel',
+                  click: function(e) {
+                    newFocusItemModal.dismiss(e);
+                  }
+                }]
+              }
+            }, 'modal-danger');
+
+            newFocusItemModal.result.then(function(event) {
+              del.apply(event, args);
+            });
+          };
+        }
       }
     };
   });

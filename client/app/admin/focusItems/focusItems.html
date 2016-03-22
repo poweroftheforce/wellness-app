@@ -1,0 +1,98 @@
+<navbar></navbar>
+<div class="content-wrapper" >
+  <div class="container content">
+    <div class="row">
+      <div class="col-sm-12" style="padding: 0 50px;">
+        <div class="page-header">
+          <h1>{{vm.pageTitle}}</h1>
+          <span class="subheader">You can manage your focus items here.<span>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12 col-lg-6 col-lg-offset-3" ng-if="!vm.showForm">
+          <table class="table table-bordered table-striped table-condensed table-hover table-responsive">
+            <thead>
+              <th>Title</th>
+              <th colspan="2">Options</th>
+            </thead>
+            <tbody>
+              <tr ng-repeat="focusItem in vm.focusItems">
+                <td>{{focusItem.title}}</td>
+                <td><i class="fa fa-edit" ng-click="vm.showForm = true; vm.newFocusItem = focusItem; vm.editingItem = true;"></i> Edit</td>
+                <td><i class="fa fa-trash trash" ng-click="vm.deleteItem(focusItem)"></i> Delete</td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="col-sm-12">
+            <div class="row">
+              <button ng-if="!vm.showForm" class="btn btn-seasons pull-right" ng-click="vm.showForm = true">Add New</button>
+            </div>
+          </div>
+      </div>
+
+      <div class="col-sm-12" ng-if="vm.showForm">
+        <div>
+           <p class="help-block">{{ vm.errors.other }}</p>
+        </div>
+        <form class="form" name="form" ng-submit="vm.editingItem ? vm.updateFocusItem(form) : vm.createFocusItem(form)" novalidate>
+          <div class="col-sm-8 col-md-6 col-lg-4">
+            <div class="form-group" ng-class="{ 'has-success': form.title.$valid && vm.submitted,
+                                                'has-error': form.title.$invalid && vm.submitted }">
+              <label>Title</label>
+              <input type="text" name="title" class="form-control" ng-model="vm.newFocusItem.title"
+                required/>
+              <p class="help-block" ng-show="form.title.$error.required && vm.submitted">
+                A title is required
+              </p>
+              <p class="help-block" ng-show="form.title.$error.mongoose">
+                {{vm.errors.title}}
+              </p>
+            </div>
+          </div>
+          <div class="col-sm-12">
+            <div class="form-group">
+              <label>Description</label>
+              <text-angular ng-model="vm.newFocusItem.description"></text-angular>
+            </div>
+          </div>
+          <div class="col-sm-12">
+            <div class="form-group" ng-class="{ 'has-success': form.section_names.$valid && vm.submitted,
+                                                'has-error': form.section_names.$invalid && vm.submitted }">
+              <label>Add To</label>
+
+              <label class="checkbox-inline">
+                <input type="checkbox" ng-model="vm.newFocusItem.nutrition" /> Nutrition
+              </label>
+              <label class="checkbox-inline">
+                <input type="checkbox" ng-model="vm.newFocusItem.exercise" /> Exercise
+              </label>
+              <label class="checkbox-inline">
+                <input type="checkbox" ng-model="vm.newFocusItem.hormones" /> Hormones
+              </label>
+              <label class="checkbox-inline">
+                <input type="checkbox" ng-model="vm.newFocusItem.inflammation" /> Inflammation
+              </label>
+              <label class="checkbox-inline">
+                <input type="checkbox" ng-model="vm.newFocusItem.detoxification" /> Detoxification
+              </label>
+            </div>
+          </div>
+          <div class="col-sm-12">
+            <div class="pull-right">
+            <button class="btn btn-seasons" style="margin-bottom: 30px;" type="submit">
+              {{ vm.editingItem ? 'Update' : 'Create' }}
+            </button>
+            <button class="btn btn-warning" style="margin-bottom: 30px;" ng-click="vm.resetForm()" onclick="return false;">
+              Go Back
+            </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="row">
+      <footer></footer>
+    </div>
+  </div>
+</div>

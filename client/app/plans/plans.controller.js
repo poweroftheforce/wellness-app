@@ -18,12 +18,6 @@ class PlansController {
     this.viewing=true;
     this.activate(plan);
     this.page = 1;
-
-    $('.content').css('min-height', ($(window).outerHeight() - 230));
-    $(window).resize(function() {
-      $('.content').css('min-height', ($(window).outerHeight() - 230));
-    });
-
   }
 
   /*

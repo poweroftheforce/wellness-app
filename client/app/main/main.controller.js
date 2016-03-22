@@ -22,18 +22,12 @@ class MainController {
     $http.get('/api/plans').then(response => {
       this.myPlans = response.data;
     });
-
-    $('.content').css('min-height', ($(window).outerHeight() - 230));
-
-    $(window).resize(function() {
-      $('.content').css('min-height', ($(window).outerHeight() - 230));
-    });
   }
 
   addPlan(form) {
     var ctr = this;
     var counter = 0;
-    this.submitted = true;  
+    this.submitted = true;
     var newPlanSections = [];
     var newPlan = new this.Plan(this.newPlanModel);
     var sections = this.template_sections;
@@ -42,7 +36,7 @@ class MainController {
     newPlan.$save()
 
     .then((newPlan) => {
-      // Navigate to new plan         
+      // Navigate to new plan
       this.$state.go('plan', {id: newPlan._id}, {reload: true});
       // this.$state.reload();
     });

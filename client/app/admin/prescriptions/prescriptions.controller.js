@@ -1,6 +1,16 @@
 'use strict';
 
+(function() {
+
+class PrescriptionsController {
+
+  constructor() {
+
+    this.pageTitle = 'Prescriptions';
+  }
+}
+
 angular.module('wellnessPlanApp')
-  .controller('PrescriptionsCtrl', function ($scope) {
-    $scope.message = 'Hello';
-  });
+  .controller('PrescriptionsController', PrescriptionsController);
+
+})();

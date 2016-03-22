@@ -48,6 +48,8 @@ function UtilService($window) {
       });
       return (origins.length >= 1);
     }
+
+
   };
 
   return Util;
