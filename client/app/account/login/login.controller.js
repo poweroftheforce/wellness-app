@@ -15,15 +15,7 @@ class LoginController {
     if (this.Auth.isLoggedIn()) {
       this.$state.go('dashboard');
     }
-
-    $('.content').css('min-height', ($(window).outerHeight() - 225));
-
-    $(window).resize(function() {
-      $('.content').css('min-height', ($(window).outerHeight() - 225));
-    });
   }
-
-  
 
   login(form) {
     this.submitted = true;

@@ -25,7 +25,7 @@ angular.module('wellnessPlanApp.admin')
               return data;
             })
             .catch((error) => {
-              $log.error('There was an error accessing this template.\n' + angular.toJson(error.data, true));              
+              $log.error('There was an error accessing this template.\n' + angular.toJson(error.data, true));
               $state.go('templates');
             });
           }
@@ -55,10 +55,10 @@ angular.module('wellnessPlanApp.admin')
         controllerAs: 'vm',
         authenticate: 'admin'
       })
-      .state('predefinedMaterials', {
-        url: '/admin/predefinedMaterials',
-        templateUrl: 'app/admin/predefinedMaterials/predefinedMaterials.html',
-        controller: 'PredefinedMaterialsController',
+      .state('addendums', {
+        url: '/admin/addendums',
+        templateUrl: 'app/admin/addendums/addendums.html',
+        controller: 'AddendumsController',
         controllerAs: 'vm',
         authenticate: 'admin'
       })
@@ -66,6 +66,18 @@ angular.module('wellnessPlanApp.admin')
         url: '/admin/references',
         templateUrl: 'app/admin/references/references.html',
         controller: 'ReferencesController',
+        controllerAs: 'vm',
+        authenticate: 'admin'
+      })
+      .state('focusItems', {
+        url: '/admin/focusItems',
+        templateUrl: 'app/admin/focusItems/focusItems.html',
+        resolve: {
+          focusItems: function(FocusItem) {
+            return FocusItem.query();
+          }
+        },
+        controller: 'FocusItemsController',
         controllerAs: 'vm',
         authenticate: 'admin'
       });

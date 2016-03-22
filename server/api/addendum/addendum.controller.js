@@ -1,16 +1,16 @@
 /**
  * Using Rails-like standard naming convention for endpoints.
- * GET     /api/predefinedMaterials              ->  index
- * POST    /api/predefinedMaterials              ->  create
- * GET     /api/predefinedMaterials/:id          ->  show
- * PUT     /api/predefinedMaterials/:id          ->  update
- * DELETE  /api/predefinedMaterials/:id          ->  destroy
+ * GET     /api/addendums              ->  index
+ * POST    /api/addendums              ->  create
+ * GET     /api/addendums/:id          ->  show
+ * PUT     /api/addendums/:id          ->  update
+ * DELETE  /api/addendums/:id          ->  destroy
  */
 
 'use strict';
 
 import _ from 'lodash';
-var PredefinedMaterial = require('./predefinedMaterial.model');
+var Addendum = require('./addendum.model');
 
 function handleError(res, statusCode) {
   statusCode = statusCode || 500;
@@ -61,41 +61,41 @@ function removeEntity(res) {
 
 // Gets a list of PredefinedMaterials
 export function index(req, res) {
-  PredefinedMaterial.findAsync()
+  Addendum.findAsync()
     .then(responseWithResult(res))
     .catch(handleError(res));
 }
 
-// Gets a single PredefinedMaterial from the DB
+// Gets a single Addendum from the DB
 export function show(req, res) {
-  PredefinedMaterial.findByIdAsync(req.params.id)
+  Addendum.findByIdAsync(req.params.id)
     .then(handleEntityNotFound(res))
     .then(responseWithResult(res))
     .catch(handleError(res));
 }
 
-// Creates a new PredefinedMaterial in the DB
+// Creates a new Addendum in the DB
 export function create(req, res) {
-  PredefinedMaterial.createAsync(req.body)
+  Addendum.createAsync(req.body)
     .then(responseWithResult(res, 201))
     .catch(handleError(res));
 }
 
-// Updates an existing PredefinedMaterial in the DB
+// Updates an existing Addendum in the DB
 export function update(req, res) {
   if (req.body._id) {
     delete req.body._id;
   }
-  PredefinedMaterial.findByIdAsync(req.params.id)
+  Addendum.findByIdAsync(req.params.id)
     .then(handleEntityNotFound(res))
     .then(saveUpdates(req.body))
     .then(responseWithResult(res))
     .catch(handleError(res));
 }
 
-// Deletes a PredefinedMaterial from the DB
+// Deletes a Addendum from the DB
 export function destroy(req, res) {
-  PredefinedMaterial.findByIdAsync(req.params.id)
+  Addendum.findByIdAsync(req.params.id)
     .then(handleEntityNotFound(res))
     .then(removeEntity(res))
     .catch(handleError(res));

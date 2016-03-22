@@ -1,7 +1,7 @@
 'use strict';
 
 var express = require('express');
-var controller = require('./predefinedMaterial.controller');
+var controller = require('./focusItem.controller');
 
 var router = express.Router();
 

@@ -1,3 +1,6 @@
+<header class="page-head" id="banner">
+  <img src="assets/images/seasons-logo-green.png" alt="Seasons Wellness" class="logo">
+</header>
 <navbar></navbar>
 <div class="content-wrapper" >
   <div class="container content">
@@ -7,13 +10,13 @@
           <button ng-show="vm.plan.patient" class="btn btn-info pull-right" ng-click="vm.viewAllPlans()">View All</button>
           <h1>{{vm.pageTitle}}</h1>
           <span class="subheader" ng-show="vm.plan.patient">{{vm.plan.patient.name.first}} {{vm.plan.patient.name.last}}'s Wellness Plan</span>
-        </div>      
+        </div>
       </div>
     </div><!-- .page-title -->
 
     <div class="row patient-info" ng-show="vm.plan.patient">
       <div class="col-md-4 ">
-        <h3>Patient Info</h3> 
+        <h3>Patient Info</h3>
         <span class="patient-info">Name: {{vm.plan.patient.name.first}}  {{vm.plan.patient.name.last}}</span> <br>
         <span class="patient-info">Date Of Birth: {{vm.plan.patient.dob}}</span>
         <hr>
@@ -90,7 +93,7 @@
         </div>
       </div>
     </div> <!-- End New Plan Form -->
-    
+
     <div class="row footer-wrapper">
       <footer></footer>
     </div>

@@ -10,19 +10,13 @@ class TemplatesController {
     this.currentUser = Auth.getCurrentUser();
     this.templates = templates;
     this.Template = Template;
-    
-    this.pageTitle = 'PDF Template';
 
-    // I need to wrap this somewhere else.
-    $('.content').css('min-height', ($(window).outerHeight() - 230));
-    $(window).resize(function() {
-      $('.content').css('min-height', ($(window).outerHeight() - 230));
-    });
+    this.pageTitle = 'PDF Template';
   }
 
   addTemplate() {
   	if (this.newTemplateVersion) {
-  		// this.$http.post('/api/templates', { version: this.newTemplateVersion, author: this.currentUser.name });	
+  		// this.$http.post('/api/templates', { version: this.newTemplateVersion, author: this.currentUser.name });
       var newTemplate = new this.Template({version: this.newTemplateVersion, author: this.currentUser.name});
       newTemplate.$save()
       .then((data) => {

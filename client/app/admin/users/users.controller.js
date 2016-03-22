@@ -6,16 +6,9 @@ class UsersController {
 
   constructor($http, $scope, User) {
 
-  	$scope.pageTitle = 'User List';
-    	
+  	$scope.pageTitle = 'Users';
+
     this.index = User.query();
-
-
-    $('.content').css('min-height', ($(window).outerHeight() - 230));
-
-    $(window).resize(function() {
-      $('.content').css('min-height', ($(window).outerHeight() - 230));
-    });
   }
 
 }
