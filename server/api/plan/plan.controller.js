@@ -67,17 +67,23 @@ function removeEntity(res) {
 export function index(req, res) {
     Plan.findAsync({_author_id: req.user._id})
     .then(responseWithResult(res))
-    .catch(handleError(res));  
+    .catch(handleError(res));
 }
 
 // Gets a single Plan from the DB
 export function show(req, res) {
   Plan.findOne({_id: req.params.id})
-    .populate('sections')
-    .execAsync()
-    .then(handleEntityNotFound(res))
-    .then(responseWithResult(res))
-    .catch(handleError(res));
+  .populate({
+    path: 'sections',
+    model: 'PlanSection',
+    populate: {
+      path: 'focusItems',
+      model: 'FocusItem'
+    }
+  })
+  .then(handleEntityNotFound(res))
+  .then(responseWithResult(res))
+  .catch(handleError(res));
 }
 
 // Creates a new Plan in the DB

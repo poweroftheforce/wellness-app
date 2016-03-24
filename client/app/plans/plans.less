@@ -7,6 +7,10 @@
 //   }
 // }
 
+html, body {
+  font-family: 'Open Sans', sans-serif;
+}
+
 
 #plan-wrapper {
   margin: 0 auto;
@@ -55,7 +59,7 @@
 }
 #plan-edit-wrapper {
   position: relative;
-  height: 595px;
+  min-height: 595px;
   .sidebar {
     z-index: 1000;
     position: absolute;
@@ -97,8 +101,45 @@
     position: absolute;
     padding: 15px;
     // editing pages
-    .plan-page {
 
+    .nav-tabs {
+      border-bottom: none;
+    }
+
+    .nav-tabs > li > a {
+      color: #555555;
+      border: 1px solid #ddd;
+      border-bottom-color: transparent;
+      cursor: pointer;
+    }
+
+    .nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
+      color: #555555;
+      background-color: #fff;
+      border: 1px solid #ddd;
+      border-bottom-color: transparent;
+      cursor: default;
+    }
+
+    .dropdown-menu {
+      background: @seasons_green;
+      color: #ffffff;
+    }
+
+    .dropdown-menu > li > a{
+      display: block;
+      padding: 3px 20px;
+      clear: both;
+      font-weight: normal;
+      line-height: 1.42857143;
+      color: #ffffff;
+      white-space: nowrap;
+    }
+
+    .dropdown-menu > .active > a, .dropdown-menu > .active > a:hover, .dropdown-menu > .active > a:focus {
+      color: @seasons_light_green;
+      background: transparent;
+      cursor: pointer;
     }
   }
 }

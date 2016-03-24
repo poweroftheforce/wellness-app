@@ -49,6 +49,13 @@ function saveUpdates(updates) {
   };
 }
 
+function saveFocusItemsUpdates(updatedFocusItems) {
+  return function(entity) {
+    entity.focusItems = updatedFocusItems;
+    return entity.saveAsync();
+  }
+}
+
 function removeEntity(res) {
   return function(entity) {
     if (entity) {
@@ -69,7 +76,7 @@ export function index(req, res) {
 
 // Gets a single Plan Section from the DB
 export function show(req, res) {
-  PlanSection.findByIdAsync({_plan_id: req.params.plan_id, _id: req.params.id})
+  PlanSection.findOne({_plan_id: req.params.plan_id, _id: req.params.id})
     .then(handleEntityNotFound(res))
     .then(responseWithResult(res))
     .catch(handleError(res));
@@ -90,6 +97,17 @@ export function update(req, res) {
   PlanSection.findByIdAsync({_plan_id: req.params.plan_id, _id: req.params.id})
     .then(handleEntityNotFound(res))
     .then(saveUpdates(req.body))
+    .then(responseWithResult(res))
+    .catch(handleError(res));
+}
+
+export function removeFocusItems(req, res) {
+  if (req.body._id) {
+    delete req.body._id;
+  }
+  PlanSection.findByIdAsync({_plan_id: req.params.plan_id, _id: req.params.id})
+    .then(handleEntityNotFound(res))
+    .then(saveFocusItemsUpdates(req.body.focusItems))
     .then(responseWithResult(res))
     .catch(handleError(res));
 }

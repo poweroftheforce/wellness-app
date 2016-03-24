@@ -1,0 +1,108 @@
+<script type="text/ng-template" id="focusItemTypeaheadTemplate.html">
+  <a>
+      <span ng-bind-html="match.label | uibTypeaheadHighlight:query"></span>
+  </a>
+</script>
+<!-- User Input -->
+<uib-tabset>
+	<uib-tab heading="~!~~Needs name~~!~" active="true" disable="false" ng-if="section.is_editable">
+		<form class="plan-form">
+				<text-angular ng-model="section.html"></text-angular>
+
+				<button class="btn btn-seasons" ng-click="vm.saveSection(section)">Save</button>
+		</form>
+<!-- 		<form class="plan-form" ng-if="vm.planSection.html">
+				<text-angular ng-model="vm.planSection.html" required></text-angular>
+				<button class="btn btn-seasons" ng-click="vm.saveSection(vm.planSection)">Save</button>
+		</form> -->
+	</uib-tab>
+
+  <!-- Focus Items -->
+  <uib-tab heading="Focus Items" active="false" disable="false" ng-if="section.has_extras">
+  <div class="col-lg-6">
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        Available Focus Items
+      </div>
+
+      <div class="panel-body">
+        <h4 ng-hide="vm.focusItems.length > 0">You have not added any focus items yet.</h4>
+        <div ng-show="vm.focusItems.length > 0">
+          <input type="text" ng-model="vm.selectedFocusItem" placeholder="Start typing here to search" uib-typeahead="option as option.title for option in vm.focusItems | filter:{title: $viewValue} | limitTo:5" typeahead-template-url="focusItemTypeaheadTemplate.html" class="form-control">
+          <ul>
+            <li ng-repeat="item in vm.focusItems">
+              {{item.title}}
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-6">
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        Current Focus Items
+      </div>
+
+      <div class="panel-body">
+        <h4 ng-hide="section.focusItems.length > 0">You have not added any focus items yet.</h4>
+        <div ng-show="section.focusItems.length > 0">
+          <ul>
+            <li ng-repeat="item in section.focusItems">
+              <a ng-click="vm.removeFocusItem(item, section)">{{item.title}}</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+    <div class="col-md-6 col-lg-5">
+
+    </div>
+
+    <div class="col-sm-12" ng-if="vm.selectedFocusItem.title">
+      <div class="well" style="margin-top: 40px;" ng-bind-html="vm.selectedFocusItem.description"></div>
+    </div>
+
+    <div class="col-sm-12 col-lg-6 col-lg-offset-6">
+      <button ng-if="vm.selectedFocusItem.title" class="btn btn-seasons pull-right" ng-click="vm.addFocusItem(vm.selectedFocusItem,section)">Add To Section</button>
+      <button ng-if="!vm.selectedFocusItem.title" class="btn btn-seasons pull-right" ng-click="vm.saveSection(section)">Save</button>
+    </div>
+
+  </uib-tab>
+
+  <!-- Recommendations -->
+  <uib-tab heading="Recommendations" active="false" disable="false" ng-if="section.has_extras">
+    <form class="plan-form">
+      <text-angular ng-model="section.planSection.recommendations" required></text-angular>
+      <button class="btn btn-seasons" ng-click="vm.saveSection(section.planSection)">Save</button>
+    </form>
+  </uib-tab>
+
+  <!-- Nutraceuticals -->
+	<uib-tab heading="Nutraceuticals" active="false" disable="false" ng-if="section.has_extras">
+		<form class="plan-form">
+			<text-angular ng-model="vm.planSection.nutraceuticals" required></text-angular>
+      <button class="btn btn-seasons" ng-click="vm.saveSection(vm.planSection)">Save</button>
+		</form>
+	</uib-tab>
+
+  <!-- Prescriptions -->
+	<uib-tab heading="Prescriptions" active="false" disable="false" ng-if="section.has_extras">
+		<form class="plan-form">
+			<text-angular ng-model="vm.planSection.prescriptions" required></text-angular>
+      <button class="btn btn-seasons" ng-click="vm.saveSection(vm.planSection)">Save</button>
+		</form>
+	</uib-tab>
+
+  <!-- Addendums -->
+  <uib-tab heading="Addendums" active="false" disable="false" ng-if="section.has_extras">
+    <form class="plan-form">
+      <text-angular ng-model="vm.planSection.html" required></text-angular>
+      <button class="btn btn-seasons" ng-click="vm.saveSection(vm.planSection)">Save</button>
+    </form>
+  </uib-tab>
+</uib-tabset>

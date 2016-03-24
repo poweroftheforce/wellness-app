@@ -58,11 +58,23 @@
         </ul>
       </div>
       <div class="body">
-        <plan-editor ng-show="vm.templateSection" data-section="{section}"></plan-editor>
+        <section-editor ng-show="vm.templateSection" data-section="vm.templateSection.planSection" data-ctrl="vm"></section-editor>
 
         <h4 ng-show="!vm.templateSection.is_editable && !vm.templateSection.has_extras">
           Nothing to do here.  <subtext>Push to preview?<subtext>
         </h4>
+        <div class="clearfix"></div>
+        <div class="hidden" style="padding: 20px; background: #eaeaea; border: 1px solid #aaa; border-radius: 4px; margin-top: 20px;">
+          <h4>Plan</h4>
+          <p>
+            {{vm.plan.sections}}
+          </p>
+          <hr>
+          <h4>Items</h4>
+          <p>
+            {{vm.templateSection.planSection.focusItems | json}}
+          </p>
+        </div>
       </div>
     </div> <!-- End Plan Edit Wrapper -->
 

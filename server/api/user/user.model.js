@@ -14,6 +14,7 @@ var UserSchema = new Schema({
     type: String,
     default: 'user'
   },
+  cover_image_url: String,
   password: String,
   provider: String,
   salt: String

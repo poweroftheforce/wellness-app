@@ -61,9 +61,18 @@ function handleError(res, statusCode) {
 
 // Gets a list of FocusItems
 export function index(req, res) {
-  return FocusItem.find().exec()
-    .then(respondWithResult(res))
-    .catch(handleError(res));
+  // if there is a query, handle it!
+  if (req.query) {
+    return FocusItem.find(req.query).exec()
+      .then(handleEntityNotFound(res))
+      .then(respondWithResult(res))
+      .catch(handleError(res));
+  }
+  else {
+    return FocusItem.find().exec()
+      .then(respondWithResult(res))
+      .catch(handleError(res));
+  }
 }
 
 // Gets a single FocusItem from the DB
