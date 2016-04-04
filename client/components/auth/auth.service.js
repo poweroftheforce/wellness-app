@@ -88,6 +88,17 @@ function AuthService($location, $http, $cookies, $q, appConfig, Util, User, Temp
       }).$promise;
     },
 
+    /**
+     * Update User
+     *
+     * @param  {Object}   user
+     * @param  {Function} callback    - optional, function(error, user)
+     * @return {Promise}
+     */
+    updateInfo(user) {
+      return User.update(user);
+    },
+
 
     /**
      * Update section of template

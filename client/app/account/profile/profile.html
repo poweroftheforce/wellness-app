@@ -6,10 +6,10 @@
         <div class="page-header">
           <h1>{{pageTitle}}</h1>
           <p class="subheader">
-            Please enter the required informatin below.  Seasons's Wellness is responsible errors made 
+            Please enter the required information below.  Seasons Wellness is not responsible for errors made
             by the account holder.
           </p>
-        </div>      
+        </div>
       </div>
     </div>
 
@@ -17,23 +17,33 @@
     <div class="row" style="margin-bottom: 25px;">
       <div class="col-sm-12">
         <form class="form" name="infoForm" ng-submit="vm.updateInfo(infoForm)" novalidate>
-          <div class="col-sm-3"> 
-            <img ng-hide="vm.user.logo_url" src="http://www.placehold.it/250x250" alt="Upload your logo!" class="img-responsive" style="margin: 0 auto;">
-            <img ng-show="vm.user.logo_url" ng-src="vm.user.logo_url" alt="{{vm.user.company}}" class="img-responsive" style="margin: 0 auto;">
-            <input type="file">
+          <div class="col-sm-3">
+            <img ng-hide="vm.user.cover_image_url" src="http://www.placehold.it/250x323" alt="Upload your logo!" class="img-responsive" style="margin: 0 auto;">
+            <img ng-show="vm.user.cover_image_url" ng-src="{{vm.user.cover_image_url}}" alt="{{vm.user.company}}" class="img-responsive" style="margin: 0 auto;">
+            <div class="form-group">
+                <label for="cover_image_url">Plan Cover URL</label>
+                <input type="text" name="cover_image_url" id="cover_image_url" class="form-control" ng-model="vm.user.cover_image_url">
+              </div>
           </div>
           <div class="col-sm-9">
-            <div class="col-sm-6">
+            <div class="col-sm-6 col-lg-4">
               <div class="form-group">
                 <label for="firstName">First Name</label>
-                <input type="text" name="firstName" id="firstName" class="form-control" ng-model="vm.user.name.first">
+                <input type="text" name="firstName" id="firstName" class="form-control" ng-model="vm.user.firstname">
               </div>
             </div>
 
-            <div class="col-sm-6">
+            <div class="col-sm-6 col-lg-4">
               <div class="form-group">
                 <label for="lastName">Last Name</label>
-                <input type="text" name="lastName" id="lastName" class="form-control" ng-model="vm.user.name.last">
+                <input type="text" name="lastName" id="lastName" class="form-control" ng-model="vm.user.lastname">
+              </div>
+            </div>
+
+            <div class="col-sm-12 col-lg-4">
+              <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="text" name="email" id="email" class="form-control" ng-model="vm.user.email">
               </div>
             </div>
 
@@ -41,42 +51,42 @@
               <div class="form-group">
                 <label for="addr1">Address Line 1</label>
 
-                <input type="text" name="addr1" id="addr1" class="form-control" ng-model="vm.user.address.street1">
+                <input type="text" name="addr1" id="addr1" class="form-control" ng-model="vm.user.address1">
               </div>
             </div>
             <div class="col-sm-12">
               <div class="form-group">
                 <label for="addr2">Address Line 2</label>
 
-                <input type="text" name="addr2" id="addr2" class="form-control" ng-model="vm.user.address.street2">
+                <input type="text" name="addr2" id="addr2" class="form-control" ng-model="vm.user.address2">
               </div>
             </div>
 
             <div class="col-sm-6">
               <div class="form-group">
                 <label for="state">State</label>
-                <input type="text" name="state" id="state" class="form-control" ng-model="vm.user.address.state">
+                <input type="text" name="state" id="state" class="form-control" ng-model="vm.user.state">
               </div>
             </div>
 
             <div class="col-sm-6">
               <div class="form-group">
                 <label for="zip">Zip Code</label>
-                <input type="text" name="zip" id="zip" class="form-control" ng-model="vm.user.address.zip">
+                <input type="text" name="zip" id="zip" class="form-control" ng-model="vm.user.zip">
               </div>
             </div>
 
             <div class="col-sm-6">
               <div class="form-group">
                 <label for="phone">Phone</label>
-                <input type="text" name="phone" id="phone" class="form-control" ng-model="vm.user.phone.mobile">
+                <input type="text" name="phone" id="phone" class="form-control" ng-model="vm.user.phone">
               </div>
             </div>
 
             <div class="col-sm-6">
               <div class="form-group">
                 <label for="altPhone">Alternate Phone</label>
-                <input type="text" name="altPhone" id="altPhone" class="form-control" ng-model="vm.user.phone.alt">
+                <input type="text" name="altPhone" id="altPhone" class="form-control" ng-model="vm.user.alt_phone">
               </div>
             </div>
             <div class="col-sm-12">

@@ -10,12 +10,24 @@
  * App-wide Styles
  */
 
- body {
+html, body {
+  font-family: 'Open Sans', sans-serif;
+}
+
+ .site-bg {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
   background: url(../assets/images/seasons_backdrop_2.jpg);
-    background-repeat: no-repeat;
-    background-position: center top;
-    background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center top;
+  background-size: cover;
+  transition: all 0.4s;
  }
+
+
 
 .browserupgrade {
   margin: 0.2em 0;

@@ -61,9 +61,16 @@
         <section-editor ng-show="vm.templateSection" data-section="vm.templateSection.planSection" data-ctrl="vm"></section-editor>
 
         <h4 ng-show="!vm.templateSection.is_editable && !vm.templateSection.has_extras">
-          Nothing to do here.  <subtext>Push to preview?<subtext>
+          <div class="well" ng-bind-html="vm.templateSection.html">
+
+          </div>
         </h4>
+
         <div class="clearfix"></div>
+
+        <div class="row">
+          <button class="btn-warning" style="margin-top: 10px;" ng-click="vm.logSection(section)">debug</button>
+        </div>
         <div class="hidden" style="padding: 20px; background: #eaeaea; border: 1px solid #aaa; border-radius: 4px; margin-top: 20px;">
           <h4>Plan</h4>
           <p>

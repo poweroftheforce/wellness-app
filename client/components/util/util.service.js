@@ -47,6 +47,38 @@ function UtilService($window) {
           url.protocol === o.protocol;
       });
       return (origins.length >= 1);
+    },
+
+    /**
+     * Slide out old background and slide in new one.
+     *
+     * @param  {String}           url       - url of new image
+     */
+    changeBackground() {
+      var backgrounds = ['url(../assets/images/seasons_backdrop_1.jpg)','url(../assets/images/seasons_backdrop_2.jpg)','url(../assets/images/seasons_backdrop_3.jpg)'];
+
+
+      // gets current background
+      var bg = $('.site-bg').css('background-image');
+
+
+      // finds index of current background
+      var idx = bg.split('backdrop_')[1][0] - 1;
+
+      // increases or resets index of background
+      if (idx < backgrounds.length - 1) {
+        console.log(idx);
+        console.log('need to increase');
+        idx++;
+      }
+
+      else {
+        console.log(idx);
+        console.log('need to decrease');
+        idx = 0;
+      }
+
+      $('.site-bg').css('background-image', backgrounds[idx]);
     }
 
 

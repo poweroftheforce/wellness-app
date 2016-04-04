@@ -5,7 +5,8 @@ var mongoose = require('bluebird').promisifyAll(require('mongoose'));
 import {Schema} from 'mongoose';
 
 var UserSchema = new Schema({
-  name: String,
+  firstname: String,
+  lastname: String,
   email: {
     type: String,
     lowercase: true
@@ -17,7 +18,13 @@ var UserSchema = new Schema({
   cover_image_url: String,
   password: String,
   provider: String,
-  salt: String
+  salt: String,
+  address1: String,
+  address2: String,
+  state: String,
+  zip: Number,
+  phone: String,
+  alt_phone: String
 });
 
 /**
@@ -29,7 +36,7 @@ UserSchema
   .virtual('profile')
   .get(function() {
     return {
-      'name': this.name,
+      'name': this.firstname,
       'role': this.role
     };
   });

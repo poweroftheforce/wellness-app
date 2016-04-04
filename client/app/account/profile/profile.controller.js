@@ -6,13 +6,13 @@ class ProfileController {
   submitted = false;
   //end-non-standard
 
-  constructor(Auth, $scope) {
+  constructor(Auth, $scope, User) {
     this.Auth = Auth;
+    this.User = User;
+    this.user = Auth.getCurrentUser();
 
     $scope.pageTitle = 'My Profile';
   }
-
-  
 
   changePassword(form) {
     this.submitted = true;
@@ -32,7 +32,8 @@ class ProfileController {
 
   updateInfo(form) {
     this.submitted = true;
-    console.log(form);
+    console.log(this.user);
+    this.Auth.updateInfo(this.user);
   }
 }
 

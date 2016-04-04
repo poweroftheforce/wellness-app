@@ -4,24 +4,24 @@
 
 class MainController {
 
-  constructor($http, $state, Auth, Template, Plan, PlanSection, template_sections) {
+  constructor($http, $state, Auth, Template, Plan, PlanSection, plans) {
     this.$http = $http;
     this.$state = $state;
-    this.user = Auth.getCurrentUser();
-    this.myPlans = [];
-    this.Template = Template;
-    this.template_sections = template_sections;
-    this.Plan = Plan;
-    this.PlanSection = PlanSection;
-    this.sections = [];
-    this.newPlanModel = {patient: {name: {first: 'J', last: 'Rhyne'}, dob: '10-1-80'}};
-    this.pageTitle = 'Dashboard';
-    this.viewing = true;
-    this.activeSection;
 
-    $http.get('/api/plans').then(response => {
-      this.myPlans = response.data;
-    });
+    this.Plan = Plan;
+    this.Template = Template;
+
+    this.pageTitle = 'Dashboard';
+    this.user = Auth.getCurrentUser();
+    this.plans = plans;
+
+
+    // this.template_sections = template_sections;
+    this.newPlanModel = {patient: {name: {first: 'John', last: 'Doe'}, dob: '01-01-76'}};
+
+    // $http.get('/api/plans').then(response => {
+    //   this.myPlans = response.data;
+    // });
   }
 
   addPlan(form) {

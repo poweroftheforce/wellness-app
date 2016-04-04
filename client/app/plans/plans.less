@@ -7,11 +7,6 @@
 //   }
 // }
 
-html, body {
-  font-family: 'Open Sans', sans-serif;
-}
-
-
 #plan-wrapper {
   margin: 0 auto;
   width: 8.5in;
@@ -140,6 +135,49 @@ html, body {
       color: @seasons_light_green;
       background: transparent;
       cursor: pointer;
+    }
+    ul.focus-items {
+      list-style: none;
+      padding: 0;
+      li.focus-item {
+        margin: 7px;
+        display: inline-block;
+        a {
+          border-radius: 6px;
+          display: block;
+          background: @seasons_green;
+          color: #fff;
+          padding: 5px 10px;
+          text-decoration: none;
+          cursor: pointer;
+        }
+        a:hover {
+          color: @seasons_light_green;
+        }
+      }
+    }
+
+    .focus-items-search {
+      margin-bottom: 15px;
+    }
+
+    .focus-items-wrapper {
+      max-height: 350px;
+      overflow-y: scroll;
+    }
+
+    .focus-items-table {
+
+    }
+
+    .panel-seasons {
+      border-color: @seasons_green;
+
+      .panel-heading {
+        color: #fff;
+        background-color: @seasons_green;
+        border-color: @seasons_green;
+      }
     }
   }
 }

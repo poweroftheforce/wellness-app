@@ -10,10 +10,15 @@ class PlanSection{
     	update: {
     		method: 'PUT'
     	},
-      updateItems: {
-        method: 'PUT',
-        url: '/api/plans/:plan_id/sections/:id/focusItems',
-        isArray: true
+      addFocusItem: {
+        method: 'POST',
+        url: '/api/plans/:plan_id/sections/:id/focusItems/:focusItem_id',
+        // isArray: true
+      },
+      removeFocusItem: {
+        method: 'DELETE',
+        url: '/api/plans/:plan_id/sections/:id/focusItems/:focusItem_id',
+        // isArray: true
       }
     });
 	}

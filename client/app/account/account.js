@@ -4,7 +4,7 @@ angular.module('wellnessPlanApp')
   .config(function($stateProvider) {
     $stateProvider
       .state('login', {
-        url: '/',
+        url: '/login',
         templateUrl: 'app/account/login/login.html',
         controller: 'LoginController',
         controllerAs: 'vm'

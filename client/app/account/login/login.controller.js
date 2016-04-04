@@ -7,14 +7,19 @@ class LoginController {
   submitted = false;
   //end-non-standard
 
-  constructor(Auth, $state) {
+  constructor(Auth, $state, Util) {
     this.Auth = Auth;
+    this.Util = Util;
     this.$state = $state;
 
     // Already logged in, redirect to dashboard
     if (this.Auth.isLoggedIn()) {
       this.$state.go('dashboard');
     }
+
+    setInterval(function() {
+      Util.changeBackground();
+    }, 5000)
   }
 
   login(form) {

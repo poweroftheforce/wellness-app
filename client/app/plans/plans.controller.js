@@ -25,6 +25,51 @@ class PlansController {
     this.page = 1;
   }
 
+  activate(plan) {
+    var self = this;
+    this.plan = plan;
+    var c_id = this.$cookies.get('ts-id');
+    this.templateSection = this.templateSections[0];
+
+    // link existing plan sections to template sections
+    for (var i=0;i<this.templateSections.length;i++) {
+
+      var section = this.templateSections[i];
+      // If the user has a cookie for last edited section...
+      if (c_id) {
+        // We need that section to be the active section
+        if ( this.templateSections[i]._id == c_id ) {
+          this.templateSection = this.templateSections[i];
+        }
+      }
+
+      // link any plan sections to their templates
+      section.planSection = this.plan.sections.filter(function(val) {return val.title == section.title} )[0];
+      // Add basic info for new sections.
+      if (!section.planSection) {
+        section.planSection = {
+          title: section.title,
+          intro: section.html,
+          _plan_id: this.plan._id,
+          addendums: [],
+          focusItems: []
+        }
+      }
+      // Add editor refs
+      section.planSection.is_editable = section.is_editable;
+      section.planSection.has_extras = section.has_extras;
+    }
+
+    // This is probably the worst way to do this =/
+    if (this.templateSection.has_extras && !this.focusItems) {
+      this.getExtras(this.templateSection.title);
+    }
+  }
+
+  logSection(section) {
+    console.log(section);
+  }
+
   /*
    *  Editor Functions
    *
@@ -37,10 +82,10 @@ class PlansController {
     .then((newSection) => {
       this.plan.sections.push(newSection._id); // this.plan.sections.push(newSection) => same result, larger request?
       this.plan.$update()
-      .then(() => {
+      .then((data) => {
         // this.$cookies.put('current-ts', this.currentSection._id);
         if (cb) {
-           cb();
+           cb(data);
         }
       });
     })
@@ -80,45 +125,6 @@ class PlansController {
     this.$cookies.put('ts-id', section._id);
   }
 
-  activate(plan) {
-    var self = this;
-    this.plan = plan;
-    var c_id = this.$cookies.get('ts-id');
-    this.templateSection = this.templateSections[0];
-
-    // link existing plan sections to template sections
-    for (var i=0;i<this.templateSections.length;i++) {
-
-      var section = this.templateSections[i];
-      // If the user has a cookie for last edited section...
-      if (c_id) {
-        // We need that section to be the active section
-        if ( this.templateSections[i]._id == c_id ) {
-          this.templateSection = this.templateSections[i];
-        }
-      }
-
-      // link any plan sections to their templates
-      section.planSection = this.plan.sections.filter(function(val) {return val.title == section.title} )[0];
-      // Add basic info for new sections.
-      if (!section.planSection) {
-        section.planSection = {
-          title: section.title,
-          intro: section.html,
-          _plan_id: this.plan._id
-        }
-      }
-      // Add editor refs
-      section.planSection.is_editable = section.is_editable;
-      section.planSection.has_extras = section.has_extras;
-    }
-
-    // This is probably the worst way to do this =/
-    if (this.templateSection.has_extras) {
-      this.getExtras(this.templateSection.title);
-    }
-  }
-
   getExtras(section) {
     var self = this;
     var query = {};
@@ -130,32 +136,27 @@ class PlansController {
   }
 
   addFocusItem(item, section) {
-    if (section.focusItems) {
-      section.focusItems.push(item._id);
-      this.saveSection(section);
+    var self = this;
+    // What if the section hasn't been added yet? =[
+
+    if (section._id) {
+      this.PlanSection.addFocusItem({plan_id: section._plan_id, id: section._id, focusItem_id: item._id }, item, function(data) {
+        self.activate(data);
+      });
     }
     else {
-      section.focusItems = [];
-      section.focusItems.push(item._id);
-      this.saveSection(section);
+      section.focusItems.push(item);
+      this.addSection(section, function(res) {
+
+      });
     }
-    this.selectedFocusItem = undefined;
   }
 
   removeFocusItem(item, section) {
-
-    console.log(section);
-
-    var index = section.focusItems.indexOf(item);
-      if (index > -1) {
-        section.focusItems.splice(index, 1);
-      }
-    // this takes a special update call.
-    this.PlanSection.updateItems({plan_id: section._plan_id, id: section._id}, section);
-
-
-
-    console.log('removed ' + item.title); // TOASTRRRRRR
+    var self = this;
+    this.PlanSection.removeFocusItem({plan_id: section._plan_id, id: section._id, focusItem_id: item._id}, function(data) {
+      self.activate(data);
+    });
   }
 
   /*

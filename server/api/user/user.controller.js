@@ -4,12 +4,39 @@ import User from './user.model';
 import passport from 'passport';
 import config from '../../config/environment';
 import jwt from 'jsonwebtoken';
+import _ from 'lodash';
 
 function validationError(res, statusCode) {
   statusCode = statusCode || 422;
   return function(err) {
     res.status(statusCode).json(err);
   }
+}
+
+function respondWithResult(res, statusCode) {
+  statusCode = statusCode || 200;
+  return function(entity) {
+    if (entity) {
+      res.status(statusCode).json(entity);
+    }
+  };
+}
+
+function handleEntityNotFound(res) {
+  return function(entity) {
+    if (!entity) {
+      res.status(404).end();
+      return null;
+    }
+    return entity;
+  };
+}
+
+function handleError(res, statusCode) {
+  statusCode = statusCode || 500;
+  return function(err) {
+    res.status(statusCode).send(err);
+  };
 }
 
 function handleError(res, statusCode) {
@@ -23,6 +50,17 @@ function respondWith(res, statusCode) {
   statusCode = statusCode || 200;
   return function() {
     res.status(statusCode).end();
+  };
+}
+
+function saveUpdates(updates) {
+  console.log(entity);
+  return function(entity) {
+    var updated = _.merge(entity, updates);
+    return updated.save()
+      .then(updated => {
+        return updated;
+      });
   };
 }
 
@@ -69,6 +107,24 @@ export function show(req, res, next) {
       res.json(user.profile);
     })
     .catch(err => next(err));
+}
+
+/**
+ * Update a user
+ */
+export function updateInfo(req, res, next) {
+  var userId = req.user._id;
+
+  User.findByIdAsync(userId)
+    .then(user => {
+
+      var updated = _.merge(user, req.body);
+        return user.saveAsync()
+          .then(() => {
+            res.status(204).end();
+          })
+          .catch(validationError(res));
+    });
 }
 
 /**

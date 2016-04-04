@@ -16,7 +16,7 @@ angular.module('wellnessPlanApp', [
 ])
   .config(function($urlRouterProvider, $locationProvider) {
     $urlRouterProvider
-      .otherwise('/');
+      .otherwise('/login');
 
     $locationProvider.html5Mode(true);
 });

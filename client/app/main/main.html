@@ -30,7 +30,7 @@
 
 
     <div id="plans-table" class="row" ng-hide="vm.plan.patient">
-      <div class="col-sm-12" ng-show="vm.myPlans.length > 0">
+      <div class="col-sm-12" ng-show="vm.plans.length > 0">
         <table class="table table-bordered table-striped table-condensed table-hover table-responsive">
             <thead>
               <th>Patient Name</th>
@@ -39,7 +39,7 @@
               <th colspan="3">Options</th>
             </thead>
             <tbody>
-              <tr ng-repeat="plan in vm.myPlans">
+              <tr ng-repeat="plan in vm.plans">
                 <td><a ui-sref="plan({id: plan._id})">{{plan.patient.name.last}}, {{plan.patient.name.first}}</a></td>
                 <td>{{plan.patient.dob}}</td>
                 <td><span am-time-ago="plan.createdAt"></span></td>
@@ -48,7 +48,7 @@
             </tbody>
           </table>
       </div>
-      <div class="col-sm-12" ng-hide="vm.myPlans.length > 0">
+      <div class="col-sm-12" ng-hide="vm.plans.length > 0">
         <h5 style="text-align: center;">You have not created any plans.</h5>
         <h5 style="text-align: center;">Enter a patient's details below to create your first plan!</h5>
       </div>

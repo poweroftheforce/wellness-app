@@ -49,10 +49,46 @@ function saveUpdates(updates) {
   };
 }
 
-function saveFocusItemsUpdates(updatedFocusItems) {
+function addItem(updatedFocusItem) {
   return function(entity) {
-    entity.focusItems = updatedFocusItems;
-    return entity.saveAsync();
+    // entity.focusItems = updatedFocusItems;
+    console.log(updatedFocusItem._id);
+    // return entity.saveAsync();
+    entity.focusItems.push(updatedFocusItem);
+    return entity.saveAsync()
+    .then((data) => {
+      return Plan.findOne({_id: entity._plan_id})
+      .populate({
+        path: 'sections',
+        model: 'PlanSection',
+        populate: {
+          path: 'focusItems',
+          model: 'FocusItem'
+        }
+      })
+    });
+  }
+}
+
+function removeItem(body, params) {
+  return function(entity) {
+    console.log(params.focusItem_id);
+    var index = entity.focusItems.indexOf(params.focusItem_id);
+
+    entity.focusItems.splice(index, 1);
+
+    return entity.saveAsync()
+    .then((data) => {
+      return Plan.findOne({_id: entity._plan_id})
+      .populate({
+        path: 'sections',
+        model: 'PlanSection',
+        populate: {
+          path: 'focusItems',
+          model: 'FocusItem'
+        }
+      })
+    });
   }
 }
 
@@ -101,13 +137,17 @@ export function update(req, res) {
     .catch(handleError(res));
 }
 
-export function removeFocusItems(req, res) {
-  if (req.body._id) {
-    delete req.body._id;
-  }
+export function addFocusItem(req, res) {
   PlanSection.findByIdAsync({_plan_id: req.params.plan_id, _id: req.params.id})
     .then(handleEntityNotFound(res))
-    .then(saveFocusItemsUpdates(req.body.focusItems))
+    .then(addItem(req.body))
+    .then(responseWithResult(res))
+    .catch(handleError(res));
+}
+
+export function removeFocusItem(req, res) {
+  PlanSection.findByIdAsync({_plan_id: req.params.plan_id, _id: req.params.id})
+    .then(removeItem(req.body, req.params))
     .then(responseWithResult(res))
     .catch(handleError(res));
 }
