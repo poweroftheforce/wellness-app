@@ -4,7 +4,7 @@
 
 class PlansController {
 
-  constructor($state, $cookies, Auth, plan, latestTemplate, Plan, PlanSection, $http, FocusItem) {
+  constructor($state, $cookies, Auth, plan, latestTemplate, Plan, PlanSection, $http, FocusItem, Addendum) {
     this.$state = $state;
     this.$cookies = $cookies;
     this.$http = $http;
@@ -12,12 +12,14 @@ class PlansController {
     this.PlanSection = PlanSection;
     this.Plan = Plan;
     this.FocusItem = FocusItem;
+    this.Addendum = Addendum;
     this.pageTitle = 'Wellness Plan';
     this.previewPages;
     this.currentPreviewPage;
     this.planSections;
     this.planSection = {};
     this.focusItems;
+    this.addendums;
     this.templateSections = latestTemplate.sections;
     this.viewing = false;
     this.itemSelected = false;
@@ -61,7 +63,7 @@ class PlansController {
     }
 
     // This is probably the worst way to do this =/
-    if (this.templateSection.has_extras && !this.focusItems) {
+    if (this.templateSection.has_extras && !this.focusItems || this.templateSection.has_extras && !this.addendums) {
       this.getExtras(this.templateSection.title);
     }
   }
@@ -133,6 +135,7 @@ class PlansController {
 
     query[section.toLowerCase()] = true;
     self.focusItems = self.FocusItem.query(query);
+    self.addendums = self.Addendum.query(query);
   }
 
   addFocusItem(item, section) {
@@ -155,6 +158,29 @@ class PlansController {
   removeFocusItem(item, section) {
     var self = this;
     this.PlanSection.removeFocusItem({plan_id: section._plan_id, id: section._id, focusItem_id: item._id}, function(data) {
+      self.activate(data);
+    });
+  }
+
+  addAddendum(item, section) {
+    var self = this;
+
+    if (section._id) {
+      this.PlanSection.addAddendum({plan_id: section._plan_id, id: section._id, addendum_id: item._id }, item, function(data) {
+        self.activate(data);
+      });
+    }
+    else {
+      section.addendums.push(item);
+      this.addSection(section, function(res) {
+
+      });
+    }
+  }
+
+  removeAddendum(item, section) {
+    var self = this;
+    this.PlanSection.removeAddendum({plan_id: section._plan_id, id: section._id, addendum_id: item._id}, function(data) {
       self.activate(data);
     });
   }

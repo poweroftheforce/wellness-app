@@ -55,13 +55,6 @@ angular.module('wellnessPlanApp.admin')
         controllerAs: 'vm',
         authenticate: 'admin'
       })
-      .state('addendums', {
-        url: '/admin/addendums',
-        templateUrl: 'app/admin/addendums/addendums.html',
-        controller: 'AddendumsController',
-        controllerAs: 'vm',
-        authenticate: 'admin'
-      })
       .state('references', {
         url: '/admin/references',
         templateUrl: 'app/admin/references/references.html',
@@ -78,6 +71,18 @@ angular.module('wellnessPlanApp.admin')
           }
         },
         controller: 'FocusItemsController',
+        controllerAs: 'vm',
+        authenticate: 'admin'
+      })
+      .state('addendums', {
+        url: '/admin/addendums',
+        templateUrl: 'app/admin/addendums/addendums.html',
+        resolve: {
+          addendums: function(Addendum) {
+            return Addendum.query();
+          }
+        },
+        controller: 'AddendumsController',
         controllerAs: 'vm',
         authenticate: 'admin'
       });

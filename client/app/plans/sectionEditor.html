@@ -97,9 +97,52 @@
 
   <!-- Addendums -->
   <uib-tab heading="Addendums" active="false" disable="false" ng-if="section.has_extras">
-    <form class="plan-form">
-      <text-angular ng-model="vm.planSection.html" required></text-angular>
-      <button class="btn btn-seasons" ng-click="vm.saveSection(vm.planSection)">Save</button>
-    </form>
+  <div class="col-lg-6">
+      <div class="panel panel-seasons">
+        <div class="panel-heading">
+          Available Addendums
+        </div>
+
+        <div class="panel-body">
+          <input style="margin-top: 10px;" type="text" ng-model="vm.selectedAddendum" placeholder="Start typing here to search" uib-typeahead="option as option.title for option in vm.addendums | filter:{title: $viewValue} | limitTo:5" typeahead-template-url="focusItemTypeaheadTemplate.html" class="form-control focus-items-search">
+          <h4 ng-hide="vm.addendums.length > 0">You have not added any addendums yet. </h4>
+          <div ng-show="vm.addendums.length > 0" class="focus-items-wrapper">
+            <table class="focus-items-table table table-bordered table-condensed table-hover">
+              <tr class="focus-item available-focus-item" ng-repeat="item in vm.addendums">
+                <td><a href="#" ng-click="vm.selectedAddendum = item">{{item.title}}</a></td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-6">
+      <div class="panel panel-seasons">
+        <div class="panel-heading">
+          Current Addendums
+        </div>
+
+        <div class="panel-body">
+          <h4 ng-hide="section.Addendums.length > 0">You have not added any addendums yet.</h4>
+          <div ng-show="section.Addendums.length > 0">
+            <table class="focus-items-table table table-bordered table-condensed table-hover">
+              <tr class="focus-item available-focus-item" ng-repeat="item in section.Addendums">
+                <td><a href="#" ng-click="vm.removeAddendum(item, section)">{{item.title}}</a></td>
+              </tr>
+            </table>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="col-sm-12" ng-if="vm.selectedAddendum.title">
+      <div class="well" style="margin-top: 40px;" ng-bind-html="vm.selectedAddendum.description"></div>
+    </div>
+
+    <div class="col-sm-12 col-lg-6 col-lg-offset-6">
+      <button ng-if="vm.selectedAddendum.title" class="btn btn-seasons pull-right" ng-click="vm.addAddendum(vm.selectedAddendum,section); vm.selectedAddendum={title: ''}">Add To Section</button>
+
+    </div>
   </uib-tab>
 </uib-tabset>

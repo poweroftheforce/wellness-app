@@ -12,13 +12,19 @@ class PlanSection{
     	},
       addFocusItem: {
         method: 'POST',
-        url: '/api/plans/:plan_id/sections/:id/focusItems/:focusItem_id',
-        // isArray: true
+        url: '/api/plans/:plan_id/sections/:id/focusItems/:focusItem_id'
       },
       removeFocusItem: {
         method: 'DELETE',
-        url: '/api/plans/:plan_id/sections/:id/focusItems/:focusItem_id',
-        // isArray: true
+        url: '/api/plans/:plan_id/sections/:id/focusItems/:focusItem_id'
+      },
+      addAddendum: {
+        method: 'POST',
+        url: '/api/plans/:plan_id/sections/:id/addendums/:addendum_id'
+      },
+      removeAddendum: {
+        method: 'DELETE',
+        url: '/api/plans/:plan_id/sections/:id/addendums/:addendum_id'
       }
     });
 	}

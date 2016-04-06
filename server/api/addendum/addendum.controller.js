@@ -10,20 +10,34 @@
 'use strict';
 
 import _ from 'lodash';
-var Addendum = require('./addendum.model');
+import Addendum from './addendum.model';
 
-function handleError(res, statusCode) {
-  statusCode = statusCode || 500;
-  return function(err) {
-    res.status(statusCode).send(err);
-  };
-}
-
-function responseWithResult(res, statusCode) {
+function respondWithResult(res, statusCode) {
   statusCode = statusCode || 200;
   return function(entity) {
     if (entity) {
       res.status(statusCode).json(entity);
+    }
+  };
+}
+
+function saveUpdates(updates) {
+  return function(entity) {
+    var updated = _.merge(entity, updates);
+    return updated.save()
+      .then(updated => {
+        return updated;
+      });
+  };
+}
+
+function removeEntity(res) {
+  return function(entity) {
+    if (entity) {
+      return entity.remove()
+        .then(() => {
+          res.status(204).end();
+        });
     }
   };
 }
@@ -38,46 +52,41 @@ function handleEntityNotFound(res) {
   };
 }
 
-function saveUpdates(updates) {
-  return function(entity) {
-    var updated = _.merge(entity, updates);
-    return updated.saveAsync()
-      .spread(updated => {
-        return updated;
-      });
+function handleError(res, statusCode) {
+  statusCode = statusCode || 500;
+  return function(err) {
+    res.status(statusCode).send(err);
   };
 }
 
-function removeEntity(res) {
-  return function(entity) {
-    if (entity) {
-      return entity.removeAsync()
-        .then(() => {
-          res.status(204).end();
-        });
-    }
-  };
-}
-
-// Gets a list of PredefinedMaterials
+// Gets a list of Addendums
 export function index(req, res) {
-  Addendum.findAsync()
-    .then(responseWithResult(res))
-    .catch(handleError(res));
+  // if there is a query, handle it!
+  if (req.query) {
+    return Addendum.find(req.query).exec()
+      .then(handleEntityNotFound(res))
+      .then(respondWithResult(res))
+      .catch(handleError(res));
+  }
+  else {
+    return Addendum.find().exec()
+      .then(respondWithResult(res))
+      .catch(handleError(res));
+  }
 }
 
 // Gets a single Addendum from the DB
 export function show(req, res) {
-  Addendum.findByIdAsync(req.params.id)
+  return Addendum.findById(req.params.id).exec()
     .then(handleEntityNotFound(res))
-    .then(responseWithResult(res))
+    .then(respondWithResult(res))
     .catch(handleError(res));
 }
 
 // Creates a new Addendum in the DB
 export function create(req, res) {
-  Addendum.createAsync(req.body)
-    .then(responseWithResult(res, 201))
+  return Addendum.create(req.body)
+    .then(respondWithResult(res, 201))
     .catch(handleError(res));
 }
 
@@ -86,16 +95,16 @@ export function update(req, res) {
   if (req.body._id) {
     delete req.body._id;
   }
-  Addendum.findByIdAsync(req.params.id)
+  return Addendum.findById(req.params.id).exec()
     .then(handleEntityNotFound(res))
     .then(saveUpdates(req.body))
-    .then(responseWithResult(res))
+    .then(respondWithResult(res))
     .catch(handleError(res));
 }
 
 // Deletes a Addendum from the DB
 export function destroy(req, res) {
-  Addendum.findByIdAsync(req.params.id)
+  return Addendum.findById(req.params.id).exec()
     .then(handleEntityNotFound(res))
     .then(removeEntity(res))
     .catch(handleError(res));
