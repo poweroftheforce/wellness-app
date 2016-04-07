@@ -6,12 +6,19 @@ import * as auth from '../../auth/auth.service';
 
 var router = new Router();
 
-router.get('/', auth.hasRole('admin'), controller.index);
+// router.get('/', auth.hasRole('admin'), controller.index);
+router.get('/', controller.index);
 router.delete('/:id', auth.hasRole('admin'), controller.destroy);
 router.get('/me', auth.isAuthenticated(), controller.me);
 router.put('/:id/password', auth.isAuthenticated(), controller.changePassword);
 router.put('/:id', auth.isAuthenticated(), controller.updateInfo);
-router.get('/:id', auth.isAuthenticated(), controller.show);
+// router.get('/:id', auth.isAuthenticated(), controller.show);
+router.get('/:id', controller.show);
 router.post('/', auth.hasRole('admin'), controller.create);
+
+// Custom Routes
+router.post('/me/pharmacies', auth.isAuthenticated(), controller.addPharmacy);
+router.post('/me/stores', auth.isAuthenticated(), controller.addStore);
+router.post('/me/networks', auth.isAuthenticated(), controller.addNetwork);
 
 export default router;

@@ -17,4 +17,7 @@ router.delete('/:id', auth.isAuthenticated(), controller.destroy);
 router.post('/:id/focusItems/:focusItem_id', auth.isAuthenticated(), controller.addFocusItem);
 router.delete('/:id/focusItems/:focusItem_id', auth.isAuthenticated(), controller.removeFocusItem);
 
+router.post('/:id/addendums/:addendum_id', auth.isAuthenticated(), controller.addAddendum);
+router.delete('/:id/addendums/:addendum_id', auth.isAuthenticated(), controller.removeAddendum);
+
 export default router;

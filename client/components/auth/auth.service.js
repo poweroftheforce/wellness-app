@@ -99,6 +99,48 @@ function AuthService($location, $http, $cookies, $q, appConfig, Util, User, Temp
       return User.update(user);
     },
 
+    addPharmacyToUser(user, pharmacy) {
+      if (user.pharmacies) {
+        user.pharmacies.push(pharmacy);
+      }
+      else {
+        user.pharmacies = [];
+        user.pharmacies.push(pharmacy);
+      }
+      return User.addPharmacy(pharmacy);
+    },
+    removePharmacyFromUser(user, pharmacy) {
+      return User.removePharmacy(pharmacy);
+    },
+
+    addStoreToUser(user, store) {
+      if (user.stores) {
+        user.stores.push(store);
+      }
+      else {
+        user.stores = [];
+        user.stores.push(store);
+      }
+      return User.addStore(store);
+    },
+    removeStoreFromUser(user, store) {
+      return User.removeStore(store);
+    },
+
+    addNetworkToUser(user, network) {
+      if (user.networks) {
+        user.networks.push(network);
+      }
+      else {
+        user.networks = [];
+        user.networks.push(network);
+      }
+      return User.addNetwork(network);
+    },
+    removeNetworkFromUser(user, network) {
+      return User.removeNetwork(network);
+    },
+
 
     /**
      * Update section of template

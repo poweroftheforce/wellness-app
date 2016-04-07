@@ -98,6 +98,127 @@
       </div>
 
       <div class="col-sm-12">
+        <hr>
+        <h3>Pharmacy List</h3>
+        <div ng-show="vm.user.pharmacies.length < 1" class="panel panel-warning">
+          <div class="panel-heading">
+            <h5>You have not added any pharmacies.</h5>
+          </div>
+        </div>
+        <form ng-submit="vm.addPharmacy(vm.newPharmacy)" class="form">
+          <table class="table table-condensed table-hover table-bordered">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Phone</th>
+                <th>Fax</th>
+                <th>Email</th>
+                <th>Contact</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="pharmacy in vm.user.pharmacies">
+                <td>{{pharmacy.name}}</td>
+                <td>{{pharmacy.phone}}</td>
+                <td>{{pharmacy.fax}}</td>
+                <td>{{pharmacy.email}}</td>
+                <td>{{pharmacy.contact}}</td>
+              </tr>
+              <tr>
+                <td>
+                  <input type="text" name="pharmacy_name" placeholder="Name" ng-model="vm.newPharmacy.name" class="form-control">
+                </td>
+                <td>
+                  <input type="text" name="pharmacy_phone" placeholder="Phone" ng-model="vm.newPharmacy.phone" class="form-control">
+                </td>
+                <td>
+                  <input type="text" name="pharmacy_fax" placeholder="Fax" ng-model="vm.newPharmacy.fax" class="form-control">
+                </td>
+                <td>
+                  <input type="text" name="pharmacy_email" placeholder="Email" ng-model="vm.newPharmacy.email" class="form-control">
+                </td>
+                <td>
+                  <input type="text" name="pharmacy_contact" placeholder="Contact" ng-model="vm.newPharmacy.contact" class="form-control">
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <button class="btn btn-seasons pull-right" type="submit">Add Pharmacy</button>
+        </form>
+      </div>
+
+      <div class="col-sm-12">
+        <hr>
+        <h3>Supplement Store</h3>
+        <div ng-show="vm.user.stores.length < 1" class="panel panel-warning">
+          <div class="panel-heading">
+            <h5>You have not added any supplement stores yet.</h5>
+          </div>
+        </div>
+
+        <form ng-submit="vm.addStore(vm.newStore)" class="form">
+          <table class="table table-condensed table-hover table-bordered">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>URL</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="store in vm.user.stores">
+                <td>{{store.name}}</td>
+                <td>{{store.url}}</td>
+              </tr>
+              <tr>
+                <td>
+                  <input type="text" name="store_name" placeholder="Name" ng-model="vm.newStore.name" class="form-control">
+                </td>
+                <td>
+                  <input type="text" name="store_url" placeholder="URL" ng-model="vm.newStore.url" class="form-control">
+                </td>
+              </form>
+            </tbody>
+          </table>
+          <button class="btn btn-seasons pull-right" type="submit">Add Store</button>
+        </form>
+      </div>
+
+      <div class="col-sm-12">
+        <hr>
+        <h3>Social Networks</h3>
+        <div ng-show="vm.user.networks.length < 1" class="panel panel-warning">
+          <div class="panel-heading">
+            <h5>You have not added any social networks.</h5>
+          </div>
+        </div>
+        <form ng-submit="vm.addNetwork(vm.newNetwork)" class="form">
+        <table class="table table-condensed table-hover table-bordered">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>URL</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="network in vm.user.networks">
+              <td>{{network.name}}</td>
+              <td>{{network.url}}</td>
+            </tr>
+            <tr>
+              <td>
+                <input type="text" name="network_name" placeholder="Name" ng-model="vm.newNetwork.name" class="form-control">
+              </td>
+              <td>
+                <input type="text" name="network_url" placeholder="URL" ng-model="vm.newNetwork.url" class="form-control">
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <button class="btn btn-seasons pull-right" type="submit">Add Network</button>
+       </form>
+      </div>
+
+      <div ng-if="false" class="col-sm-12">
         <h3>Update Password</h3>
         <form class="form" name="passwordForm" ng-submit="vm.changePassword(passwordForm)" novalidate>
           <div class="col-sm-4">

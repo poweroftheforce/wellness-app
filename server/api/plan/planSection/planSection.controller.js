@@ -61,10 +61,24 @@ function addItem(updatedFocusItem) {
       .populate({
         path: 'sections',
         model: 'PlanSection',
-        populate: {
-          path: 'focusItems',
-          model: 'FocusItem'
-        }
+        populate: [{ path: 'focusItems', model: 'FocusItem' },
+                   { path: 'addendums', model: 'Addendum' }]
+      })
+    });
+  }
+}
+
+function addAddendumToSection(updatedAddendum) {
+  return function(entity) {
+    entity.addendums.push(updatedAddendum);
+    return entity.saveAsync()
+    .then((data) => {
+      return Plan.findOne({_id: entity._plan_id})
+      .populate({
+        path: 'sections',
+        model: 'PlanSection',
+        populate: [{ path: 'focusItems', model: 'FocusItem' },
+                   { path: 'addendums', model: 'Addendum' }]
       })
     });
   }
@@ -83,10 +97,25 @@ function removeItem(body, params) {
       .populate({
         path: 'sections',
         model: 'PlanSection',
-        populate: {
-          path: 'focusItems',
-          model: 'FocusItem'
-        }
+        populate: [{ path: 'focusItems', model: 'FocusItem' },
+                   { path: 'addendums', model: 'Addendum' }]
+      })
+    });
+  }
+}
+
+function removeAddendumFromSection(body, params) {
+  return function(entity) {
+    var index = entity.addendums.indexOf(params.addendum_id);
+    entity.addendums.splice(index, 1);
+    return entity.saveAsync()
+    .then((data) => {
+      return Plan.findOne({_id: entity._plan_id})
+      .populate({
+        path: 'sections',
+        model: 'PlanSection',
+        populate: [{ path: 'focusItems', model: 'FocusItem' },
+                   { path: 'addendums', model: 'Addendum' }]
       })
     });
   }
@@ -148,6 +177,22 @@ export function addFocusItem(req, res) {
 export function removeFocusItem(req, res) {
   PlanSection.findByIdAsync({_plan_id: req.params.plan_id, _id: req.params.id})
     .then(removeItem(req.body, req.params))
+    .then(responseWithResult(res))
+    .catch(handleError(res));
+}
+
+export function addAddendum(req, res) {
+  var planid = req.params.plan_id;
+  PlanSection.findByIdAsync({_plan_id: planid, _id: req.params.id})
+    .then(handleEntityNotFound(res))
+    .then(addAddendumToSection(req.body))
+    .then(responseWithResult(res))
+    .catch(handleError(res));
+}
+
+export function removeAddendum(req, res) {
+  PlanSection.findByIdAsync({_plan_id: req.params.plan_id, _id: req.params.id})
+    .then(removeAddendumFromSection(req.body, req.params))
     .then(responseWithResult(res))
     .catch(handleError(res));
 }

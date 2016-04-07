@@ -32,6 +32,40 @@ angular.module('wellnessPlanApp')
         templateUrl: 'app/account/profile/profile.html',
         controller: 'ProfileController',
         controllerAs: 'vm',
+        resolve: {
+          networks: function(Network, $log) {
+            var promise = Network.query();
+            return promise.$promise.then((data) => {
+              return data;
+            })
+            .catch((error) => {
+              $log.error('There was an error accessing your social networks.\n' + angular.toJson(error.data, true));
+              $state.go('profile');
+            });
+          },
+
+          pharmacies: function(Pharmacy, $log) {
+            var promise = Pharmacy.query();
+            return promise.$promise.then((data) => {
+              return data;
+            })
+            .catch((error) => {
+              $log.error('There was an error accessing your pharmacies.\n' + angular.toJson(error.data, true));
+              $state.go('profile');
+            });
+          },
+
+          stores: function(Store, $log) {
+            var promise = Store.query();
+            return promise.$promise.then((data) => {
+              return data;
+            })
+            .catch((error) => {
+              $log.error('There was an error accessing your supplement stores.\n' + angular.toJson(error.data, true));
+              $state.go('profile');
+            });
+          }
+        },
         authenticate: true
       });
   })

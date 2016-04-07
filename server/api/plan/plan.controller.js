@@ -76,10 +76,8 @@ export function show(req, res) {
   .populate({
     path: 'sections',
     model: 'PlanSection',
-    populate: {
-      path: 'focusItems',
-      model: 'FocusItem'
-    }
+    populate:  [{ path: 'focusItems', model: 'FocusItem' },
+                { path: 'addendums', model: 'Addendum' }]
   })
   .then(handleEntityNotFound(res))
   .then(responseWithResult(res))

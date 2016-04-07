@@ -24,8 +24,14 @@ var UserSchema = new Schema({
   state: String,
   zip: Number,
   phone: String,
-  alt_phone: String
+  alt_phone: String,
+  networks: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Network' }],
+  pharmacies: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Pharmacy' }],
+  stores: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Store' }]
 });
+
+
+
 
 /**
  * Virtuals
@@ -37,6 +43,8 @@ UserSchema
   .get(function() {
     return {
       'name': this.firstname,
+      'email': this.email,
+      'social_networks': this.social_networks,
       'role': this.role
     };
   });

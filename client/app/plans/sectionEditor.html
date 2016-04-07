@@ -123,10 +123,10 @@
         </div>
 
         <div class="panel-body">
-          <h4 ng-hide="section.Addendums.length > 0">You have not added any addendums yet.</h4>
-          <div ng-show="section.Addendums.length > 0">
+          <h4 ng-hide="section.addendums.length > 0">You have not added any addendums yet.</h4>
+          <div ng-show="section.addendums.length > 0">
             <table class="focus-items-table table table-bordered table-condensed table-hover">
-              <tr class="focus-item available-focus-item" ng-repeat="item in section.Addendums">
+              <tr class="focus-item available-focus-item" ng-repeat="item in section.addendums">
                 <td><a href="#" ng-click="vm.removeAddendum(item, section)">{{item.title}}</a></td>
               </tr>
             </table>

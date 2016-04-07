@@ -127,6 +127,69 @@ export function updateInfo(req, res, next) {
     });
 }
 
+export function addPharmacy(req, res, next) {
+  console.log('called api controller');
+  var userId = req.user._id;
+
+  User.findByIdAsync(userId)
+    .then(user => {
+      if (user.pharmacies) {
+        user.pharmacies.push(req.body._id);
+      }
+      else {
+        user.pharmacies = [];
+        user.pharmacies.push(req.body._id);
+      }
+      console.log(user);
+      return user.saveAsync()
+        .then(() => {
+          res.status(204).end();
+        })
+        .catch(validationError(res));
+    });
+
+}
+
+export function addStore(req, res, next) {
+  var userId = req.user._id;
+  User.findByIdAsync(userId)
+    .then(user => {
+      if (user.stores) {
+        user.stores.push(req.body._id);
+      }
+      else {
+        user.stores = [];
+        user.stores.push(req.body._id);
+      }
+      console.log(user);
+      return user.saveAsync()
+        .then(() => {
+          res.status(204).end();
+        })
+        .catch(validationError(res));
+    });
+}
+
+export function addNetwork(req, res, next) {
+  var userId = req.user._id;
+  User.findByIdAsync(userId)
+    .then(user => {
+      if (user.networks) {
+        user.networks.push(req.body._id);
+      }
+      else {
+        user.networks = [];
+        user.networks.push(req.body._id);
+      }
+      console.log(user);
+      return user.saveAsync()
+        .then(() => {
+          res.status(204).end();
+        })
+        .catch(validationError(res));
+    });
+}
+
 /**
  * Deletes a user
  * restriction: 'admin'
@@ -168,7 +231,12 @@ export function changePassword(req, res, next) {
 export function me(req, res, next) {
   var userId = req.user._id;
 
-  User.findOneAsync({ _id: userId }, '-salt -password')
+  User.findOne({ _id: userId }, '-salt -password')
+    .populate([
+      {path: 'pharmacies', model: 'Pharmacy'},
+      {path: 'networks', model: 'Network'},
+      {path: 'stores', model: 'Store'},
+      ])
     .then(user => { // don't ever give out the password or salt
       if (!user) {
         return res.status(401).end();
