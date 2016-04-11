@@ -39,13 +39,6 @@ function handleError(res, statusCode) {
   };
 }
 
-function handleError(res, statusCode) {
-  statusCode = statusCode || 500;
-  return function(err) {
-    res.status(statusCode).send(err);
-  };
-}
-
 function respondWith(res, statusCode) {
   statusCode = statusCode || 200;
   return function() {
@@ -54,13 +47,9 @@ function respondWith(res, statusCode) {
 }
 
 function saveUpdates(updates) {
-  console.log(entity);
   return function(entity) {
     var updated = _.merge(entity, updates);
-    return updated.save()
-      .then(updated => {
-        return updated;
-      });
+    return updated.saveAsync();
   };
 }
 
@@ -112,24 +101,27 @@ export function show(req, res, next) {
 /**
  * Update a user
  */
-export function updateInfo(req, res, next) {
-  var userId = req.user._id;
-
-  User.findByIdAsync(userId)
+export function update(req, res) {
+  if (req.body._id) {
+    delete req.body._id;
+  }
+  if (req.body.__v) {
+    delete req.body.__v;
+  }
+  User.findByIdAsync(req.user._id)
     .then(user => {
-
       var updated = _.merge(user, req.body);
-      user.pharmacies = req.body.pharmacies;
-      user.stores = req.body.stores;
-      user.networks = req.body.networks;
-
-        return user.saveAsync()
-          .then(() => {
-            res.status(204).end();
-          })
-          .catch(err => next(err));
+      updated.pharmacies = req.body.pharmacies;
+      updated.stores = req.body.stores;
+      updated.networks = req.body.networks;
+      return updated.saveAsync()
+        .then(() => {
+          res.status(204).end();
+        })
+        .catch(validationError(res));
     });
 }
+
 
 export function addPharmacy(req, res, next) {
   console.log('called api controller');

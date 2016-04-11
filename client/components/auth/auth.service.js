@@ -100,7 +100,7 @@ function AuthService($location, $http, $cookies, $q, appConfig, Util, User, Temp
         function() {
           return safeCb(callback)(null);
         },
-        function() {
+        function(err) {
           return safeCb(callback)(err);
         }).$promise;
     },

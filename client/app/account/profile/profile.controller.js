@@ -6,7 +6,8 @@ class ProfileController {
   submitted = false;
   //end-non-standard
 
-  constructor(Auth, $scope, User, Pharmacy, Network, Store) {
+  constructor(Auth, $scope, $state, User, Pharmacy, Network, Store) {
+    this.$state = $state;
     this.Auth = Auth;
     this.User = User;
     this.Pharmacy = Pharmacy;
@@ -37,8 +38,15 @@ class ProfileController {
   }
 
   updateInfo() {
-    this.submitted = true;
-    this.Auth.updateInfo(this.user);
+    var self = this;
+    self.submitted = true;
+    self.Auth.updateInfo(self.user)
+    .then(() => {
+      // TOAST IT
+    })
+    .catch((err) => {
+      console.log(err);
+    });
   }
 
   addPharmacy(pharmacy) {
@@ -46,8 +54,7 @@ class ProfileController {
     var newPharmacy = new this.Pharmacy(pharmacy);
     newPharmacy.$save(function(data) {
       self.user.pharmacies.push(data);
-      self.Auth.updateInfo(self.user);
-      self.user = self.Auth.getCurrentUser();
+      self.updateInfo();
       self.newPharmacy = {};
     });
   }
@@ -55,40 +62,54 @@ class ProfileController {
     var self = this;
     var idx = this.user.pharmacies.indexOf(pharmacy);
     this.user.pharmacies.splice(idx, 1);
-    this.Auth.updateInfo(this.user)
-    .then(() => {
-      this.user = self.Auth.getCurrentUser();
+    console.log(this.user.pharmacies);
+    var promise = this.Pharmacy.get({id: pharmacy._id}, function(pharmacy) {
+      pharmacy.$delete(function() {
+        self.updateInfo();
+      });
     });
-    // var promise = this.Pharmacy.get({id: pharmacy._id}, function(pharma) {
-
-    // });
-
   }
 
   addStore(store) {
     var self = this;
     var newStore = new this.Store(store);
     newStore.$save(function(data) {
-      self.Auth.addStoreToUser(self.user, data);
+      self.user.stores.push(data);
+      self.updateInfo();
       self.newStore = {};
     });
   }
   removeStore(store) {
     var self = this;
-    self.Auth.removeStoreFromUser(self.user, store);
+    var idx = this.user.stores.indexOf(store);
+    this.user.stores.splice(idx, 1);
+    console.log(this.user.stores);
+    var promise = this.Store.get({id: store._id}, function(store) {
+      store.$delete(function() {
+        self.updateInfo();
+      });
+    });
   }
 
   addNetwork(network) {
     var self = this;
     var newNetwork = new this.Network(network);
     newNetwork.$save(function(data) {
-      self.Auth.addNetworkToUser(self.user, data);
+      self.user.networks.push(data);
+      self.updateInfo();
       self.newNetwork = {};
     });
   }
   removeNetwork(network) {
     var self = this;
-    self.Auth.removeNetworkFromUser(self.user, network);
+    var idx = this.user.networks.indexOf(network);
+    this.user.networks.splice(idx, 1);
+    console.log(this.user.networks);
+    var promise = this.Network.get({id: network._id}, function(network) {
+      network.$delete(function() {
+        self.updateInfo();
+      });
+    });
   }
 }
 
