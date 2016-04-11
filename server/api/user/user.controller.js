@@ -119,11 +119,15 @@ export function updateInfo(req, res, next) {
     .then(user => {
 
       var updated = _.merge(user, req.body);
+      user.pharmacies = req.body.pharmacies;
+      user.stores = req.body.stores;
+      user.networks = req.body.networks;
+
         return user.saveAsync()
           .then(() => {
             res.status(204).end();
           })
-          .catch(validationError(res));
+          .catch(err => next(err));
     });
 }
 
@@ -140,14 +144,12 @@ export function addPharmacy(req, res, next) {
         user.pharmacies = [];
         user.pharmacies.push(req.body._id);
       }
-      console.log(user);
       return user.saveAsync()
         .then(() => {
           res.status(204).end();
         })
         .catch(validationError(res));
     });
-
 }
 
 export function addStore(req, res, next) {
@@ -161,7 +163,6 @@ export function addStore(req, res, next) {
         user.stores = [];
         user.stores.push(req.body._id);
       }
-      console.log(user);
       return user.saveAsync()
         .then(() => {
           res.status(204).end();
@@ -181,7 +182,6 @@ export function addNetwork(req, res, next) {
         user.networks = [];
         user.networks.push(req.body._id);
       }
-      console.log(user);
       return user.saveAsync()
         .then(() => {
           res.status(204).end();

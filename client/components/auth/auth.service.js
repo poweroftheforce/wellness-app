@@ -95,52 +95,15 @@ function AuthService($location, $http, $cookies, $q, appConfig, Util, User, Temp
      * @param  {Function} callback    - optional, function(error, user)
      * @return {Promise}
      */
-    updateInfo(user) {
-      return User.update(user);
+    updateInfo(user, callback) {
+      return User.update({id: currentUser._id}, user,
+        function() {
+          return safeCb(callback)(null);
+        },
+        function() {
+          return safeCb(callback)(err);
+        }).$promise;
     },
-
-    addPharmacyToUser(user, pharmacy) {
-      if (user.pharmacies) {
-        user.pharmacies.push(pharmacy);
-      }
-      else {
-        user.pharmacies = [];
-        user.pharmacies.push(pharmacy);
-      }
-      return User.addPharmacy(pharmacy);
-    },
-    removePharmacyFromUser(user, pharmacy) {
-      return User.removePharmacy(pharmacy);
-    },
-
-    addStoreToUser(user, store) {
-      if (user.stores) {
-        user.stores.push(store);
-      }
-      else {
-        user.stores = [];
-        user.stores.push(store);
-      }
-      return User.addStore(store);
-    },
-    removeStoreFromUser(user, store) {
-      return User.removeStore(store);
-    },
-
-    addNetworkToUser(user, network) {
-      if (user.networks) {
-        user.networks.push(network);
-      }
-      else {
-        user.networks = [];
-        user.networks.push(network);
-      }
-      return User.addNetwork(network);
-    },
-    removeNetworkFromUser(user, network) {
-      return User.removeNetwork(network);
-    },
-
 
     /**
      * Update section of template

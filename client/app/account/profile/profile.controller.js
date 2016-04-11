@@ -36,9 +36,8 @@ class ProfileController {
     }
   }
 
-  updateInfo(form) {
+  updateInfo() {
     this.submitted = true;
-    console.log(this.user);
     this.Auth.updateInfo(this.user);
   }
 
@@ -46,21 +45,32 @@ class ProfileController {
     var self = this;
     var newPharmacy = new this.Pharmacy(pharmacy);
     newPharmacy.$save(function(data) {
-      console.log(data);
-      self.Auth.addPharmacyToUser(self.user, data);
+      self.user.pharmacies.push(data);
+      self.Auth.updateInfo(self.user);
+      self.user = self.Auth.getCurrentUser();
+      self.newPharmacy = {};
     });
   }
   removePharmacy(pharmacy) {
     var self = this;
-    self.Auth.removePharmacyFromUser(self.user, pharmacy);
+    var idx = this.user.pharmacies.indexOf(pharmacy);
+    this.user.pharmacies.splice(idx, 1);
+    this.Auth.updateInfo(this.user)
+    .then(() => {
+      this.user = self.Auth.getCurrentUser();
+    });
+    // var promise = this.Pharmacy.get({id: pharmacy._id}, function(pharma) {
+
+    // });
+
   }
 
   addStore(store) {
     var self = this;
-    console.log('begin adding store:');
     var newStore = new this.Store(store);
     newStore.$save(function(data) {
       self.Auth.addStoreToUser(self.user, data);
+      self.newStore = {};
     });
   }
   removeStore(store) {
@@ -70,10 +80,10 @@ class ProfileController {
 
   addNetwork(network) {
     var self = this;
-    console.log('begin adding network:');
     var newNetwork = new this.Network(network);
     newNetwork.$save(function(data) {
       self.Auth.addNetworkToUser(self.user, data);
+      self.newNetwork = {};
     });
   }
   removeNetwork(network) {

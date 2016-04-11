@@ -11,7 +11,7 @@
       </div>
     </div><!-- .page-title -->
 
-    <div class="row patient-info" ng-show="vm.plan.patient">
+    <div class="row patient-info" ng-show="!vm.plan.patient">
       <div class="col-md-4 ">
         <h3>Patient Info</h3>
         <span class="patient-info">Name: {{vm.plan.patient.name.first}}  {{vm.plan.patient.name.last}}</span> <br>
@@ -59,13 +59,95 @@
       </div>
       <div class="body">
         <section-editor ng-show="vm.templateSection" data-section="vm.templateSection.planSection" data-ctrl="vm"></section-editor>
-
-        <h4 ng-show="!vm.templateSection.is_editable && !vm.templateSection.has_extras">
-          <div class="well" ng-bind-html="vm.templateSection.html">
-
+        <div class="container-fluid">
+          <div class="panel panel-seasons" ng-show="!vm.templateSection.is_editable && !vm.templateSection.has_extras && vm.templateSection.title != 'Compounding Pharmacy List' && vm.templateSection.title != 'Supplement Store' && vm.templateSection.title != 'Social Media' && vm.templateSection.html != '' && vm.templateSection.title != 'Front' ">
+            <div class="panel-heading">This Section Is Not Editable</div>
+            <div class="panel-body" ng-bind-html="vm.templateSection.html"></div>
           </div>
-        </h4>
 
+          <div class="col-lg-8 col-lg-offset-2" ng-if="vm.templateSection.title == 'Front'">
+            <img ng-src="{{vm.user.cover_image_url}}" class="img-responsive" alt="Plan Cover">
+          </div>
+
+
+          <div ng-show="vm.templateSection.title == 'Compounding Pharmacy List'" class="panel" ng-class="vm.user.pharmacies.length > 0 ? 'panel-seasons' : 'panel-warning'">
+
+            <div class="panel-heading" ng-show="vm.user.pharmacies.length < 1">Uh Oh!</div>
+            <div class="panel-body" ng-show="vm.user.pharmacies.length < 1">You have not added any items for section yet.  Please visit the <a ui-sref="profile">My Profile</a> page to add these items.</div>
+
+            <div class="panel-heading">Your Compounding Pharmacy List</div>
+            <div class="panel-body" ng-show="vm.user.pharmacies.length > 0">
+              <table class="table table-bordered table-hover table-responsive table-condensed">
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Phone</th>
+                    <th>Fax</th>
+                    <th>Email</th>
+                    <th>Contact</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr ng-repeat="pharmacy in vm.user.pharmacies">
+                    <td>{{pharmacy.name}}</td>
+                    <td>{{pharmacy.phone}}</td>
+                    <td>{{pharmacy.fax}}</td>
+                    <td>{{pharmacy.email}}</td>
+                    <td>{{pharmacy.contact}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div ng-show="vm.templateSection.title == 'Supplement Store'" class="panel" ng-class="vm.user.stores.length > 0 ? 'panel-seasons' : 'panel-warning'">
+
+            <div class="panel-heading" ng-show="vm.user.stores.length < 1">Uh Oh!</div>
+            <div class="panel-body" ng-show="vm.user.stores.length < 1">You have not added any items for section yet.  Please visit the <a ui-sref="profile">My Profile</a> page to add these items.</div>
+
+            <div class="panel-heading" ng-show="vm.user.stores.length > 0">Supplement Stores</div>
+            <div class="panel-body" ng-show="vm.user.stores.length > 0">
+              <table class="table table-bordered table-hover table-responsive table-condensed">
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>URL</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr ng-repeat="store in vm.user.stores">
+                    <td>{{store.name}}</td>
+                    <td>{{store.url}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div ng-show="vm.templateSection.title == 'Social Media'" class="panel" ng-class="vm.user.networks.length > 0 ? 'panel-seasons' : 'panel-warning'">
+
+            <div class="panel-heading" ng-show="vm.user.networks.length < 1">Uh Oh!</div>
+            <div class="panel-body" ng-show="vm.user.networks.length < 1">You have not added any items for section yet.  Please visit the <a ui-sref="profile">My Profile</a> page to add these items.</div>
+
+            <div class="panel-heading" ng-show="vm.user.networks.length > 0">Social Media</div>
+            <div class="panel-body" ng-show="vm.user.networks.length > 0">
+              <table class="table table-bordered table-hover table-responsive table-condensed">
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>URL</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr ng-repeat="network in vm.user.networks">
+                    <td>{{network.name}}</td>
+                    <td>{{network.url}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
         <div class="clearfix"></div>
 
         <div class="row">

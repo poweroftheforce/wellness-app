@@ -114,6 +114,7 @@
                 <th>Fax</th>
                 <th>Email</th>
                 <th>Contact</th>
+                <th></th>
               </tr>
             </thead>
             <tbody>
@@ -123,6 +124,7 @@
                 <td>{{pharmacy.fax}}</td>
                 <td>{{pharmacy.email}}</td>
                 <td>{{pharmacy.contact}}</td>
+                <td><i class="fa fa-trash trash" ng-click="vm.removePharmacy(pharmacy)"></i></td>
               </tr>
               <tr>
                 <td>

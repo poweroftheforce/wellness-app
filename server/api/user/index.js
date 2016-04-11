@@ -17,8 +17,11 @@ router.get('/:id', controller.show);
 router.post('/', auth.hasRole('admin'), controller.create);
 
 // Custom Routes
-router.post('/me/pharmacies', auth.isAuthenticated(), controller.addPharmacy);
-router.post('/me/stores', auth.isAuthenticated(), controller.addStore);
-router.post('/me/networks', auth.isAuthenticated(), controller.addNetwork);
+// router.post('/me/pharmacies', auth.isAuthenticated(), controller.addPharmacy);
+// router.put('/me/pharmacies/:id', auth.isAuthenticated(), controller.removePharmacy);
+// router.post('/me/stores', auth.isAuthenticated(), controller.addStore);
+// router.put('/me/stores/:id', auth.isAuthenticated(), controller.removeStore);
+// router.post('/me/networks', auth.isAuthenticated(), controller.addNetwork);
+// router.put('/me/networks/:id', auth.isAuthenticated(), controller.removeNetwork);
 
 export default router;
