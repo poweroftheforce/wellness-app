@@ -242,7 +242,11 @@ class PlansController {
   }
 
   printPlan() {
-    window.print();
+    this.viewing = true;
+    setTimeout(function() {
+      // window.print();
+    }, 1000);
+
   }
 }
 angular.module('wellnessPlanApp')

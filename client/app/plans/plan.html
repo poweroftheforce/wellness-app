@@ -11,7 +11,7 @@
       </div>
     </div><!-- .page-title -->
 
-    <div class="row patient-info" ng-show="!vm.plan.patient">
+    <div class="row patient-info" ng-show="vm.plan.patient">
       <div class="col-md-4 ">
         <h3>Patient Info</h3>
         <span class="patient-info">Name: {{vm.plan.patient.name.first}}  {{vm.plan.patient.name.last}}</span> <br>
@@ -19,9 +19,8 @@
         <hr>
       </div>
       <div class="col-md-4 col-md-offset-4">
-        <button class="btn btn-lg btn-seasons" ng-show="!vm.viewing" ng-click="vm.viewing=true">View Plan</button>
-        <button class="btn btn-lg btn-seasons" ng-show="vm.viewing" ng-click="vm.viewing=false">Edit Plan</button>
-        <button class="btn btn-lg btn-seasons" onclick="window.print()">Print</button>
+        <button class="btn btn-lg btn-seasons" ng-show="vm.viewing" ng-click="vm.viewing=false">Back To Editor</button>
+        <button class="btn btn-lg btn-seasons" ng-click="vm.printPlan()">Print</button>
 
       </div>
     </div>  <!-- End Patient Info -->
@@ -30,14 +29,25 @@
       <div class="controls" style="margin: 0 auto 30px auto; text-align: center;"> <a href="" ng-click="vm.previousPage()">Prev</a> | <a href="" ng-click="vm.nextPage()">Next</a></div>
       <div class="section-wrapper" ng-repeat="section in vm.templateSections | orderBy:'order'">
 
-          <div class="plan-page" ng-if="section.planSection">
+          <div class="plan-page cover-page" ng-attr-style="{{'background-image: url(' + vm.user.cover_image_url + ')!important; background-size: cover !important; background-repeat: no-repeat !important;'}}" ng-if="section.title=='Front'"></div>
+
+          <div class="plan-page cover-page" ng-if="section.title=='Nutrition'">
             <div class="plan-page-body">
               <h2 class="plan-page-title" ng-bind-html="section.title"></h2>
-              <div class="plan-page-content" ng-bind-html="section.planSection.html"></div>
+              <div class="plan-page-content" ng-show="section.planSection.html" ng-bind-html="section.html"></div>
+              <div class="plan-page-content" ng-hide="section.planSection.html" ng-bind-html="section.html"></div>
             </div>
           </div>
 
-          <div class="plan-page" ng-if="!section.planSection">
+          <div class="plan-page" ng-if="section.planSection && section.title != 'Front'">
+            <div class="plan-page-body">
+              <h2 class="plan-page-title" ng-bind-html="section.title"></h2>
+              <div class="plan-page-content" ng-show="section.planSection.html" ng-bind-html="section.planSection.html"></div>
+              <div class="plan-page-content" ng-hide="section.planSection.html" ng-bind-html="section.html"></div>
+            </div>
+          </div>
+
+          <div class="plan-page" ng-if="!section.planSection && section.title != 'Front'">
             <div class="plan-page-body">
               <h2 class="plan-page-title" ng-bind-html="section.title"></h2>
               <div class="plan-page-content" ng-bind-html="section.html"></div>
@@ -151,7 +161,7 @@
         <div class="clearfix"></div>
 
         <div class="row">
-          <button class="btn-warning" style="margin-top: 10px;" ng-click="vm.logSection(section)">debug</button>
+          <!-- <button class="btn-warning" style="margin-top: 10px;" ng-click="vm.logSection(section)">debug</button> -->
         </div>
         <div class="hidden" style="padding: 20px; background: #eaeaea; border: 1px solid #aaa; border-radius: 4px; margin-top: 20px;">
           <h4>Plan</h4>

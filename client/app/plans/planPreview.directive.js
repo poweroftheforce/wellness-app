@@ -27,10 +27,12 @@ angular.module('wellnessPlanApp')
 					  var pageBodyHeight = page.parent().height();
 					  var pageHeight = page.height();
 
-					  if (pageHeight > pageBodyHeight) {
+					  if (pageHeight > pageBodyHeight && idx < 11) {
 					    $(section).append('<div class="plan-page"><div class="plan-page-body"><div class="plan-page-content"></div></div></div>');
 
 					    // As long as the content is overflowing, push it down to the top of the next page.
+              // Set overflow limit of 10 to prevent crashes
+              var idx = 0;
 					    while (pageHeight > pageBodyHeight) {
 
                 // push last child of overlowing div to the next div
@@ -38,7 +40,9 @@ angular.module('wellnessPlanApp')
 
 					      // update height
 					      var pageHeight = $(page).height();
+
 					    }
+              idx++;
 					    removeOverflow(section);
 					  }
 					  // If the last page has no overflow, it's done!
