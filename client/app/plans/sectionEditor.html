@@ -5,17 +5,13 @@
 </script>
 <!-- User Input -->
 <uib-tabset>
-	<uib-tab heading="Provider Comments" active="true" disable="false" ng-if="section.is_editable">
-		<form class="plan-form">
-				<text-angular ng-model="section.html"></text-angular>
-
-				<button class="btn btn-seasons" ng-click="vm.saveSection(section)">Save</button>
-		</form>
-<!-- 		<form class="plan-form" ng-if="vm.planSection.html">
-				<text-angular ng-model="vm.planSection.html" required></text-angular>
-				<button class="btn btn-seasons" ng-click="vm.saveSection(vm.planSection)">Save</button>
-		</form> -->
-	</uib-tab>
+  <!-- Comments  -->
+  <uib-tab heading="Comments" active="true" disable="false" ng-if="section.is_editable">
+    <form class="plan-form">
+        <text-angular ng-model="section.comments"></text-angular>
+        <button class="btn btn-seasons" ng-click="vm.saveSection(section)">Save</button>
+    </form>
+  </uib-tab>
 
   <!-- Focus Items -->
   <uib-tab heading="Focus Items" active="false" disable="false" ng-if="section.has_extras">
@@ -68,54 +64,54 @@
       <button ng-if="vm.selectedFocusItem.title" class="btn btn-seasons pull-right" ng-click="vm.addFocusItem(vm.selectedFocusItem,section); vm.selectedFocusItem={title: ''}">Add To Section</button>
 
     </div>
-
   </uib-tab>
 
   <!-- Recommendations -->
   <uib-tab heading="Recommendations" active="false" disable="false" ng-if="section.has_extras">
     <form class="plan-form">
-      <text-angular ng-model="section.planSection.recommendations" required></text-angular>
-      <button class="btn btn-seasons" ng-click="vm.saveSection(section.planSection)">Save</button>
+      <text-angular ng-model="section.recommendations" required></text-angular>
+      <button class="btn btn-seasons" ng-click="vm.saveSection(section)">Save</button>
     </form>
   </uib-tab>
 
   <!-- Nutraceuticals -->
 	<uib-tab heading="Nutraceuticals" active="false" disable="false" ng-if="section.has_extras">
 		<form class="plan-form">
-			<text-angular ng-model="vm.planSection.nutraceuticals" required></text-angular>
-      <button class="btn btn-seasons" ng-click="vm.saveSection(vm.planSection)">Save</button>
+			<text-angular ng-model="section.nutraceuticals" required></text-angular>
+      <button class="btn btn-seasons" ng-click="vm.saveSection(section)">Save</button>
 		</form>
 	</uib-tab>
 
   <!-- Prescriptions -->
 	<uib-tab heading="Prescriptions" active="false" disable="false" ng-if="section.has_extras">
 		<form class="plan-form">
-			<text-angular ng-model="vm.planSection.prescriptions" required></text-angular>
-      <button class="btn btn-seasons" ng-click="vm.saveSection(vm.planSection)">Save</button>
+			<text-angular ng-model="section.prescriptions" required></text-angular>
+      <button class="btn btn-seasons" ng-click="vm.saveSection(section)">Save</button>
 		</form>
 	</uib-tab>
 
   <!-- Addendums -->
   <uib-tab heading="Addendums" active="false" disable="false" ng-if="section.has_extras">
-  <div class="col-lg-6">
-      <div class="panel panel-seasons">
-        <div class="panel-heading">
-          Available Addendums
-        </div>
+    <div class="col-lg-6">
+        <div class="panel panel-seasons">
+          <div class="panel-heading">
+            Available Addendums
+          </div>
 
-        <div class="panel-body">
-          <input style="margin-top: 10px;" type="text" ng-model="vm.selectedAddendum" placeholder="Start typing here to search" uib-typeahead="option as option.title for option in vm.addendums | filter:{title: $viewValue} | limitTo:5" typeahead-template-url="focusItemTypeaheadTemplate.html" class="form-control focus-items-search">
-          <h4 ng-hide="vm.addendums.length > 0">You have not added any addendums yet. </h4>
-          <div ng-show="vm.addendums.length > 0" class="focus-items-wrapper">
-            <table class="focus-items-table table table-bordered table-condensed table-hover">
-              <tr class="focus-item available-focus-item" ng-repeat="item in vm.addendums">
-                <td><a href="#" ng-click="vm.selectedAddendum = item">{{item.title}}</a></td>
-              </tr>
-            </table>
+          <div class="panel-body">
+            <input style="margin-top: 10px;" type="text" ng-model="vm.selectedAddendum" placeholder="Start typing here to search" uib-typeahead="option as option.title for option in vm.addendums | filter:{title: $viewValue} | limitTo:5" typeahead-template-url="focusItemTypeaheadTemplate.html" class="form-control focus-items-search">
+            <h4 ng-hide="vm.addendums.length > 0">You have not added any addendums yet. </h4>
+            <div ng-show="vm.addendums.length > 0" class="focus-items-wrapper">
+              <table class="focus-items-table table table-bordered table-condensed table-hover">
+                <tr class="focus-item available-focus-item" ng-repeat="item in vm.addendums">
+                  <td><a href="#" ng-click="vm.selectedAddendum = item">{{item.title}}</a></td>
+                </tr>
+              </table>
+            </div>
           </div>
         </div>
-      </div>
     </div>
+
     <div class="col-lg-6">
       <div class="panel panel-seasons">
         <div class="panel-heading">
@@ -142,7 +138,14 @@
 
     <div class="col-sm-12 col-lg-6 col-lg-offset-6">
       <button ng-if="vm.selectedAddendum.title" class="btn btn-seasons pull-right" ng-click="vm.addAddendum(vm.selectedAddendum,section); vm.selectedAddendum={title: ''}">Add To Section</button>
-
     </div>
+  </uib-tab>
+
+  <!-- References -->
+  <uib-tab heading="References" active="false" disable="false" ng-if="section.has_extras">
+    <form class="plan-form">
+      <text-angular ng-model="section.references" required></text-angular>
+      <button class="btn btn-seasons" ng-click="vm.saveSection(section)">Save</button>
+    </form>
   </uib-tab>
 </uib-tabset>
