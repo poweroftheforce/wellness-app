@@ -23,39 +23,36 @@
     opacity: 0;
     z-index: 0;
     margin-bottom: 50px;
-// &:before {
-//     position: absolute;
-//     background: #43ab4c;
-//     background: rgba(67, 171, 76, 0.4);
-//     height: 30px;
-//     width: 100px;
-//     left: 30px;
-//     top: 30px;
-//     content: '';
-//   }
-&:after {
-  position: absolute;
-  background: @seasons_light_green;
-// background: rgba(67, 171, 76, 0.4);
-height: 30px;
-// left: 25px;
-// right: 25px;
-// bottom: 30px;
-content: '';
-}
-h2.plan-page-title {
-  margin: -15px -15px 10px -15px;
-  color: #fff !important;
-  padding: 15px 0 15px 25px;
-  background-color: @seasons_green !important;
-  font-weight: 300;
-}
-}
-.plan-page.cover-page {
-  &:after {
-    display: none;
+
+    &:after {
+      position: absolute;
+      background: @seasons_light_green;
+      height: 30px;
+      content: '';
+    }
+    h2.plan-page-title {
+      margin: -15px -15px 10px -15px;
+      color: #fff !important;
+      padding: 15px 0 15px 25px;
+      background-color: @seasons_green !important;
+      font-weight: 300;
+    }
+    .plan-page-number {
+      position: absolute;
+      bottom: -25px;
+      z-index: 1;
+      left: 40px;
+    }
   }
-}
+  .plan-page.cover-page {
+    &:after {
+      display: none;
+    }
+
+    .plan-page-number {
+      display: none;
+    }
+  }
 }
 #plan-edit-wrapper {
   position: relative;
@@ -241,7 +238,7 @@ ul.focus-items {
     margin: 0;
 
     .plan-page {
-      border: none;
+      // border: none;
       font-size: 1.1em;
       width: 7.65in;
       page-break-after: always;

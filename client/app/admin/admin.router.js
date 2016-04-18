@@ -34,6 +34,25 @@ angular.module('wellnessPlanApp.admin')
         controllerAs: 'vm',
         authenticate: 'admin'
       })
+      .state('templateEditor', {
+        url: '/admin/templateEditor',
+        templateUrl: 'app/admin/templates/templates.detail.html',
+        resolve: {
+          template: function(Template, $stateParams, $log, $state) {
+            var promise = Template.latest();
+            return promise.$promise.then((data) => {
+              return data[0];
+            })
+            .catch((error) => {
+              $log.error('There was an error accessing the editor.\n' + angular.toJson(error.data, true));
+              $state.go('templates');
+            });
+          }
+        },
+        controller: 'TemplatesDetailController',
+        controllerAs: 'vm',
+        authenticate: 'admin'
+      })
       .state('users', {
         url: '/admin/users',
         templateUrl: 'app/admin/users/users.html',

@@ -29,28 +29,102 @@
       <div class="controls" style="margin: 0 auto 30px auto; text-align: center;"> <a href="" ng-click="vm.previousPage()">Prev</a> | <a href="" ng-click="vm.nextPage()">Next</a></div>
       <div class="section-wrapper" ng-repeat="section in vm.templateSections | orderBy:'order'">
 
-          <div class="plan-page cover-page" ng-attr-style="{{'background-image: url(' + vm.user.cover_image_url + ')!important; background-size: cover !important; background-repeat: no-repeat !important;'}}" ng-if="section.title=='Front'"></div>
+          <!-- COVER PAGE -->
+          <div class="plan-page cover-page" ng-attr-style="{{'background-image: url(' + vm.user.cover_image_url + ')!important; background-size: cover !important; background-repeat: no-repeat !important;'}}" ng-if="section.title=='Front'">
+            <div class="plan-page-body"><div class="plan-page-content"></div></div>
+          </div>
 
-          <div class="plan-page cover-page" ng-if="section.title=='Nutrition'">
+          <!-- WELLNESS POINTS -->
+          <div class="plan-page" ng-if="section.has_extras">
             <div class="plan-page-body">
               <h2 class="plan-page-title" ng-bind-html="section.title"></h2>
-              <div class="plan-page-content" ng-show="section.planSection.html" ng-bind-html="section.html"></div>
-              <div class="plan-page-content" ng-hide="section.planSection.html" ng-bind-html="section.html"></div>
+              <div class="plan-page-content" ng-if="section.planSection.html" ng-bind-html="section.planSection.html"></div>
+              <div class="plan-page-content" ng-if="!section.planSection.html" ng-bind-html="section.html"></div>
             </div>
           </div>
 
-          <div class="plan-page" ng-if="section.planSection && section.title != 'Front'">
+          <!-- PHARMACIES -->
+          <div class="plan-page" ng-if="section.title == 'Compounding Pharmacy List'">
             <div class="plan-page-body">
               <h2 class="plan-page-title" ng-bind-html="section.title"></h2>
-              <div class="plan-page-content" ng-show="section.planSection.html" ng-bind-html="section.planSection.html"></div>
-              <div class="plan-page-content" ng-hide="section.planSection.html" ng-bind-html="section.html"></div>
+              <div class="plan-page-content">
+                <table class="table table-condensed table-bordered table-responsive">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Phone</th>
+                      <th>Fax</th>
+                      <th>Email</th>
+                      <th>Contact</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr ng-repeat="pharmacy in vm.user.pharmacies">
+                      <td>{{pharmacy.name}}</td>
+                      <td>{{pharmacy.phone}}</td>
+                      <td>{{pharmacy.fax}}</td>
+                      <td>{{pharmacy.email}}</td>
+                      <td>{{pharmacy.contact}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
 
-          <div class="plan-page" ng-if="!section.planSection && section.title != 'Front'">
+          <!-- SUPPLEMENT STORES -->
+          <div class="plan-page" ng-if="section.title == 'Supplement Store'">
             <div class="plan-page-body">
               <h2 class="plan-page-title" ng-bind-html="section.title"></h2>
-              <div class="plan-page-content" ng-bind-html="section.html"></div>
+              <div class="plan-page-content">
+                <table class="table table-condensed table-bordered table-responsive">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>URL</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr ng-repeat="store in vm.user.stores">
+                      <td>{{store.name}}</td>
+                      <td>{{store.url}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- SOCIAL MEDIA -->
+          <div class="plan-page" ng-if="section.title == 'Social Media'">
+            <div class="plan-page-body">
+              <h2 class="plan-page-title" ng-bind-html="section.title"></h2>
+              <div class="plan-page-content">
+                <table class="table table-condensed table-bordered table-responsive">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>URL</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr ng-repeat="network in vm.user.networks">
+                      <td>{{network.name}}</td>
+                      <td>{{network.url}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- REST OF PAGES -->
+
+          <div class="plan-page" ng-if="section.title != 'Front' && section.title != 'Compounding Pharmacy List' && section.title != 'Supplement Store' && section.title != 'Social Media' && !section.has_extras">
+            <div class="plan-page-body">
+              <h2 class="plan-page-title" ng-bind-html="section.title"></h2>
+              <div class="plan-page-content" ng-if="section.planSection.html" ng-bind-html="section.planSection.html"></div>
+              <div class="plan-page-content" ng-if="!section.planSection.html" ng-bind-html="section.html"></div>
             </div>
           </div>
 

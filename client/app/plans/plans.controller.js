@@ -21,7 +21,7 @@ class PlansController {
     this.focusItems;
     this.addendums;
     this.templateSections = latestTemplate.sections;
-    this.viewing = false;
+    this.viewing = true;
     this.itemSelected = false;
     this.activate(plan);
     this.page = 1;
