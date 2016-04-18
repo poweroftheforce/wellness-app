@@ -21,8 +21,8 @@ angular.module('wellnessPlanApp')
         	}
 
         	function removeOverflow(section, idx) {
-            // console.log(idx);
-            if (idx > 10) {  // overflow limit to prevent infinite loop
+            console.log(idx);
+            if (idx > 20) {  // overflow limit to prevent infinite loop
               console.log('Error: repeating content overflow - Check format of sections');
               // need a toaster saying the section format is wrong!
             }
@@ -36,7 +36,7 @@ angular.module('wellnessPlanApp')
               page.append('<div class="plan-page-number"></div>');
             }
 
-					  if (pageBodyHeight > pageHeight && idx <= 10 ) {
+					  if (pageBodyHeight > pageHeight && idx <= 20 ) {
 					    $(section).append('<div class="plan-page"><div class="plan-page-body"><div class="plan-page-content"></div></div></div>');
 
 					    // As long as the content is overflowing, push it down to the top of the next page.
@@ -81,7 +81,7 @@ angular.module('wellnessPlanApp')
         	setTimeout(function() {
         		pagedContent();
             previewInit();
-        	}, 1000);
+        	}, 1500);
       }
     };
   });

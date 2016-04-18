@@ -4,6 +4,7 @@ var mongoose = require('bluebird').promisifyAll(require('mongoose'));
 
 var PlanSectionSchema = new mongoose.Schema({
   title: {type: String, required: true},
+  intro: String,
   comments: String,
   focusItems: [{ type: mongoose.Schema.Types.ObjectId, ref: 'FocusItem' }],
   recommendations: String,
@@ -11,7 +12,7 @@ var PlanSectionSchema = new mongoose.Schema({
   prescriptions: String,
   addendums: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Addendum' }],
   references: String,
-  html: String,
+  // html: String,
   _plan_id: {type: String, required: true, ref: 'Plan'}
 }, { timestamps: true });
 

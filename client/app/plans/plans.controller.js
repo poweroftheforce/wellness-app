@@ -21,7 +21,7 @@ class PlansController {
     this.focusItems;
     this.addendums;
     this.templateSections = latestTemplate.sections;
-    this.viewing = false;
+    this.viewing = true;
     this.itemSelected = false;
     this.activate(plan);
     this.page = 1;
@@ -51,13 +51,13 @@ class PlansController {
       if (!section.planSection) {
         section.planSection = {
           title: section.title,
-          intro: section.html,
           _plan_id: this.plan._id,
           addendums: [],
           focusItems: []
         }
       }
       // Add editor refs
+      section.planSection.intro = section.intro;
       section.planSection.is_editable = section.is_editable;
       section.planSection.has_extras = section.has_extras;
     }
@@ -189,6 +189,57 @@ class PlansController {
    *  Preview Functions
    *
    */
+  sectionPreview(section) {
+    var html = '';
+    var items = section.focusItems;
+    var addendums = section.addendums;
+
+    if (section.intro) {
+      html += section.intro;
+    }
+
+    if (section.comments) {
+      html += section.comments;
+    }
+
+    if (items && items.length > 0) {
+      for (var i=0; i<items.length; i++) {
+        html += '<strong>' + items[i].title + '</strong>';
+        html += items[i].description;
+      }
+    }
+
+    if (section.recommendations) {
+      html += '<h2 class="plan-page-sub-heading">Recommendations</h2>';
+      html += section.recommendations;
+    }
+
+    if (section.nutraceuticals) {
+      html += '<h2 class="plan-page-sub-heading">Nutraceuticals</h2>';
+      html += section.nutraceuticals;
+    }
+
+    if (section.prescriptions) {
+      html += '<h2 class="plan-page-sub-heading">Prescriptions</h2>';
+      html += section.prescriptions;
+    }
+
+    if (section.references) {
+      html += '<h2 class="plan-page-sub-heading">References</h2>';
+      html += section.references;
+    }
+
+    if (addendums  && addendums.length > 0) {
+      html += '<h2 class="plan-page-sub-heading">Addendums</h2>';
+      for (var i=0; i<addendums.length; i++) {
+        html += '<strong>' + addendums[i].title + '</strong>';
+        html += addendums[i].description;
+      }
+    }
+
+    return html;
+  }
+
   nextPage() {
     this.pages = $('.plan-page').toArray();
     if (this.page < $(this.pages).length) {
@@ -244,8 +295,9 @@ class PlansController {
   printPlan() {
     this.viewing = true;
     setTimeout(function() {
-      // window.print();
-    }, 1000);
+      window.print();
+      // this.viewing = false;
+    }, 2000);
 
   }
 }

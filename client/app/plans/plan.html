@@ -37,9 +37,8 @@
           <!-- WELLNESS POINTS -->
           <div class="plan-page" ng-if="section.has_extras">
             <div class="plan-page-body">
-              <h2 class="plan-page-title" ng-bind-html="section.title"></h2>
-              <div class="plan-page-content" ng-if="section.planSection.html" ng-bind-html="section.planSection.html"></div>
-              <div class="plan-page-content" ng-if="!section.planSection.html" ng-bind-html="section.html"></div>
+              <h2 class="plan-page-title">{{section.title}}</h2>
+              <div class="plan-page-content" ng-bind-html="vm.sectionPreview(section.planSection)"></div>
             </div>
           </div>
 
