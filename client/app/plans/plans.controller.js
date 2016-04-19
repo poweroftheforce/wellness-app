@@ -20,7 +20,7 @@ class PlansController {
     this.planSection = {};
     this.focusItems;
     this.addendums;
-    this.templateSections = latestTemplate.sections;
+    this.templateSections = latestTemplate.sections.filter(function(val) {return val.is_active} );
     this.viewing = true;
     this.itemSelected = false;
     this.activate(plan);

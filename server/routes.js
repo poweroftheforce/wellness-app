@@ -13,6 +13,7 @@ export default function(app) {
   // app.use('/api/nutraceuticals', require('./api/nutraceutical'));
   // app.use('/api/prescriptions', require('./api/prescription'));
   app.use('/api/focusItems', require('./api/focusItem'));
+  // app.use('/api/drugReactions', require('./api/drugReaction'));
   app.use('/api/plans', require('./api/plan'));
   app.use('/api/plans/:plan_id/sections', require('./api/plan/planSection'));
   app.use('/api/templates', require('./api/template'));

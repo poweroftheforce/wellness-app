@@ -2,6 +2,13 @@
 
 var mongoose = require('bluebird').promisifyAll(require('mongoose'));
 
+var drugReactionSchema = new mongoose.Schema({
+  drug_category: String,
+  nutrients_depleted: String,
+  potential_negative_reactions: String,
+  references: String
+});
+
 var PlanSchema = new mongoose.Schema({
   patient: {
   	name: {
@@ -22,7 +29,8 @@ var PlanSchema = new mongoose.Schema({
             ref: 'User',
             required: true
   },
-  sections: [{ type: mongoose.Schema.Types.ObjectId, ref: 'PlanSection' }]
+  sections: [{ type: mongoose.Schema.Types.ObjectId, ref: 'PlanSection' }],
+  drugReactions: [drugReactionSchema]
 }, { timestamps: true });
 
 
