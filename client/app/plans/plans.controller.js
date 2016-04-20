@@ -30,7 +30,7 @@ class PlansController {
   activate(plan) {
     var self = this;
     this.plan = plan;
-    var c_id = this.$cookies.get('ts-id');
+    // var c_id = this.$cookies.get('ts-id');
     this.templateSection = this.templateSections[0];
 
     // link existing plan sections to template sections
@@ -38,12 +38,12 @@ class PlansController {
 
       var section = this.templateSections[i];
       // If the user has a cookie for last edited section...
-      if (c_id) {
-        // We need that section to be the active section
-        if ( this.templateSections[i]._id == c_id ) {
-          this.templateSection = this.templateSections[i];
-        }
-      }
+      // if (c_id) {
+      //   // We need that section to be the active section
+      //   if ( this.templateSections[i]._id == c_id ) {
+      //     this.templateSection = this.templateSections[i];
+      //   }
+      // }
 
       // link any plan sections to their templates
       section.planSection = this.plan.sections.filter(function(val) {return val.title == section.title} )[0];
@@ -62,7 +62,7 @@ class PlansController {
       section.planSection.has_extras = section.has_extras;
     }
 
-    // This is probably the worst way to do this =/
+    // This is probably the worst way to do this =/  ( It breaks in production )
     if (this.templateSection.has_extras && !this.focusItems || this.templateSection.has_extras && !this.addendums) {
       this.getExtras(this.templateSection.title);
     }
