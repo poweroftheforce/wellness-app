@@ -4,16 +4,12 @@ angular.module('wellnessPlanApp')
   .config(function($stateProvider) {
     $stateProvider
       .state('dashboard', {
-        authenticate: 'user',
+        //authenticate: 'user',
+        authenticate:true,
         url: '/dashboard',
         templateUrl: 'app/main/main.html',
         controller: 'MainController',
-        controllerAs: 'vm',
-        resolve: {
-          plans: function(Plan, Auth) {
-            return Plan.query({});
-          }
-        }
+        controllerAs: 'vm'
       })
       .state('about', {
         url: '/about',

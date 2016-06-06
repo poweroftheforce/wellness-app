@@ -1,20 +1,22 @@
 'use strict';
 
 angular.module('wellnessPlanApp')
-  .factory('Modal', function ($rootScope, $modal) {
+  .factory('Modal', function ($rootScope, $uibModal) {
     /**
      * Opens a modal
      * @param  {Object} scope      - an object to be merged with modal's scope
      * @param  {String} modalClass - (optional) class(es) to be applied to the modal
+     * @param  {String} modalTemplate - (optional) template to be applied to the modal
      * @return {Object}            - the instance $modal.open() returns
      */
-    function openModal(scope = {}, modalClass = 'modal-default') {
+    function openModal(scope = {}, modalClass = 'modal-default', modalTemplate = 'components/modal/modal.html') {
       var modalScope = $rootScope.$new();
 
       angular.extend(modalScope, scope);
 
-      return $modal.open({
-        templateUrl: 'components/modal/modal.html',
+      return $uibModal.open({
+        templateUrl: modalTemplate,
+        // templateUrl: 'components/modal/modal.html',
         windowClass: modalClass,
         scope: modalScope
       });
@@ -44,9 +46,10 @@ angular.module('wellnessPlanApp')
 
             deleteModal = openModal({
               modal: {
+                strongConfirm: true,
                 dismissable: true,
                 title: 'Confirm Delete',
-                html: '<p>Are you sure you want to delete <strong>' + name + '</strong> ?</p>',
+                html: '<p>Are you sure you want to delete <strong>' + name + '</strong> ?</p><p style="color: #d9534f"><strong>WARNING</strong> This action cannot be undone!</p>',
                 buttons: [{
                   classes: 'btn-danger',
                   text: 'Delete',
@@ -67,54 +70,46 @@ angular.module('wellnessPlanApp')
               del.apply(event, args);
             });
           };
-        }
-      },
-
-      /* Form Modals */
-
-      FocusItem: {
-
-        /**
-         * Create a function to open a form modal (ex. ng-click='myModalFn(name, arg1, arg2...)')
-         * @param  {Function} action - callback, ran when form is submitted
-         * @return {Function}     - the function to open the modal (ex. myModalFn)
-         */
-        create(create = angular.noop) {
+        },
+        deletePlan(del = angular.noop) {
           /**
-           * Open a Create Focus Item modal
+           * Open a delete confirmation modal
            * @param  {String} name   - name or info to show on modal
            * @param  {All}           - any additional args are passed straight to del callback
            */
           return function() {
             var args = Array.prototype.slice.call(arguments),
-                newFocusItemModal;
+                name = args.shift(),
+                deleteModal;
 
-            newFocusItemModal = openModal({
+            deleteModal = openModal({
               modal: {
+                strongConfirm: true,
                 dismissable: true,
-                title: 'Add New Focus Item',
-                html: '<p>Are you sure you want to create one?</p>',
-                buttons: [{
-                  classes: 'btn-seasons',
-                  text: 'Create',
+                patientName: name,
+                deleteButton: {
+                  classes: 'btn-danger',
+                  text: 'Delete',
                   click: function(e) {
-                    newFocusItemModal.close(e);
+                    deleteModal.close(e);
                   }
-                }, {
-                  classes: 'btn-warning',
+                },
+                cancelButton: {
+                  classes: 'btn-default',
                   text: 'Cancel',
                   click: function(e) {
-                    newFocusItemModal.dismiss(e);
+                    deleteModal.dismiss(e);
                   }
-                }]
+                }
               }
-            }, 'modal-danger');
+            }, 'modal-danger', 'components/modal/deletePlanModal.html');
 
-            newFocusItemModal.result.then(function(event) {
+            deleteModal.result.then(function(event) {
               del.apply(event, args);
             });
           };
         }
+
       }
     };
   });

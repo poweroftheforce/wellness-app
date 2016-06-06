@@ -33,14 +33,14 @@
               <th>Patient Name</th>
               <th>Date Of Birth</th>
               <th>Created</th>
-              <th colspan="3">Options</th>
+              <th></th>
             </thead>
             <tbody>
               <tr ng-repeat="plan in vm.plans">
                 <td><a ui-sref="plan({id: plan._id})">{{plan.patient.name.last}}, {{plan.patient.name.first}}</a></td>
                 <td>{{plan.patient.dob}}</td>
-                <td><span am-time-ago="plan.createdAt"></span></td>
-                <td style="text-align: center;"><i class="fa fa-trash trash" ng-click="vm.deletePlan(plan)"></i></td>
+                <td>{{plan.createdAt | date}}</td>
+                <td style="text-align: center;"><i class="fa fa-trash trash" ng-click="vm.deletePlan(plan.patientName, plan)"></i></td>
               </tr>
             </tbody>
           </table>

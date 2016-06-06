@@ -67,14 +67,10 @@ function UtilService($window) {
 
       // increases or resets index of background
       if (idx < backgrounds.length - 1) {
-        console.log(idx);
-        console.log('need to increase');
         idx++;
       }
 
       else {
-        console.log(idx);
-        console.log('need to decrease');
         idx = 0;
       }
 

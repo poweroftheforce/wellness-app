@@ -24,7 +24,6 @@ class TemplatesDetailController {
 
   activate(template) {
     this.template = template;
-    console.log(template);
 
     if (this.$cookies.get('current-ts')) {
       for (var i in this.template.sections) {

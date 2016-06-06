@@ -2,31 +2,24 @@
 
 <div class="content-wrapper">
   <div class="container content">
-    <div class="row page-title">
-      <div class="col-sm-12" style="padding: 0 50px;">
-        <div class="page-header">
+    <div class="row page-title  page-header">
+      <div class="col-lg-8" style="padding: 0 50px;">
+
           <h1>{{vm.pageTitle}}</h1>
-          <span class="subheader" ng-show="vm.plan.patient">{{vm.plan.patient.name.first}} {{vm.plan.patient.name.last}}'s Wellness Plan</span>
-        </div>
+          <span class="subheader" ng-show="vm.plan.patient">{{vm.plan.patient.name.first}} {{vm.plan.patient.name.last}}'s Wellness Plan</span> | <span class="patient-info">DOB: {{vm.plan.patient.dob}}</span>
+
+      </div>
+      <div class="col-lg-4" style="text-align: right;">
+        <button class="btn btn-lg btn-seasons" ng-show="vm.viewing" ng-click="vm.viewing=false">Back To Editor</button>
+        <button class="btn btn-lg btn-seasons" ng-show="vm.viewing" ng-click="vm.printPlan()">Print</button>
+        <button class="btn btn-lg btn-seasons" ng-show="!vm.viewing" ng-click="vm.viewing=true">Preview</button>
       </div>
     </div><!-- .page-title -->
 
-    <div class="row patient-info" ng-show="vm.plan.patient">
-      <div class="col-md-4 ">
-        <h3>Patient Info</h3>
-        <span class="patient-info">Name: {{vm.plan.patient.name.first}}  {{vm.plan.patient.name.last}}</span> <br>
-        <span class="patient-info">Date Of Birth: {{vm.plan.patient.dob}}</span>
-        <hr>
-      </div>
-      <div class="col-md-4 col-md-offset-4">
-        <button class="btn btn-lg btn-seasons" ng-show="vm.viewing" ng-click="vm.viewing=false">Back To Editor</button>
-        <button class="btn btn-lg btn-seasons" ng-click="vm.printPlan()">Print</button>
-
-      </div>
-    </div>  <!-- End Patient Info -->
-
-    <div class="row" id="plan-wrapper" ng-show="vm.viewing">
-      <div class="controls" style="margin: 0 auto 30px auto; text-align: center;"> <a href="" ng-click="vm.previousPage()">Prev</a> | <a href="" ng-click="vm.nextPage()">Next</a></div>
+    <div class="row" id="plan-wrapper" style="margin-top: 20px;" ng-show="vm.viewing">
+      <div class="controls" style="margin: 0 auto 30px auto; text-align: center;">
+        <a href="" ng-click="vm.previousPage()"><i class="fa fa-chevron-left fa-2x"></i></a> &nbsp;&nbsp;&nbsp;
+        <a href="" ng-click="vm.nextPage()"><i class="fa fa-chevron-right fa-2x"></i></a></div>
       <div class="section-wrapper" ng-repeat="section in vm.templateSections | orderBy:'order'">
 
           <!-- COVER PAGE -->

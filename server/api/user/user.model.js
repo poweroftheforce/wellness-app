@@ -30,9 +30,6 @@ var UserSchema = new Schema({
   stores: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Store' }]
 });
 
-
-
-
 /**
  * Virtuals
  */

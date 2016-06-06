@@ -21,7 +21,6 @@ angular.module('wellnessPlanApp')
         	}
 
         	function removeOverflow(section, idx) {
-            console.log(idx);
             if (idx > 20) {  // overflow limit to prevent infinite loop
               console.log('Error: repeating content overflow - Check format of sections');
               // need a toaster saying the section format is wrong!
@@ -68,7 +67,6 @@ angular.module('wellnessPlanApp')
 
             for (var i=0; i<pages.length; i++) {
               $(pages[i]).children('.plan-page-number').html(i+1);
-              console.log();
             }
 
             // Animate first page.

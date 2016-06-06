@@ -7,11 +7,25 @@
 //   }
 // }
 
+.controls {
+  a {
+    color: @seasons_green;
+  }
+
+  a:first-child {
+    display: block;
+    height: 25px;
+    border-right: 1px solid #ccc;
+    border-right: 1px solid rgba(100,100,100,0.3);
+  }
+}
+
 #plan-wrapper {
   margin: 0 auto;
   width: 8.5in;
   position: relative;
   height: 11in;
+
   .plan-page {
     position: absolute;
     height: 9.75in;

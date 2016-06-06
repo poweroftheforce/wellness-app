@@ -4,24 +4,25 @@
 
 class MainController {
 
-  constructor($http, $state, Auth, Template, Plan, PlanSection, plans) {
+  constructor($http, $state, $uibModal, Auth, Template, Plan, PlanSection, Modal) {
     this.$http = $http;
     this.$state = $state;
 
     this.Plan = Plan;
     this.Template = Template;
+    this.$uibModal = $uibModal;
+    this.Modal = Modal;
 
     this.pageTitle = 'Dashboard';
     this.user = Auth.getCurrentUser();
-    this.plans = plans;
+    // this.plans = plans;
+    this.newPlanModel = {};
+    this.plans = Plan.query();
 
-
-    // this.template_sections = template_sections;
-    this.newPlanModel = {patient: {name: {first: 'John', last: 'Doe'}, dob: '01-01-76'}};
-
-    // $http.get('/api/plans').then(response => {
-    //   this.myPlans = response.data;
-    // });
+    this.deletePlan = Modal.confirm.deletePlan(plan => {
+      plan.$remove();
+      this.plans.splice(this.plans.indexOf(plan), 1);
+    });
   }
 
   addPlan(form) {
@@ -41,12 +42,6 @@ class MainController {
       // this.$state.reload();
     });
   }
-
-  deletePlan(plan) {
-    this.$http.delete('/api/plans/' + plan._id);
-    this.$state.reload()
-  }
-
 }
 
 angular.module('wellnessPlanApp')

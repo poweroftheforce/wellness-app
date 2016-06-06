@@ -1,0 +1,29 @@
+<div class="modal-header">
+  <button ng-if="modal.dismissable" type="button" ng-click="$dismiss()" class="close">&times;</button>
+  <h4 class="modal-title">YOU ABOUT TO PERMANENTLY DELETE THIS PLAN</h4>
+</div>
+<div class="modal-body">
+  <p>Are you sure you want to delete <strong ng-bind-html="modal.patientName"></strong>'s plan?</p>
+  <hr>
+  <div ng-if="modal.html" ng-bind-html="modal.html"></div>
+
+  <div class="row">
+    <div class="col-lg-10 col-lg-offset-1">
+      <form ng-model="form">
+        <div class="form-group">
+          <p><strong>To proceed, you must enter the patient's <u>FULL</u> name.</p>
+          <input class="form-control" name="confirmName" type="text" ng-model="modal.confirmName">
+        </div>
+        </form>
+      <p ng-if="modal.confirmName" style="color: #d9534f; text-align: center;"><strong>WARNING</strong> <br> This action cannot be undone!</p>
+    </div>
+  </div>
+
+</div>
+<div class="modal-footer">
+  <button ng-class="modal.deleteButton.classes" ng-click="modal.deleteButton.click($event)" ng-bind="modal.deleteButton.text" class=
+  "btn" ng-disabled="modal.confirmName != modal.patientName"></button>
+
+  <button ng-class="modal.cancelButton.classes" ng-click="modal.cancelButton.click($event)" ng-bind="modal.cancelButton.text" class=
+  "btn"></button>
+</div>

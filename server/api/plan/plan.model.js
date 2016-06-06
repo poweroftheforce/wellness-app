@@ -31,7 +31,27 @@ var PlanSchema = new mongoose.Schema({
   },
   sections: [{ type: mongoose.Schema.Types.ObjectId, ref: 'PlanSection' }],
   drugReactions: [drugReactionSchema]
-}, { timestamps: true });
+}, {
+  timestamps: true,
+  toObject: {
+    virtuals: true
+  },
+  toJSON: {
+    virtuals: true
+  }
+});
+
+
+/**
+ * Virtuals
+ */
+
+ PlanSchema
+  .virtual('patientName')
+  .get(function() {
+    return this.patient.name.first + ' ' + this.patient.name.last;
+  });
+
 
 
 /**
