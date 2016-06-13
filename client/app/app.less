@@ -6,25 +6,39 @@
 @seasons_green: #9dba3f;
 @seasons_light_green: #e9ec8a;
 @seasons_tan: #d7bc99;
+@F5_: #F5F5F5;
+
+@OpenSans: 'Open Sans', sans-serif;
+
+
+
+/* Micro ClearFix Mixin */
+.clrfix {
+	zoom:1;
+	&:before, &:after{ content:""; display:table; }
+	&:after{ clear: both; }
+}
+
+
 /**
  * App-wide Styles
  */
 
 html, body {
-  font-family: 'Open Sans', sans-serif;
+	font-family: 'Open Sans', sans-serif;
 }
 
  .site-bg {
-  position: fixed;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  background: url(../assets/images/seasons_backdrop_2.jpg);
-  background-repeat: no-repeat;
-  background-position: center top;
-  background-size: cover;
-  transition: all 0.4s;
+	position: fixed;
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	background: url(../assets/images/seasons_backdrop_2.jpg);
+	background-repeat: no-repeat;
+	background-position: center top;
+	background-size: cover;
+	transition: all 0.4s;
  }
 
 
@@ -53,7 +67,7 @@ html, body {
 	background: rgba(255,255,255,0.9);
 	position: relative;
 	padding-bottom: 195px;
-  max-height: 100%;
+	max-height: 100%;
 }
 
 .navbar {
@@ -149,6 +163,26 @@ html, body {
 		}
 }
 
+.section-wrapper, .controls {
+    .clrfix();
+}
+
+.controls a:first-child {
+    float: left;
+    width: 50%;
+}
+
+#plan-wrapper .plan-page {
+    width: 100%;
+}
+
+.plan-page-number {
+    color: @seasons_green;
+    font-family: @OpenSans;
+    font-size: 16px;
+    line-height: 18px;
+}
+
 // injector
 @import 'account/login/login.less';
 @import 'account/profile/profile.less';
@@ -158,6 +192,7 @@ html, body {
 @import 'admin/nutraceuticals/nutraceuticals.less';
 @import 'admin/prescriptions/prescriptions.less';
 @import 'admin/references/references.less';
+@import 'admin/reports/reports.less';
 @import 'admin/templates/templates.less';
 @import 'admin/users/users.less';
 @import 'main/main.less';

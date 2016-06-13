@@ -1,250 +1,258 @@
 <navbar></navbar>
 
-<div class="content-wrapper">
-  <div class="container content">
-    <div class="row page-title  page-header">
-      <div class="col-lg-8" style="padding: 0 50px;">
+<div class="content-wrapper wellness-plan">
+	<div class="container content">
+		<div class="row page-title  page-header">
+			<div class="col-lg-8" style="padding: 0 50px;">
 
-          <h1>{{vm.pageTitle}}</h1>
-          <span class="subheader" ng-show="vm.plan.patient">{{vm.plan.patient.name.first}} {{vm.plan.patient.name.last}}'s Wellness Plan</span> | <span class="patient-info">DOB: {{vm.plan.patient.dob}}</span>
+				<h1>{{ vm.pageTitle }}</h1>
+				<span class="subheader" ng-show="vm.plan.patient">Wellness Plan for: {{ vm.plan.patient.name.first }} {{ vm.plan.patient.name.last }}</span> | <span class="patient-info">DOB: {{ vm.plan.patient.dob }}</span>
 
-      </div>
-      <div class="col-lg-4" style="text-align: right;">
-        <button class="btn btn-lg btn-seasons" ng-show="vm.viewing" ng-click="vm.viewing=false">Back To Editor</button>
-        <button class="btn btn-lg btn-seasons" ng-show="vm.viewing" ng-click="vm.printPlan()">Print</button>
-        <button class="btn btn-lg btn-seasons" ng-show="!vm.viewing" ng-click="vm.viewing=true">Preview</button>
-      </div>
-    </div><!-- .page-title -->
+			</div>
+			<div class="col-lg-4" style="text-align: right;">
+				<button class="btn btn-lg btn-seasons" ng-show="vm.viewing" ng-click="vm.viewing=false">Back To Editor</button>
+				<button class="btn btn-lg btn-seasons" ng-show="vm.viewing" ng-click="vm.printPlan()">Print</button>
+				<button class="btn btn-lg btn-seasons" ng-show="!vm.viewing" ng-click="vm.viewing=true">Preview</button>
+			</div>
+		</div>
+		<!-- .page-title -->
 
-    <div class="row" id="plan-wrapper" style="margin-top: 20px;" ng-show="vm.viewing">
-      <div class="controls" style="margin: 0 auto 30px auto; text-align: center;">
-        <a href="" ng-click="vm.previousPage()"><i class="fa fa-chevron-left fa-2x"></i></a> &nbsp;&nbsp;&nbsp;
-        <a href="" ng-click="vm.nextPage()"><i class="fa fa-chevron-right fa-2x"></i></a></div>
-      <div class="section-wrapper" ng-repeat="section in vm.templateSections | orderBy:'order'">
+		<div class="row plan-wrapper" id="plan-wrapper" style="margin-top: 20px;" ng-show="vm.viewing">
+			
+			<div class="controls" style="margin: 0 auto 30px auto; text-align: center;">
+				<a href="" ng-click="vm.previousPage()"><i class="fa fa-chevron-left fa-2x"></i></a>
+				&nbsp;&nbsp;&nbsp;
+				<a href="" ng-click="vm.nextPage()"><i class="fa fa-chevron-right fa-2x"></i></a>
+			</div>
 
-          <!-- COVER PAGE -->
-          <div class="plan-page cover-page" ng-attr-style="{{'background-image: url(' + vm.user.cover_image_url + ')!important; background-size: cover !important; background-repeat: no-repeat !important;'}}" ng-if="section.title=='Front'">
-            <div class="plan-page-body"><div class="plan-page-content"></div></div>
-          </div>
+			<div class="section-wrapper" ng-repeat="section in vm.templateSections | orderBy:'order'">
 
-          <!-- WELLNESS POINTS -->
-          <div class="plan-page" ng-if="section.has_extras">
-            <div class="plan-page-body">
-              <h2 class="plan-page-title">{{section.title}}</h2>
-              <div class="plan-page-content" ng-bind-html="vm.sectionPreview(section.planSection)"></div>
-            </div>
-          </div>
+				<!-- COVER PAGE -->
+				<div class="plan-page cover-page" ng-attr-style="{{'background-image: url(' + vm.user.cover_image_url + ')!important; background-size: cover !important; background-repeat: no-repeat !important;'}}" ng-if="section.title=='Front'">
+					<div class="plan-page-body">
+						<div class="plan-page-content"></div>
+					</div>
+				</div>
 
-          <!-- PHARMACIES -->
-          <div class="plan-page" ng-if="section.title == 'Compounding Pharmacy List'">
-            <div class="plan-page-body">
-              <h2 class="plan-page-title" ng-bind-html="section.title"></h2>
-              <div class="plan-page-content">
-                <table class="table table-condensed table-bordered table-responsive">
-                  <thead>
-                    <tr>
-                      <th>Name</th>
-                      <th>Phone</th>
-                      <th>Fax</th>
-                      <th>Email</th>
-                      <th>Contact</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr ng-repeat="pharmacy in vm.user.pharmacies">
-                      <td>{{pharmacy.name}}</td>
-                      <td>{{pharmacy.phone}}</td>
-                      <td>{{pharmacy.fax}}</td>
-                      <td>{{pharmacy.email}}</td>
-                      <td>{{pharmacy.contact}}</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
+				<!-- WELLNESS POINTS -->
+				<div class="plan-page" ng-if="section.has_extras">
+					<div class="plan-page-body">
+						<h2 class="plan-page-title">{{ section.title }}</h2>
+						<div class="plan-page-content" ng-bind-html="vm.sectionPreview( section.planSection )"></div>
+					</div>
+				</div>
 
-          <!-- SUPPLEMENT STORES -->
-          <div class="plan-page" ng-if="section.title == 'Supplement Store'">
-            <div class="plan-page-body">
-              <h2 class="plan-page-title" ng-bind-html="section.title"></h2>
-              <div class="plan-page-content">
-                <table class="table table-condensed table-bordered table-responsive">
-                  <thead>
-                    <tr>
-                      <th>Name</th>
-                      <th>URL</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr ng-repeat="store in vm.user.stores">
-                      <td>{{store.name}}</td>
-                      <td>{{store.url}}</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
+				<!-- PHARMACIES -->
+				<div class="plan-page" ng-if="section.title == 'Compounding Pharmacy List'">
+					<div class="plan-page-body">
+						<h2 class="plan-page-title" ng-bind-html="section.title"></h2>
+						<div class="plan-page-content">
+							<table class="table table-condensed table-bordered table-responsive">
+								<thead>
+									<tr>
+										<th>Name</th>
+										<th>Phone</th>
+										<th>Fax</th>
+										<th>Email</th>
+										<th>Contact</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr ng-repeat="pharmacy in vm.user.pharmacies">
+										<td>{{pharmacy.name}}</td>
+										<td>{{pharmacy.phone}}</td>
+										<td>{{pharmacy.fax}}</td>
+										<td>{{pharmacy.email}}</td>
+										<td>{{pharmacy.contact}}</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
 
-          <!-- SOCIAL MEDIA -->
-          <div class="plan-page" ng-if="section.title == 'Social Media'">
-            <div class="plan-page-body">
-              <h2 class="plan-page-title" ng-bind-html="section.title"></h2>
-              <div class="plan-page-content">
-                <table class="table table-condensed table-bordered table-responsive">
-                  <thead>
-                    <tr>
-                      <th>Name</th>
-                      <th>URL</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr ng-repeat="network in vm.user.networks">
-                      <td>{{network.name}}</td>
-                      <td>{{network.url}}</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
+				<!-- SUPPLEMENT STORES -->
+				<div class="plan-page" ng-if="section.title == 'Supplement Store'">
+					<div class="plan-page-body">
+						<h2 class="plan-page-title" ng-bind-html="section.title"></h2>
+						<div class="plan-page-content">
+							<table class="table table-condensed table-bordered table-responsive">
+								<thead>
+									<tr>
+										<th>Name</th>
+										<th>URL</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr ng-repeat="store in vm.user.stores">
+										<td>{{store.name}}</td>
+										<td>{{store.url}}</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
 
-          <!-- REST OF PAGES -->
+				<!-- SOCIAL MEDIA -->
+				<div class="plan-page" ng-if="section.title == 'Social Media'">
+					<div class="plan-page-body">
+						<h2 class="plan-page-title" ng-bind-html="section.title"></h2>
+						<div class="plan-page-content">
+							<table class="table table-condensed table-bordered table-responsive">
+								<thead>
+									<tr>
+										<th>Name</th>
+										<th>URL</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr ng-repeat="network in vm.user.networks">
+										<td>{{network.name}}</td>
+										<td>{{network.url}}</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
 
-          <div class="plan-page" ng-if="section.title != 'Front' && section.title != 'Compounding Pharmacy List' && section.title != 'Supplement Store' && section.title != 'Social Media' && !section.has_extras">
-            <div class="plan-page-body">
-              <h2 class="plan-page-title" ng-bind-html="section.title"></h2>
-              <div class="plan-page-content" ng-if="section.planSection.html" ng-bind-html="section.planSection.html"></div>
-              <div class="plan-page-content" ng-if="!section.planSection.html" ng-bind-html="section.html"></div>
-            </div>
-          </div>
+				<!-- REST OF PAGES -->
+				<div class="plan-page" ng-if="section.title != 'Front' && section.title != 'Compounding Pharmacy List' && section.title != 'Supplement Store' && section.title != 'Social Media' && !section.has_extras">
+					<div class="plan-page-body">
+						<h2 class="plan-page-title" ng-bind-html="section.title"></h2>
+						<div class="plan-page-content" ng-if="section.planSection.html" ng-bind-html="section.planSection.html"></div>
+						<div class="plan-page-content stuff" ng-if="!section.planSection.html" ng-bind-html="section.html"></div>
+					</div>
+				</div>
 
-      </div>
-    </div><!-- End Plan View Wrapper -->
-    <plan-preview ng-show="vm.viewing"></plan-preview>
-
-
-    <div class="row" id="plan-edit-wrapper" ng-show="vm.plan.patient && !vm.viewing">
-      <div class="sidebar">
-        <ul>
-          <li ng-repeat="section in vm.templateSections | orderBy:'order'">
-            <a href="#" ng-class="{active : vm.templateSection === section}" ng-click="vm.setSection(section)">{{section.title}}</a>
-          </li>
-        </ul>
-      </div>
-      <div class="body">
-        <section-editor ng-show="vm.templateSection" data-section="vm.templateSection.planSection" data-ctrl="vm"></section-editor>
-        <div class="container-fluid">
-          <div class="panel panel-seasons" ng-show="!vm.templateSection.is_editable && !vm.templateSection.has_extras && vm.templateSection.title != 'Compounding Pharmacy List' && vm.templateSection.title != 'Supplement Store' && vm.templateSection.title != 'Social Media' && vm.templateSection.html != '' && vm.templateSection.title != 'Front' ">
-            <div class="panel-heading">This Section Is Not Editable</div>
-            <div class="panel-body" ng-bind-html="vm.templateSection.html"></div>
-          </div>
-
-          <div class="col-lg-8 col-lg-offset-2" ng-if="vm.templateSection.title == 'Front'">
-            <img ng-src="{{vm.user.cover_image_url}}" class="img-responsive" alt="Plan Cover">
-          </div>
+			</div>
+		</div>
+		<!-- End Plan View Wrapper -->
+		<plan-preview ng-show="vm.viewing"></plan-preview>
 
 
-          <div ng-show="vm.templateSection.title == 'Compounding Pharmacy List'" class="panel" ng-class="vm.user.pharmacies.length > 0 ? 'panel-seasons' : 'panel-warning'">
+		<div class="row" id="plan-edit-wrapper" ng-show="vm.plan.patient && !vm.viewing">
+			<div class="sidebar">
+				<ul>
+					<li ng-repeat="section in vm.templateSections | orderBy:'order'">
+						<a href="#" ng-class="{active : vm.templateSection === section}" ng-click="vm.setSection(section)">{{section.title}}</a>
+					</li>
+				</ul>
+			</div>
+			<div class="body">
+				<section-editor ng-show="vm.templateSection" data-section="vm.templateSection.planSection" data-ctrl="vm"></section-editor>
+				<div class="container-fluid">
+					<div class="panel panel-seasons" ng-show="!vm.templateSection.is_editable && !vm.templateSection.has_extras && vm.templateSection.title != 'Compounding Pharmacy List' && vm.templateSection.title != 'Supplement Store' && vm.templateSection.title != 'Social Media' && vm.templateSection.html != '' && vm.templateSection.title != 'Front' ">
+						<div class="panel-heading">This Section Is Not Editable</div>
+						<div class="panel-body" ng-bind-html="vm.templateSection.html"></div>
+					</div>
 
-            <div class="panel-heading" ng-show="vm.user.pharmacies.length < 1">Uh Oh!</div>
-            <div class="panel-body" ng-show="vm.user.pharmacies.length < 1">You have not added any items for section yet.  Please visit the <a ui-sref="profile">My Profile</a> page to add these items.</div>
+					<div class="col-lg-8 col-lg-offset-2" ng-if="vm.templateSection.title == 'Front'">
+						<img ng-src="{{vm.user.cover_image_url}}" class="img-responsive" alt="Plan Cover">
+					</div>
 
-            <div class="panel-heading">Your Compounding Pharmacy List</div>
-            <div class="panel-body" ng-show="vm.user.pharmacies.length > 0">
-              <table class="table table-bordered table-hover table-responsive table-condensed">
-                <thead>
-                  <tr>
-                    <th>Name</th>
-                    <th>Phone</th>
-                    <th>Fax</th>
-                    <th>Email</th>
-                    <th>Contact</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr ng-repeat="pharmacy in vm.user.pharmacies">
-                    <td>{{pharmacy.name}}</td>
-                    <td>{{pharmacy.phone}}</td>
-                    <td>{{pharmacy.fax}}</td>
-                    <td>{{pharmacy.email}}</td>
-                    <td>{{pharmacy.contact}}</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
 
-          <div ng-show="vm.templateSection.title == 'Supplement Store'" class="panel" ng-class="vm.user.stores.length > 0 ? 'panel-seasons' : 'panel-warning'">
+					<div ng-show="vm.templateSection.title == 'Compounding Pharmacy List'" class="panel" ng-class="vm.user.pharmacies.length > 0 ? 'panel-seasons' : 'panel-warning'">
 
-            <div class="panel-heading" ng-show="vm.user.stores.length < 1">Uh Oh!</div>
-            <div class="panel-body" ng-show="vm.user.stores.length < 1">You have not added any items for section yet.  Please visit the <a ui-sref="profile">My Profile</a> page to add these items.</div>
+						<div class="panel-heading" ng-show="vm.user.pharmacies.length < 1">Uh Oh!</div>
+						<div class="panel-body" ng-show="vm.user.pharmacies.length < 1">You have not added any items for section yet. Please visit the <a ui-sref="profile">My Profile</a> page to add these items.</div>
 
-            <div class="panel-heading" ng-show="vm.user.stores.length > 0">Supplement Stores</div>
-            <div class="panel-body" ng-show="vm.user.stores.length > 0">
-              <table class="table table-bordered table-hover table-responsive table-condensed">
-                <thead>
-                  <tr>
-                    <th>Name</th>
-                    <th>URL</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr ng-repeat="store in vm.user.stores">
-                    <td>{{store.name}}</td>
-                    <td>{{store.url}}</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
+						<div class="panel-heading">Your Compounding Pharmacy List</div>
+						<div class="panel-body" ng-show="vm.user.pharmacies.length > 0">
+							<table class="table table-bordered table-hover table-responsive table-condensed">
+								<thead>
+									<tr>
+										<th>Name</th>
+										<th>Phone</th>
+										<th>Fax</th>
+										<th>Email</th>
+										<th>Contact</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr ng-repeat="pharmacy in vm.user.pharmacies">
+										<td>{{pharmacy.name}}</td>
+										<td>{{pharmacy.phone}}</td>
+										<td>{{pharmacy.fax}}</td>
+										<td>{{pharmacy.email}}</td>
+										<td>{{pharmacy.contact}}</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
 
-          <div ng-show="vm.templateSection.title == 'Social Media'" class="panel" ng-class="vm.user.networks.length > 0 ? 'panel-seasons' : 'panel-warning'">
+					<div ng-show="vm.templateSection.title == 'Supplement Store'" class="panel" ng-class="vm.user.stores.length > 0 ? 'panel-seasons' : 'panel-warning'">
 
-            <div class="panel-heading" ng-show="vm.user.networks.length < 1">Uh Oh!</div>
-            <div class="panel-body" ng-show="vm.user.networks.length < 1">You have not added any items for section yet.  Please visit the <a ui-sref="profile">My Profile</a> page to add these items.</div>
+						<div class="panel-heading" ng-show="vm.user.stores.length < 1">Uh Oh!</div>
+						<div class="panel-body" ng-show="vm.user.stores.length < 1">You have not added any items for section yet. Please visit the <a ui-sref="profile">My Profile</a> page to add these items.</div>
 
-            <div class="panel-heading" ng-show="vm.user.networks.length > 0">Social Media</div>
-            <div class="panel-body" ng-show="vm.user.networks.length > 0">
-              <table class="table table-bordered table-hover table-responsive table-condensed">
-                <thead>
-                  <tr>
-                    <th>Name</th>
-                    <th>URL</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr ng-repeat="network in vm.user.networks">
-                    <td>{{network.name}}</td>
-                    <td>{{network.url}}</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-        <div class="clearfix"></div>
+						<div class="panel-heading" ng-show="vm.user.stores.length > 0">Supplement Stores</div>
+						<div class="panel-body" ng-show="vm.user.stores.length > 0">
+							<table class="table table-bordered table-hover table-responsive table-condensed">
+								<thead>
+									<tr>
+										<th>Name</th>
+										<th>URL</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr ng-repeat="store in vm.user.stores">
+										<td>{{store.name}}</td>
+										<td>{{store.url}}</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
 
-        <div class="row">
-          <!-- <button class="btn-warning" style="margin-top: 10px;" ng-click="vm.logSection(section)">debug</button> -->
-        </div>
-        <div class="hidden" style="padding: 20px; background: #eaeaea; border: 1px solid #aaa; border-radius: 4px; margin-top: 20px;">
-          <h4>Plan</h4>
-          <p>
-            {{vm.plan.sections}}
-          </p>
-          <hr>
-          <h4>Items</h4>
-          <p>
-            {{vm.templateSection.planSection.focusItems | json}}
-          </p>
-        </div>
-      </div>
-    </div> <!-- End Plan Edit Wrapper -->
+					<div ng-show="vm.templateSection.title == 'Social Media'" class="panel" ng-class="vm.user.networks.length > 0 ? 'panel-seasons' : 'panel-warning'">
 
-    <div class="row footer-wrapper">
-      <footer></footer>
-    </div>
-  </div>
+						<div class="panel-heading" ng-show="vm.user.networks.length < 1">Uh Oh!</div>
+						<div class="panel-body" ng-show="vm.user.networks.length < 1">You have not added any items for section yet. Please visit the <a ui-sref="profile">My Profile</a> page to add these items.</div>
+
+						<div class="panel-heading" ng-show="vm.user.networks.length > 0">Social Media</div>
+						<div class="panel-body" ng-show="vm.user.networks.length > 0">
+							<table class="table table-bordered table-hover table-responsive table-condensed">
+								<thead>
+									<tr>
+										<th>Name</th>
+										<th>URL</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr ng-repeat="network in vm.user.networks">
+										<td>{{network.name}}</td>
+										<td>{{network.url}}</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+				<div class="clearfix"></div>
+
+				<div class="row">
+					<!-- <button class="btn-warning" style="margin-top: 10px;" ng-click="vm.logSection(section)">debug</button> -->
+				</div>
+				<div class="hidden" style="padding: 20px; background: #eaeaea; border: 1px solid #aaa; border-radius: 4px; margin-top: 20px;">
+					<h4>Plan</h4>
+					<p>
+						{{vm.plan.sections}}
+					</p>
+					<hr>
+					<h4>Items</h4>
+					<p>
+						{{vm.templateSection.planSection.focusItems | json}}
+					</p>
+				</div>
+			</div>
+		</div>
+		<!-- End Plan Edit Wrapper -->
+
+		<div class="row footer-wrapper">
+			<footer></footer>
+		</div>
+	</div>
 </div>

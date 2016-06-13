@@ -4,7 +4,7 @@
 
 class MainController {
 
-  constructor($http, $state, $uibModal, Auth, Template, Plan, PlanSection, Modal) {
+  constructor( $http, $state, $uibModal, Auth, Template, Plan, PlanSection, Modal ) {
     this.$http = $http;
     this.$state = $state;
 
@@ -25,7 +25,7 @@ class MainController {
     });
   }
 
-  addPlan(form) {
+  addPlan( form ) {
     var ctr = this;
     var counter = 0;
     this.submitted = true;
@@ -36,7 +36,7 @@ class MainController {
     newPlan._author_id = this.user._id;
     newPlan.$save()
 
-    .then((newPlan) => {
+    .then(( newPlan ) => {
       // Navigate to new plan
       this.$state.go('plan', {id: newPlan._id}, {reload: true});
       // this.$state.reload();
@@ -44,7 +44,7 @@ class MainController {
   }
 }
 
-angular.module('wellnessPlanApp')
-  .controller('MainController', MainController);
+angular.module( 'wellnessPlanApp' )
+  .controller( 'MainController', MainController );
 
 })();

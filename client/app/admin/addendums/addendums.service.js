@@ -15,6 +15,5 @@ class Addendum{
   }
 
 }
-angular.module('wellnessPlanApp')
-  .service('Addendum', Addendum);
+angular.module('wellnessPlanApp').service('Addendum', Addendum);
 })();

@@ -4,305 +4,304 @@
 
 class PlansController {
 
-  constructor($state, $cookies, Auth, plan, latestTemplate, Plan, PlanSection, $http, FocusItem, Addendum) {
-    this.$state = $state;
-    this.$cookies = $cookies;
-    this.$http = $http;
-    this.user = Auth.getCurrentUser();
-    this.PlanSection = PlanSection;
-    this.Plan = Plan;
-    this.FocusItem = FocusItem;
-    this.Addendum = Addendum;
-    this.pageTitle = 'Wellness Plan';
-    this.previewPages;
-    this.currentPreviewPage;
-    this.planSections;
-    this.planSection = {};
-    this.focusItems;
-    this.addendums;
-    this.templateSections = latestTemplate.sections.filter(function(val) {return val.is_active} );
-    this.viewing = false;
-    this.itemSelected = false;
-    this.activate(plan);
-    this.page = 1;
-  }
+	constructor( $state, $cookies, Auth, plan, latestTemplate, Plan, PlanSection, $http, FocusItem, Addendum ) {
+		this.$state = $state;
+		this.$cookies = $cookies;
+		this.$http = $http;
+		this.user = Auth.getCurrentUser();
+		this.PlanSection = PlanSection;
+		this.Plan = Plan;
+		this.FocusItem = FocusItem;
+		this.Addendum = Addendum;
+		//this.Report			= Report;
+		this.pageTitle = 'Wellness Plan';
+		this.previewPages;
+		this.currentPreviewPage;
+		this.planSections;
+		this.planSection = {
+			html : ''
+		};
+		this.focusItems;
+		this.addendums;
+		this.reports;
 
-  activate(plan) {
-    var self = this;
-    this.plan = plan;
-    // var c_id = this.$cookies.get('ts-id');
-    this.templateSection = this.templateSections[0];
+		this.templateSections = latestTemplate.sections.filter(function( val ) {
+										return val.is_active
+									});
+		this.viewing = false;
+		this.itemSelected = false;
 
-    // link existing plan sections to template sections
-    for (var i=0;i<this.templateSections.length;i++) {
+		this.activate( plan );
+		this.page = 1;
 
-      var section = this.templateSections[i];
-      // If the user has a cookie for last edited section...
-      // if (c_id) {
-      //   // We need that section to be the active section
-      //   if ( this.templateSections[i]._id == c_id ) {
-      //     this.templateSection = this.templateSections[i];
-      //   }
-      // }
 
-      // link any plan sections to their templates
-      section.planSection = this.plan.sections.filter(function(val) {return val.title == section.title} )[0];
+  	};
 
-      // Add basic info for new sections.
-      if (!section.planSection) {
-        section.planSection = {
-          title: section.title,
-          _plan_id: this.plan._id,
-          addendums: [],
-          focusItems: []
-        }
-      }
-      // Add editor refs
-      section.planSection.intro = section.intro;
-      section.planSection.is_editable = section.is_editable;
-      section.planSection.has_extras = section.has_extras;
-    }
+	activate( plan ) {
+		var self = this;
+		this.plan = plan;
 
-    // This is probably the worst way to do this =/  ( It breaks in production )
-    if (this.templateSection.has_extras && !this.focusItems || this.templateSection.has_extras && !this.addendums) {
-      this.getExtras(this.templateSection.title);
-    }
-  }
+		// var c_id = this.$cookies.get('ts-id');
+		this.templateSection = this.templateSections[ 0 ];
 
-  logSection(section) {
-    console.log(section);
-  }
+		// link existing plan sections to template sections
+		for ( var i=0; i < this.templateSections.length; i++ ) {
+			var section = this.templateSections[ i ];
+			// If the user has a cookie for last edited section...
+			// if (c_id) {
+			//   // We need that section to be the active section
+			//   if ( this.templateSections[i]._id == c_id ) {
+			//     this.templateSection = this.templateSections[i];
+			//   }
+			// }
+			// link any plan sections to their templates
+			section.planSection = this.plan.sections.filter(function( val ) {
+										return val.title == section.title;
+									})[ 0 ];
 
-  /*
-   *  Editor Functions
-   *
-   */
+			// Add basic info for new sections.
+			section.html = section.intro;
 
-  addSection(section, cb) {
-    // I think this will be a slient action when edits are made.
-    var newPlanSection = new this.PlanSection(section);
-    newPlanSection.$save({plan_id: this.plan._id})
-    .then((newSection) => {
-      this.plan.sections.push(newSection._id); // this.plan.sections.push(newSection) => same result, larger request?
-      this.plan.$update()
-      .then((data) => {
-        // this.$cookies.put('current-ts', this.currentSection._id);
-        if (cb) {
-           cb(data);
-        }
-      });
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-  }
+			if ( !section.planSection ) {
+				section.planSection = {
+					title: section.title,
+					_plan_id: this.plan._id,
+					addendums	: [],
+					reports		: [],
+					focusItems	: []
+				}
+			}
+			// Add editor refs
+			section.planSection.intro = section.intro;
+			section.planSection.is_editable = section.is_editable;
+			section.planSection.has_extras = section.has_extras;
+		}
 
-  saveSection(section) {
-    var self = this;
-    if (section._id) {
-      self.PlanSection.update({plan_id: self.plan._id, id: section._id }, section, function() {
-        //need a toaster!
-        console.log('updated');
-        self.plan = self.Plan.get({id: self.plan._id}, function(plan) {
-          self.activate(plan);
-        });
+		// This is probably the worst way to do this =/  ( It breaks in production )
+		if ( this.templateSection.has_extras && !this.focusItems || this.templateSection.has_extras && !this.addendums ) {
+			this.getExtras( this.templateSection.title );
+		}
+	};
 
-      });
-    }
-    else {
-      self.addSection(section, function() {
-        // need a toaster!
-        self.plan = self.Plan.get({id: self.plan._id}, function(plan) {
-          self.activate(plan);
-        });
-      });
-    }
-  }
+	/*
+	 *  Editor Functions
+	 *
+	*/
+	addSection( section, cb ) {
+		// I think this will be a slient action when edits are made.
+		var newPlanSection = new this.PlanSection(section);
+		newPlanSection.$save({plan_id: this.plan._id})
+		.then((newSection) => {
+			this.plan.sections.push(newSection._id); // this.plan.sections.push(newSection) => same result, larger request?
+			this.plan.$update()
+			.then((data) => {
+				// this.$cookies.put('current-ts', this.currentSection._id);
+				if (cb) {
+					cb(data);
+				}
+			});
+		})
+		.catch((err) => {
+			console.log(err);
+		});
+	};
 
-  setSection(section) {
-    var title = section.title;
-    if (section.has_extras) {
-      this.getExtras(title);
-    }
-    this.templateSection = section;
-    this.$cookies.put('ts-id', section._id);
-  }
+	saveSection(section) {
+		var self = this;
+		if (section._id) {
+			self.PlanSection.update({plan_id: self.plan._id, id: section._id }, section, function() {
+				//need a toaster!
+				console.log('updated');
+				self.plan = self.Plan.get({id: self.plan._id}, function(plan) {
+					self.activate(plan);
+				});
+			});
+		} else {
+			self.addSection(section, function() {
+				// need a toaster!
+				self.plan = self.Plan.get({id: self.plan._id}, function(plan) {
+					self.activate(plan);
+				});
+			});
+		}
+	};
 
-  getExtras(section) {
-    var self = this;
-    var query = {};
+	setSection(section) {
+		var title = section.title;
+		if (section.has_extras) {
+			this.getExtras(title);
+		}
+		this.templateSection = section;
+		this.$cookies.put('ts-id', section._id);
+	};
 
-    this.selectedFocusItem = undefined;
+	getExtras(section) {
+		var self = this;
+		var query = {};
 
-    query[section.toLowerCase()] = true;
-    self.focusItems = self.FocusItem.query(query);
-    self.addendums = self.Addendum.query(query);
-  }
+		this.selectedFocusItem = undefined;
+		query[section.toLowerCase()] = true;
+		self.focusItems = self.FocusItem.query(query);
+		self.addendums = self.Addendum.query(query);
+	};
 
-  addFocusItem(item, section) {
-    var self = this;
-    // What if the section hasn't been added yet? =[
+	addFocusItem(item, section) {
+		var self = this;
 
-    if (section._id) {
-      this.PlanSection.addFocusItem({plan_id: section._plan_id, id: section._id, focusItem_id: item._id }, item, function(data) {
-        self.activate(data);
-      });
-    }
-    else {
-      section.focusItems.push(item);
-      this.addSection(section, function(res) {
+		// What if the section hasn't been added yet? =[
+		if (section._id) {
+			this.PlanSection.addFocusItem({plan_id: section._plan_id, id: section._id, focusItem_id: item._id }, item, function(data) {
+				self.activate(data);
+			});
+		} else {
+			section.focusItems.push(item);
+			this.addSection(section, function(res) { });
+		}
+	};
 
-      });
-    }
-  }
+	removeFocusItem(item, section) {
+		var self = this;
+		this.PlanSection.removeFocusItem({plan_id: section._plan_id, id: section._id, focusItem_id: item._id}, function(data) {
+			self.activate(data);
+		});
+	};
 
-  removeFocusItem(item, section) {
-    var self = this;
-    this.PlanSection.removeFocusItem({plan_id: section._plan_id, id: section._id, focusItem_id: item._id}, function(data) {
-      self.activate(data);
-    });
-  }
+	addAddendum(item, section) {
+		var self = this;
 
-  addAddendum(item, section) {
-    var self = this;
+		if (section._id) {
+			this.PlanSection.addAddendum({plan_id: section._plan_id, id: section._id, addendum_id: item._id }, item, function(data) {
+				self.activate(data);
+			});
+		} else {
+			section.addendums.push(item);
+			this.addSection(section, function(res) { });
+		}
+	};
 
-    if (section._id) {
-      this.PlanSection.addAddendum({plan_id: section._plan_id, id: section._id, addendum_id: item._id }, item, function(data) {
-        self.activate(data);
-      });
-    }
-    else {
-      section.addendums.push(item);
-      this.addSection(section, function(res) {
+	removeAddendum(item, section) {
+		var self = this;
+		this.PlanSection.removeAddendum({plan_id: section._plan_id, id: section._id, addendum_id: item._id}, function(data) {
+			self.activate(data);
+		});
+	};
 
-      });
-    }
-  }
+	/*
+	 *  Preview Functions
+	 *
+	 */
+	sectionPreview( section ) {
+		this.html = '';
+		var items = section.focusItems;
+		var addendums = section.addendums;
 
-  removeAddendum(item, section) {
-    var self = this;
-    this.PlanSection.removeAddendum({plan_id: section._plan_id, id: section._id, addendum_id: item._id}, function(data) {
-      self.activate(data);
-    });
-  }
+		if ( section.intro ) {
+			this.html += section.intro;
+		}
 
-  /*
-   *  Preview Functions
-   *
-   */
-  sectionPreview(section) {
-    var html = '';
-    var items = section.focusItems;
-    var addendums = section.addendums;
+		if (section.comments) {
+			this.html += section.comments;
+		}
 
-    if (section.intro) {
-      html += section.intro;
-    }
+		if ( items && items.length > 0 ) {
+			for ( var i=0; i<items.length; i++ ) {
+				this.html += '<strong>' + items[ i ].title + '</strong>';
+				this.html += items[ i ].description;
+			}
+		}
 
-    if (section.comments) {
-      html += section.comments;
-    }
+		if (section.recommendations) {
+			this.html += '<h2 class="plan-page-sub-heading">Recommendations</h2>';
+			this.html += section.recommendations;
+		}
 
-    if (items && items.length > 0) {
-      for (var i=0; i<items.length; i++) {
-        html += '<strong>' + items[i].title + '</strong>';
-        html += items[i].description;
-      }
-    }
+		if (section.nutraceuticals) {
+			this.html += '<h2 class="plan-page-sub-heading">Nutraceuticals</h2>';
+			this.html += section.nutraceuticals;
+		}
 
-    if (section.recommendations) {
-      html += '<h2 class="plan-page-sub-heading">Recommendations</h2>';
-      html += section.recommendations;
-    }
+		if ( section.prescriptions ) {
+			this.html += '<h2 class="plan-page-sub-heading">Prescriptions</h2>';
+			this.html += section.prescriptions;
+		}
 
-    if (section.nutraceuticals) {
-      html += '<h2 class="plan-page-sub-heading">Nutraceuticals</h2>';
-      html += section.nutraceuticals;
-    }
+		if ( section.references ) {
+			this.html += '<h2 class="plan-page-sub-heading">References</h2>';
+			this.html += section.references;
+		}
 
-    if (section.prescriptions) {
-      html += '<h2 class="plan-page-sub-heading">Prescriptions</h2>';
-      html += section.prescriptions;
-    }
+		if ( addendums  && addendums.length > 0 ) {
+			this.html += '<h2 class="plan-page-sub-heading">Addendums</h2>';
+			for ( var i=0; i<addendums.length; i++ ) {
+				this.html += '<strong>' + addendums[ i ].title + '</strong>';
+				this.html += addendums[ i ].description;
+			}
+		}
 
-    if (section.references) {
-      html += '<h2 class="plan-page-sub-heading">References</h2>';
-      html += section.references;
-    }
+		return this.html;
+	};
 
-    if (addendums  && addendums.length > 0) {
-      html += '<h2 class="plan-page-sub-heading">Addendums</h2>';
-      for (var i=0; i<addendums.length; i++) {
-        html += '<strong>' + addendums[i].title + '</strong>';
-        html += addendums[i].description;
-      }
-    }
+	nextPage() {
+		this.pages = $('.plan-page').toArray();
+		if (this.page < $(this.pages).length) {
+			//Prep
+			var animationEnd = 'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend';
+			var page = this.pages[this.page - 1];
 
-    return html;
-  }
+			// Fade out current page
+			$(page).addClass('animated fadeOutLeft').one(animationEnd, function() {
+				$(page).css('opacity', 0);
+				$(page).removeClass('animated fadeOutLeft');
+			});
 
-  nextPage() {
-    this.pages = $('.plan-page').toArray();
-    if (this.page < $(this.pages).length) {
-      //Prep
-      var animationEnd = 'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend';
-      var page = this.pages[this.page - 1];
+			// Set Page
+			this.page ++;
+			var nextPage = this.pages[this.page - 1];
 
-      // Fade out current page
-      $(page).addClass('animated fadeOutLeft').one(animationEnd, function() {
-        $(page).css('opacity', 0);
-        $(page).removeClass('animated fadeOutLeft');
-      });
+			// Fade in new page
+			$(nextPage).addClass('animated fadeInRight').one(animationEnd, function() {
+				$(nextPage).css('opacity', 1);
+				$(nextPage).removeClass('animated fadeInRight');
+			});
+		}
+	};
 
-      // Set Page
-      this.page ++;
-      var nextPage = this.pages[this.page - 1];
+	previousPage() {
+		if (this.page > 1) {
+			//Prep
+			var animationEnd = 'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend';
+			var page = this.pages[this.page - 1];
 
-      // Fade in new page
-      $(nextPage).addClass('animated fadeInRight').one(animationEnd, function() {
-        $(nextPage).css('opacity', 1);
-        $(nextPage).removeClass('animated fadeInRight');
-      });
-    }
-  }
+			// Fade out current page
+			$(page).addClass('animated fadeOutRight').one(animationEnd, function() {
+				$(page).css('opacity', 0);
+				$(page).css('z-index', 0);
+				$(page).removeClass('animated fadeOutRight');
+			});
 
-  previousPage() {
-    if (this.page > 1) {
+			// Set Page
+			this.page --;
+			var nextPage = this.pages[this.page - 1];
 
-      //Prep
-      var animationEnd = 'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend';
-      var page = this.pages[this.page - 1];
+			// Fade in new page
+			$(nextPage).addClass('animated fadeInLeft').one(animationEnd, function() {
+				$(nextPage).css('opacity', 1);
+				$(nextPage).css('z-index', 1);
+				$(nextPage).removeClass('animated fadeInLeft');
+			});
+		}
+	};
 
-      // Fade out current page
-      $(page).addClass('animated fadeOutRight').one(animationEnd, function() {
-        $(page).css('opacity', 0);
-        $(page).css('z-index', 0);
-        $(page).removeClass('animated fadeOutRight');
-      });
+	printPlan() {
+		this.viewing = true;
+		setTimeout(function() {
+			window.print();
+			// this.viewing = false;
+		}, 2000);
+	};
 
-      // Set Page
-      this.page --;
-      var nextPage = this.pages[this.page - 1];
+};
 
-      // Fade in new page
-      $(nextPage).addClass('animated fadeInLeft').one(animationEnd, function() {
-        $(nextPage).css('opacity', 1);
-        $(nextPage).css('z-index', 1);
-        $(nextPage).removeClass('animated fadeInLeft');
-      });
-    }
-  }
-
-  printPlan() {
-    this.viewing = true;
-    setTimeout(function() {
-      window.print();
-      // this.viewing = false;
-    }, 2000);
-
-  }
-}
-angular.module('wellnessPlanApp')
-  .controller('PlansController', PlansController);
+angular.module( 'wellnessPlanApp' ).controller( 'PlansController', PlansController );
 
 })();

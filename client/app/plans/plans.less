@@ -6,291 +6,285 @@
 //     background: #fff;;
 //   }
 // }
-
 .controls {
-  a {
-    color: @seasons_green;
-  }
-
-  a:first-child {
-    display: block;
-    height: 25px;
-    border-right: 1px solid #ccc;
-    border-right: 1px solid rgba(100,100,100,0.3);
-  }
+	a {
+		color: @seasons_green;
+	}
+	a:first-child {
+		display: block;
+		height: 25px;
+		border-right: 1px solid #ccc;
+		border-right: 1px solid rgba(100,100,100,0.3);
+	}
 }
-
-#plan-wrapper {
-  margin: 0 auto;
-  width: 8.5in;
-  position: relative;
-  height: 11in;
-
-  .plan-page {
-    position: absolute;
-    height: 9.75in;
-    width: 7.65in;
-    background: #fff;
-    margin: 0 auto;
-    padding: .5in;
-    box-shadow: 0px 0px 9px -1px #999;
-    opacity: 0;
-    z-index: 0;
-    margin-bottom: 50px;
-    font-size: 1em;
-
-    &:after {
-      position: absolute;
-      background: @seasons_light_green;
-      height: 30px;
-      content: '';
-    }
-    h2.plan-page-title {
-      margin: -15px -15px 10px -15px;
-      color: #fff !important;
-      padding: 15px 0 15px 25px;
-      background-color: @seasons_green !important;
-      font-weight: 300;
-    }
-    .plan-page-number {
-      position: absolute;
-      bottom: -25px;
-      z-index: 1;
-      left: 40px;
-    }
-  }
-  .plan-page.cover-page {
-    &:after {
-      display: none;
-    }
-
-    .plan-page-number {
-      display: none;
-    }
-  }
+.plan-wrapper {
+	margin: 0 auto;
+	width: 8.5in;
+	position: relative;
+	height: 12in;
+	.plan-page {
+		position: absolute;
+		height: 11in;
+		width: 100%;
+		background: #fff;
+		margin: 0 auto;
+		padding: 0.5in;
+		box-shadow: 0 0 9px -1px #999;
+		opacity: 0;
+		z-index: 0;
+		margin-bottom: 50px;
+		font-size: 1em;
+		&:after {
+			position: absolute;
+			background: @seasons_light_green;
+			height: 30px;
+			content: '';
+		}
+		h2.plan-page-title {
+			margin: -15px -15px 10px;
+			color: #fff !important;
+			padding: 15px 0 15px 25px;
+			background-color: @seasons_green !important;
+			font-weight: 300;
+		}
+		.plan-page-number {
+			position: absolute;
+			bottom: -25px;
+			z-index: 1;
+			left: 40px;
+		}
+	}
+	.plan-page.cover-page {
+		&:after {
+			display: none;
+		}
+		.plan-page-number {
+			display: none;
+		}
+	}
 }
 #plan-edit-wrapper {
-  position: relative;
-  min-height: 595px;
-  .sidebar {
-    z-index: 1000;
-    position: absolute;
-    left: 250px;
-    width: 0;
-    height: 100%;
-    margin-left: -250px;
-    overflow-y: auto;
-    background: @seasons_green;
-    -webkit-transition: all 0.5s ease;
-    -moz-transition: all 0.5s ease;
-    -o-transition: all 0.5s ease;
-    transition: all 0.5s ease;
+	position: relative;
+	min-height: 595px;
+	.sidebar {
+		z-index: 1000;
+		position: absolute;
+		left: 250px;
+		width: 0;
+		height: 100%;
+		margin-left: -250px;
+		overflow-y: auto;
+		background: @seasons_green;
+		-webkit-transition: all 0.5s ease;
+		-moz-transition: all 0.5s ease;
+		-o-transition: all 0.5s ease;
+		transition: all 0.5s ease;
+		ul {
+			list-style: none;
+			padding: 0;
+			li {
+				line-height: 28px;
+				text-indent: 20px;
+				a {
+					color: #fff;
+					text-decoration: none;
+					display: block;
+				}
+				a:hover {
+					background: @seasons_light_green;
+					color: #333;
+				}
+				a.active {
+					background: @seasons_light_green;
+					color: #333;
+				}
+			}
+		}
+	}
+	.body {
+		width: 100%;
+		position: absolute;
+		padding: 15px; // editing pages
+		.nav-tabs {
+			border-bottom: 1px solid #DDD;
+			margin-bottom: 1em;
+		}
+		.nav-tabs > li > a {
+			color: #555555;
+			border: 1px solid #ddd;
+			border-bottom-color: transparent;
+			cursor: pointer;
+		}
+		.nav-tabs > li.active > a,
+		.nav-tabs > li.active > a:focus,
+		.nav-tabs > li.active > a:hover {
+			color: #555555;
+			background-color: #fff;
+			border: 1px solid #ddd;
+			border-bottom-color: transparent;
+			cursor: default;
+		}
+		.dropdown-menu {
+			background: @seasons_green;
+			color: #ffffff;
+		}
+		.dropdown-menu > li > a {
+			display: block;
+			padding: 3px 20px;
+			clear: both;
+			font-weight: normal;
+			line-height: 1.42857143;
+			color: #ffffff;
+			white-space: nowrap;
+		}
+		.dropdown-menu > .active > a,
+		.dropdown-menu > .active > a:focus,
+		.dropdown-menu > .active > a:hover {
+			color: @seasons_light_green;
+			background: transparent;
+			cursor: pointer;
+		}
+		ul.focus-items {
+			list-style: none;
+			padding: 0;
+			li.focus-item {
+				margin: 7px;
+				display: inline-block;
+				a {
+					border-radius: 6px;
+					display: block;
+					background: @seasons_green;
+					color: #fff;
+					padding: 5px 10px;
+					text-decoration: none;
+					cursor: pointer;
+				}
+				a:hover {
+					color: @seasons_light_green;
+				}
+			}
+		}
+		.focus-items-search {
+			margin-bottom: 15px;
+		}
+		.focus-items-wrapper {
+			max-height: 350px;
+			overflow-y: scroll;
+		}
+		.focus-items-table {}
+		.panel-seasons {
+			border-color: @seasons_green;
+			.panel-heading {
+				color: #fff;
+				background-color: @seasons_green;
+				border-color: @seasons_green;
+			}
+		}
 
-    ul {
-      list-style: none;
-      padding: 0;
-      li {
-        line-height: 28px;
-        text-indent: 20px;
-        a {
-          color: #fff;
-          text-decoration: none;
-          display: block;
-        }
-        a:hover {
-          background: @seasons_light_green;
-          color: #333;
-        }
-        a.active {
-          background: @seasons_light_green;
-          color: #333;
-        }
-      }
-    }
-  }
-  .body {
-    width: 100%;
-    position: absolute;
-    padding: 15px;
-// editing pages
+		.container-fluid {
+			padding-left: initial;
+			padding-right: initial;
+			margin-top: 1em;
+		}
 
-.nav-tabs {
-  border-bottom: none;
+		.col-lg-6 {
+			padding: 0;
+		}
+
+		.col-lg-6 + .col-lg-6 {
+			padding-left: 15px;
+		}
+	}
 }
-
-.nav-tabs > li > a {
-  color: #555555;
-  border: 1px solid #ddd;
-  border-bottom-color: transparent;
-  cursor: pointer;
-}
-
-.nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
-  color: #555555;
-  background-color: #fff;
-  border: 1px solid #ddd;
-  border-bottom-color: transparent;
-  cursor: default;
-}
-
-.dropdown-menu {
-  background: @seasons_green;
-  color: #ffffff;
-}
-
-.dropdown-menu > li > a{
-  display: block;
-  padding: 3px 20px;
-  clear: both;
-  font-weight: normal;
-  line-height: 1.42857143;
-  color: #ffffff;
-  white-space: nowrap;
-}
-
-.dropdown-menu > .active > a, .dropdown-menu > .active > a:hover, .dropdown-menu > .active > a:focus {
-  color: @seasons_light_green;
-  background: transparent;
-  cursor: pointer;
-}
-ul.focus-items {
-  list-style: none;
-  padding: 0;
-  li.focus-item {
-    margin: 7px;
-    display: inline-block;
-    a {
-      border-radius: 6px;
-      display: block;
-      background: @seasons_green;
-      color: #fff;
-      padding: 5px 10px;
-      text-decoration: none;
-      cursor: pointer;
-    }
-    a:hover {
-      color: @seasons_light_green;
-    }
-  }
-}
-
-.focus-items-search {
-  margin-bottom: 15px;
-}
-
-.focus-items-wrapper {
-  max-height: 350px;
-  overflow-y: scroll;
-}
-
-.focus-items-table {
-
-}
-
-.panel-seasons {
-  border-color: @seasons_green;
-
-  .panel-heading {
-    color: #fff;
-    background-color: @seasons_green;
-    border-color: @seasons_green;
-  }
-}
-}
-}
-
 // #plan-preview-wrapper {
 //   .plan-preview {
 //     display: none;
 //     margin: 0 auto;
 //   }
 // }
-
 @media (min-width: 768px) {
-  #plan-edit-wrapper {
-    padding-left: 250px;
-    .sidebar {
-      width: 250px;
-    }
-    .body {
-      padding: 20px;
-      position: relative;
-    }
-  }
+	#plan-edit-wrapper {
+		padding-left: 250px;
+		.sidebar {
+			width: 250px;
+		}
+		.body {
+			padding: 20px;
+			position: relative;
+		}
+	}
 }
-
 @media print {
-
-  header, .row.page-title, .row.patient-info, .row.footer-wrapper, .controls {
-    display: none;
-  }
-
-  a, a:visited { text-decoration: none; }
-
-  a,a:visited { color: #428bca !important; }
-
-  a[href]:after { content: "";}
-
-  abbr[title]:after { content: " (" attr(title) ")"; }
-
-  // .ir a:after, a[href^="javascript:"]:after, a[href^="#"]:after { content: ""; }
-
-  // Hides default date and site name ( in chrome ).
-  @page {
-    margin: 0;
-    size: auto;
-  }
-
-  .content-wrapper:before {
-  // background: transparent !important;
-  }
-
-  #plan-wrapper {
-    max-height: none;
-    overflow-y: inherit;
-    border: none;
-    width: 100%;
-    margin: 0;
-
-    .plan-page {
-      // border: none;
-      font-size: 1em;
-      width: 7.65in;
-      page-break-after: always;
-      opacity: 1 !important;
-      position: relative;
-      margin: 0;
-      padding: .15in;
-      background: inherit !important;
-      -webkit-print-color-adjust: exact;
-      font-size: inherit;
-
-      &:after {
-        left: .15in;
-        right: .15in;
-        bottom: -30px;
-      }
-
-      h2.plan-page-title {
-        padding: .15in 0 .15in .5in;
-        margin: 0;
-      }
-
-      .plan-page-content {
-        padding-left: .5in;
-        padding-right: .5in;
-        padding-top: .25in;
-      }
-    }
-
-    .plan-page.cover-page {
-      padding: none;
-      height: 10.25in;
-    }
-  }
-
-  subtext {
-    font-size: 0.6em;
-    color: #888;
-  }
+	.controls,
+	.row.footer-wrapper,
+	.row.page-title,
+	.row.patient-info,
+	header {
+		display: none;
+	}
+	a,
+	a:visited {
+		text-decoration: none;
+	}
+	a,
+	a:visited {
+		color: #428bca !important;
+	}
+	a[href]:after {
+		content: "";
+	}
+	abbr[title]:after {
+		content: " (" attr(title) ")";
+	}
+	// .ir a:after, a[href^="javascript:"]:after, a[href^="#"]:after { content: ""; }
+	// Hides default date and site name ( in chrome ).
+	@page {
+		margin: 0;
+		size: auto;
+	}
+	.content-wrapper:before {
+		// background: transparent !important;
+	}
+	.plan-wrapper {
+		max-height: none;
+		overflow-y: inherit;
+		border: none;
+		width: 100%;
+		margin: 0;
+		.plan-page {
+			// border: none;
+			font-size: 1em;
+			width: 7.65in;
+			page-break-after: always;
+			opacity: 1 !important;
+			position: relative;
+			margin: 0;
+			padding: 0.15in;
+			background: inherit !important;
+			-webkit-print-color-adjust: exact;
+			font-size: inherit;
+			&:after {
+				left: 0.15in;
+				right: 0.15in;
+				bottom: -30px;
+			}
+			h2.plan-page-title {
+				padding: 0.15in 0 0.15in 0.5in;
+				margin: 0;
+			}
+			.plan-page-content {
+				padding-left: 0.5in;
+				padding-right: 0.5in;
+				padding-top: 0.25in;
+			}
+		}
+		.plan-page.cover-page {
+			padding: none;
+			height: 10.25in;
+		}
+	}
+	subtext {
+		font-size: 0.6em;
+		color: #888;
+	}
 }
