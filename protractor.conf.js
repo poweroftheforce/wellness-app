@@ -58,9 +58,7 @@ var config = {
   },
 
   onPrepare: function() {
-    require('babel-core/register')({
-  	  ignore: /\/lib\/|\/node_modules\//
-    });
+    require('babel-core/register');
     // Load Mocha and Chai + plugins
     require('./mocha.conf');
 
