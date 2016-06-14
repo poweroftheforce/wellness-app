@@ -9,20 +9,33 @@
 
 'use strict';
 
-import _ from 'lodash';
+var _interopRequireDefault = require('babel-runtime/helpers/interop-require-default')['default'];
+
+Object.defineProperty(exports, '__esModule', {
+  value: true
+});
+exports.index = index;
+exports.create = create;
+exports.update = update;
+exports.destroy = destroy;
+
+var _lodash = require('lodash');
+
+var _lodash2 = _interopRequireDefault(_lodash);
+
 var Template = require('../template.model');
 var TemplateSection = require('./templateSection.model');
 
 function handleError(res, statusCode) {
   statusCode = statusCode || 500;
-  return function(err) {
+  return function (err) {
     res.status(statusCode).send(err);
   };
 }
 
 function responseWithResult(res, statusCode) {
   statusCode = statusCode || 200;
-  return function(entity) {
+  return function (entity) {
     if (entity) {
       res.status(statusCode).json(entity);
     }
@@ -30,7 +43,7 @@ function responseWithResult(res, statusCode) {
 }
 
 function handleEntityNotFound(res) {
-  return function(entity) {
+  return function (entity) {
     if (!entity) {
       res.status(404).end();
       return null;
@@ -40,32 +53,28 @@ function handleEntityNotFound(res) {
 }
 
 function saveUpdates(updates) {
-  return function(entity) {
-    var updated = _.merge(entity, updates);
-    return updated.saveAsync()
-      .spread(updated => {
-        return updated;
-      });
+  return function (entity) {
+    var updated = _lodash2['default'].merge(entity, updates);
+    return updated.saveAsync().spread(function (updated) {
+      return updated;
+    });
   };
 }
 
 function removeEntity(res) {
-  return function(entity) {
+  return function (entity) {
     if (entity) {
-      return entity.removeAsync()
-        .then(() => {
-          res.status(204).end();
-        });
+      return entity.removeAsync().then(function () {
+        res.status(204).end();
+      });
     }
   };
 }
 
 // Gets a list of Template Sections (From One Template!)
-export function index(req, res) {
-  TemplateSection.findAsync({_template_id: req.params.template_id})
-    .then(handleEntityNotFound(res))
-    .then(responseWithResult(res))
-    .catch(handleError(res));
+
+function index(req, res) {
+  TemplateSection.findAsync({ _template_id: req.params.template_id }).then(handleEntityNotFound(res)).then(responseWithResult(res))['catch'](handleError(res));
 }
 
 // // Gets a single Template Section from the DB
@@ -77,29 +86,24 @@ export function index(req, res) {
 // }
 
 // Creates a new Template Section in the DB (In The Correct Section)
-export function create(req, res) {
+
+function create(req, res) {
   req.body._template_id = req.params.template_id;
-  TemplateSection.createAsync(req.body)
-    .then(responseWithResult(res, 201))
-    .catch(handleError(res));
+  TemplateSection.createAsync(req.body).then(responseWithResult(res, 201))['catch'](handleError(res));
 }
 
 // Updates an existing Template Section in the DB
-export function update(req, res) {
+
+function update(req, res) {
   if (req.body._id) {
     delete req.body._id;
   }
-  TemplateSection.findByIdAsync(req.params.id)
-    .then(handleEntityNotFound(res))
-    .then(saveUpdates(req.body))
-    .then(responseWithResult(res))
-    .catch(handleError(res));
+  TemplateSection.findByIdAsync(req.params.id).then(handleEntityNotFound(res)).then(saveUpdates(req.body)).then(responseWithResult(res))['catch'](handleError(res));
 }
 
 // Deletes a Template Section from the DB
-export function destroy(req, res) {
-  TemplateSection.findByIdAsync(req.params.id)
-    .then(handleEntityNotFound(res))
-    .then(removeEntity(res))
-    .catch(handleError(res));
+
+function destroy(req, res) {
+  TemplateSection.findByIdAsync(req.params.id).then(handleEntityNotFound(res)).then(removeEntity(res))['catch'](handleError(res));
 }
+//# sourceMappingURL=templateSection.controller.js.map

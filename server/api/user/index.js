@@ -1,14 +1,26 @@
 'use strict';
 
-import {Router} from 'express';
-import * as controller from './user.controller';
-import * as auth from '../../auth/auth.service';
+var _interopRequireWildcard = require('babel-runtime/helpers/interop-require-wildcard')['default'];
 
-var router = new Router();
+Object.defineProperty(exports, '__esModule', {
+  value: true
+});
+
+var _express = require('express');
+
+var _userController = require('./user.controller');
+
+var controller = _interopRequireWildcard(_userController);
+
+var _authAuthService = require('../../auth/auth.service');
+
+var auth = _interopRequireWildcard(_authAuthService);
+
+var router = new _express.Router();
 
 // router.get('/', auth.hasRole('admin'), controller.index);
 router.get('/', controller.index);
-router.delete('/:id', auth.hasRole('admin'), controller.destroy);
+router['delete']('/:id', auth.hasRole('admin'), controller.destroy);
 router.get('/me', auth.isAuthenticated(), controller.me);
 router.put('/:id/password', auth.isAuthenticated(), controller.changePassword);
 router.put('/:id', auth.isAuthenticated(), controller.update);
@@ -24,4 +36,6 @@ router.post('/', auth.hasRole('admin'), controller.create);
 // router.post('/me/networks', auth.isAuthenticated(), controller.addNetwork);
 // router.put('/me/networks/:id', auth.isAuthenticated(), controller.removeNetwork);
 
-export default router;
+exports['default'] = router;
+module.exports = exports['default'];
+//# sourceMappingURL=index.js.map

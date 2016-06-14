@@ -4,9 +4,19 @@
 
 'use strict';
 
-import {EventEmitter} from 'events';
-import FocusItem from './focusItem.model';
-var FocusItemEvents = new EventEmitter();
+var _interopRequireDefault = require('babel-runtime/helpers/interop-require-default')['default'];
+
+Object.defineProperty(exports, '__esModule', {
+  value: true
+});
+
+var _events = require('events');
+
+var _focusItemModel = require('./focusItem.model');
+
+var _focusItemModel2 = _interopRequireDefault(_focusItemModel);
+
+var FocusItemEvents = new _events.EventEmitter();
 
 // Set max event listeners (0 == unlimited)
 FocusItemEvents.setMaxListeners(0);
@@ -20,14 +30,16 @@ var events = {
 // Register the event emitter to the model events
 for (var e in events) {
   var event = events[e];
-  FocusItem.schema.post(e, emitEvent(event));
+  _focusItemModel2['default'].schema.post(e, emitEvent(event));
 }
 
 function emitEvent(event) {
-  return function(doc) {
+  return function (doc) {
     FocusItemEvents.emit(event + ':' + doc._id, doc);
     FocusItemEvents.emit(event, doc);
-  }
+  };
 }
 
-export default FocusItemEvents;
+exports['default'] = FocusItemEvents;
+module.exports = exports['default'];
+//# sourceMappingURL=focusItem.events.js.map

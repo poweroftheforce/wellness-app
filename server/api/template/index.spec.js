@@ -1,3 +1,5 @@
+"use strict";
+
 // 'use strict';
 
 // var proxyquire = require('proxyquire').noPreserveCache();
@@ -95,3 +97,4 @@
 //   });
 
 // });
+//# sourceMappingURL=index.spec.js.map

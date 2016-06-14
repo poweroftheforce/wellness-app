@@ -1,16 +1,29 @@
 'use strict';
 
-import {Router} from 'express';
-import * as controller from './templateSection.controller';
-import * as auth from '../../../auth/auth.service';
+var _interopRequireWildcard = require('babel-runtime/helpers/interop-require-wildcard')['default'];
 
-var router = new Router({mergeParams: true});
+Object.defineProperty(exports, '__esModule', {
+  value: true
+});
 
+var _express = require('express');
 
-router.get('/', controller.index);     
-router.post('/', controller.create);				
-router.put('/:id', controller.update);			
-router.patch('/:id', controller.update);		
-router.delete('/:id', controller.destroy);	
+var _templateSectionController = require('./templateSection.controller');
 
-export default router;
+var controller = _interopRequireWildcard(_templateSectionController);
+
+var _authAuthService = require('../../../auth/auth.service');
+
+var auth = _interopRequireWildcard(_authAuthService);
+
+var router = new _express.Router({ mergeParams: true });
+
+router.get('/', controller.index);
+router.post('/', controller.create);
+router.put('/:id', controller.update);
+router.patch('/:id', controller.update);
+router['delete']('/:id', controller.destroy);
+
+exports['default'] = router;
+module.exports = exports['default'];
+//# sourceMappingURL=index.js.map

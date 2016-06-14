@@ -1,3 +1,5 @@
+"use strict";
+
 // 'use strict';
 
 // import app from '../..';
@@ -20,4 +22,4 @@
 //   // });
 
 // });
-
+//# sourceMappingURL=plan.model.spec.js.map

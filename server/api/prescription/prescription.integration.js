@@ -1,3 +1,5 @@
+"use strict";
+
 // 'use strict';
 
 // var app = require('../..');
@@ -145,3 +147,4 @@
 //   });
 
 // });
+//# sourceMappingURL=prescription.integration.js.map

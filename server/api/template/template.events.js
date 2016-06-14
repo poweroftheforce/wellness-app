@@ -4,9 +4,14 @@
 
 'use strict';
 
-import {EventEmitter} from 'events';
+Object.defineProperty(exports, '__esModule', {
+  value: true
+});
+
+var _events = require('events');
+
 var Template = require('./template.model');
-var TemplateEvents = new EventEmitter();
+var TemplateEvents = new _events.EventEmitter();
 
 // Set max event listeners (0 == unlimited)
 TemplateEvents.setMaxListeners(0);
@@ -24,10 +29,12 @@ for (var e in events) {
 }
 
 function emitEvent(event) {
-  return function(doc) {
+  return function (doc) {
     TemplateEvents.emit(event + ':' + doc._id, doc);
     TemplateEvents.emit(event, doc);
-  }
+  };
 }
 
-export default TemplateEvents;
+exports['default'] = TemplateEvents;
+module.exports = exports['default'];
+//# sourceMappingURL=template.events.js.map

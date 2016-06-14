@@ -1,3 +1,5 @@
+"use strict";
+
 // 'use strict';
 
 // var app = require('../..');
@@ -61,7 +63,6 @@
 //           done();
 //         });
 //     });
-
 
 //     it('should respond with the newly created template', function() {
 //       newTemplate.name.should.equal('New Template');
@@ -159,3 +160,4 @@
 //   });
 
 // });
+//# sourceMappingURL=template.integration.js.map

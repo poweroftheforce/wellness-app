@@ -15,83 +15,65 @@ var routerStub = {
   put: sinon.spy(),
   patch: sinon.spy(),
   post: sinon.spy(),
-  delete: sinon.spy()
+  'delete': sinon.spy()
 };
 
 // require the index with our stubbed out modules
 var focusItemIndex = proxyquire('./index.js', {
   'express': {
-    Router: function() {
+    Router: function Router() {
       return routerStub;
     }
   },
   './focusItem.controller': focusItemCtrlStub
 });
 
-describe('FocusItem API Router:', function() {
+describe('FocusItem API Router:', function () {
 
-  it('should return an express router instance', function() {
+  it('should return an express router instance', function () {
     focusItemIndex.should.equal(routerStub);
   });
 
-  describe('GET /api/focusItems', function() {
+  describe('GET /api/focusItems', function () {
 
-    it('should route to focusItem.controller.index', function() {
-      routerStub.get
-        .withArgs('/', 'focusItemCtrl.index')
-        .should.have.been.calledOnce;
+    it('should route to focusItem.controller.index', function () {
+      routerStub.get.withArgs('/', 'focusItemCtrl.index').should.have.been.calledOnce;
     });
-
   });
 
-  describe('GET /api/focusItems/:id', function() {
+  describe('GET /api/focusItems/:id', function () {
 
-    it('should route to focusItem.controller.show', function() {
-      routerStub.get
-        .withArgs('/:id', 'focusItemCtrl.show')
-        .should.have.been.calledOnce;
+    it('should route to focusItem.controller.show', function () {
+      routerStub.get.withArgs('/:id', 'focusItemCtrl.show').should.have.been.calledOnce;
     });
-
   });
 
-  describe('POST /api/focusItems', function() {
+  describe('POST /api/focusItems', function () {
 
-    it('should route to focusItem.controller.create', function() {
-      routerStub.post
-        .withArgs('/', 'focusItemCtrl.create')
-        .should.have.been.calledOnce;
+    it('should route to focusItem.controller.create', function () {
+      routerStub.post.withArgs('/', 'focusItemCtrl.create').should.have.been.calledOnce;
     });
-
   });
 
-  describe('PUT /api/focusItems/:id', function() {
+  describe('PUT /api/focusItems/:id', function () {
 
-    it('should route to focusItem.controller.update', function() {
-      routerStub.put
-        .withArgs('/:id', 'focusItemCtrl.update')
-        .should.have.been.calledOnce;
+    it('should route to focusItem.controller.update', function () {
+      routerStub.put.withArgs('/:id', 'focusItemCtrl.update').should.have.been.calledOnce;
     });
-
   });
 
-  describe('PATCH /api/focusItems/:id', function() {
+  describe('PATCH /api/focusItems/:id', function () {
 
-    it('should route to focusItem.controller.update', function() {
-      routerStub.patch
-        .withArgs('/:id', 'focusItemCtrl.update')
-        .should.have.been.calledOnce;
+    it('should route to focusItem.controller.update', function () {
+      routerStub.patch.withArgs('/:id', 'focusItemCtrl.update').should.have.been.calledOnce;
     });
-
   });
 
-  describe('DELETE /api/focusItems/:id', function() {
+  describe('DELETE /api/focusItems/:id', function () {
 
-    it('should route to focusItem.controller.destroy', function() {
-      routerStub.delete
-        .withArgs('/:id', 'focusItemCtrl.destroy')
-        .should.have.been.calledOnce;
+    it('should route to focusItem.controller.destroy', function () {
+      routerStub['delete'].withArgs('/:id', 'focusItemCtrl.destroy').should.have.been.calledOnce;
     });
-
   });
-
 });
+//# sourceMappingURL=index.spec.js.map

@@ -9,20 +9,36 @@
 
 'use strict';
 
-import _ from 'lodash';
+var _interopRequireDefault = require('babel-runtime/helpers/interop-require-default')['default'];
+
+Object.defineProperty(exports, '__esModule', {
+  value: true
+});
+exports.index = index;
+exports.show = show;
+exports.create = create;
+exports.update = update;
+exports.destroy = destroy;
+exports.latest = latest;
+exports.updateSection = updateSection;
+
+var _lodash = require('lodash');
+
+var _lodash2 = _interopRequireDefault(_lodash);
+
 var Template = require('./template.model');
 var TemplateSection = require('./templateSection/templateSection.model');
 
 function handleError(res, statusCode) {
   statusCode = statusCode || 500;
-  return function(err) {
+  return function (err) {
     res.status(statusCode).send(err);
   };
 }
 
 function responseWithResult(res, statusCode) {
   statusCode = statusCode || 200;
-  return function(entity) {
+  return function (entity) {
     if (entity) {
       res.status(statusCode).json(entity);
     }
@@ -30,7 +46,7 @@ function responseWithResult(res, statusCode) {
 }
 
 function handleEntityNotFound(res) {
-  return function(entity) {
+  return function (entity) {
     if (!entity) {
       res.status(404).end();
       return null;
@@ -40,43 +56,37 @@ function handleEntityNotFound(res) {
 }
 
 function saveUpdates(updates) {
-  return function(entity) {
-    var updated = _.merge(entity, updates);
-    return updated.saveAsync()
-      .spread(updated => {
-        return updated;
-      });
+  return function (entity) {
+    var updated = _lodash2['default'].merge(entity, updates);
+    return updated.saveAsync().spread(function (updated) {
+      return updated;
+    });
   };
 }
 
 function removeEntity(res) {
-  return function(entity) {
+  return function (entity) {
     if (entity) {
-      return entity.removeAsync()
-        .then(() => {
-          res.status(204).end();
-        });
+      return entity.removeAsync().then(function () {
+        res.status(204).end();
+      });
     }
   };
 }
 
 // Gets a list of Templates
-export function index(req, res) {
+
+function index(req, res) {
   Template.findAsync()
-    // .populate('sections')
-    .then(responseWithResult(res))
-    .catch(handleError(res));
+  // .populate('sections')
+  .then(responseWithResult(res))['catch'](handleError(res));
 }
 
 // Gets a single Template from the DB
-export function show(req, res) {
 
-  Template.findOne({_id: req.params.id})
-    .populate('sections')
-    .execAsync()
-    .then(handleEntityNotFound(res))
-    .then(responseWithResult(res))
-    .catch(handleError(res));
+function show(req, res) {
+
+  Template.findOne({ _id: req.params.id }).populate('sections').execAsync().then(handleEntityNotFound(res)).then(responseWithResult(res))['catch'](handleError(res));
 
   // Template.findByIdAsync(req.params.id)
   //   .then(handleEntityNotFound(res))
@@ -85,53 +95,42 @@ export function show(req, res) {
 }
 
 // Creates a new Template in the DB
-export function create(req, res) {
-  Template.createAsync(req.body)
-    .then(responseWithResult(res, 201))
-    .catch(handleError(res));
+
+function create(req, res) {
+  Template.createAsync(req.body).then(responseWithResult(res, 201))['catch'](handleError(res));
 }
 
 // Updates an existing Template in the DB
-export function update(req, res) {
+
+function update(req, res) {
   if (req.body._id) {
     delete req.body._id;
   }
-  Template.findByIdAsync(req.params.id)
-    .then(handleEntityNotFound(res))
-    .then(saveUpdates(req.body))
-    .then(responseWithResult(res))
-    .catch(handleError(res));
+  Template.findByIdAsync(req.params.id).then(handleEntityNotFound(res)).then(saveUpdates(req.body)).then(responseWithResult(res))['catch'](handleError(res));
 }
 
 // Deletes a Template from the DB
-export function destroy(req, res) {
-  Template.findByIdAsync(req.params.id)
-    .then(handleEntityNotFound(res))
-    .then(removeEntity(res))
-    .catch(handleError(res));
+
+function destroy(req, res) {
+  Template.findByIdAsync(req.params.id).then(handleEntityNotFound(res)).then(removeEntity(res))['catch'](handleError(res));
 }
 
 // Returns the last updated Template - this is so wrong!
-export function latest(req, res) {
-  Template.find().sort({version: -1}).limit(1)
-    .populate('sections')
-    .execAsync()
-    .then(handleEntityNotFound(res))
-    .then(responseWithResult(res))
-    .catch(handleError(res));
+
+function latest(req, res) {
+  Template.find().sort({ version: -1 }).limit(1).populate('sections').execAsync().then(handleEntityNotFound(res)).then(responseWithResult(res))['catch'](handleError(res));
 }
 
 // Update Template Section
-export function updateSection(req, res, next) {
+
+function updateSection(req, res, next) {
   var templateId = req.templateId;
   var sectionId = req.sectionId;
 
-  Template.findByIdAsync(templateId)
-    .then(template => {
-      return template.saveAsync()
-      .then(() => {
-        res.status(204).end();
-      })
-      .catch(handleError(res));
-    });
+  Template.findByIdAsync(templateId).then(function (template) {
+    return template.saveAsync().then(function () {
+      res.status(204).end();
+    })['catch'](handleError(res));
+  });
 }
+//# sourceMappingURL=template.controller.js.map

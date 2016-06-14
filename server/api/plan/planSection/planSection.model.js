@@ -1,9 +1,12 @@
 'use strict';
 
+Object.defineProperty(exports, '__esModule', {
+  value: true
+});
 var mongoose = require('bluebird').promisifyAll(require('mongoose'));
 
 var PlanSectionSchema = new mongoose.Schema({
-  title: {type: String, required: true},
+  title: { type: String, required: true },
   intro: String,
   comments: String,
   focusItems: [{ type: mongoose.Schema.Types.ObjectId, ref: 'FocusItem' }],
@@ -13,7 +16,9 @@ var PlanSectionSchema = new mongoose.Schema({
   addendums: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Addendum' }],
   references: String,
   // html: String,
-  _plan_id: {type: String, required: true, ref: 'Plan'}
+  _plan_id: { type: String, required: true, ref: 'Plan' }
 }, { timestamps: true });
 
-export default mongoose.model('PlanSection', PlanSectionSchema);
+exports['default'] = mongoose.model('PlanSection', PlanSectionSchema);
+module.exports = exports['default'];
+//# sourceMappingURL=planSection.model.js.map
